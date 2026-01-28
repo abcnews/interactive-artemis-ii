@@ -159,7 +159,7 @@ const parseDOM = async (el: Element) => {
   ).blocks;
 };
 
-Promise.all([proxy('titanic-submersible'), whenOdysseyLoaded]).then(async () => {
+Promise.all([proxy('interactive-artemis-ii'), whenOdysseyLoaded]).then(async () => {
   // Load the header graphic
 
   const headerMounts = selectMounts('graphicheader') as unknown as (HTMLElement & Mount)[];
