@@ -1,11 +1,11 @@
 {
 	"name": "interactive-artemis-ii",
-	"version": "1.0.8",
-	"description": "A project generated from aunty's svelte project template.",
+	"version": "0.0.1",
+	"description": "Artemis II interactive",
 	"license": "MIT",
 	"private": true,
 	"contributors": [
-		"Simon Elvery <simon@elvery.net>"
+		"Joshua Byrd <byrd.joshua@abc.net.au>"
 	],
 	"aunty": {
 		"type": "svelte"
