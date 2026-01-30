@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleLinear } from 'd3-scale';
-  import { TITANIC } from '../lib/constants';
+  import { LIMIT } from '../lib/constants';
   export let pressure: number;
   const domain = [0, 400];
   const range = [-128, 123];
@@ -16,7 +16,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   viewBox="0 0 316.05 316.05"
   class:visible={pressure > 10}
-  class:bottom={pressure >= TITANIC / 10}
+  class:bottom={pressure >= LIMIT / 10}
   aria-hidden="true"
 >
   <defs>

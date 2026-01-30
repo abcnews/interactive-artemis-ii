@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ROWS, TITANIC } from '../lib/constants';
+  import { ROWS } from '../lib/constants';
 
   export let depthInMetres: number;
   const formatter = new Intl.NumberFormat();

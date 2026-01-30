@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { depth } from "../lib/stores";
-  import { TITANIC, SCREENS, ROWS, COLUMNS } from "../lib/constants";
+  import { LIMIT, SCREENS, ROWS, COLUMNS } from "../lib/constants";
   import { getReadableStore } from "@abcnews/progress-utils";
   import Gauge from "./Gauge.svelte";
 
@@ -26,7 +26,7 @@
   });
   $: depthInMetres =
     typeof $scroll?.data?.threshold === "number"
-      ? $scroll.data.threshold * TITANIC
+      ? $scroll.data.threshold * LIMIT
       : -1;
 </script>
 

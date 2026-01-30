@@ -2,14 +2,14 @@
   import { fade } from 'svelte/transition';
   import DepthGauge from './DepthGauge.svelte';
   import PressureGauge from './PressureGauge.svelte';
-  import { TITANIC } from '../lib/constants';
+  import { LIMIT } from '../lib/constants';
 
   export let depthInMetres: number;
-  $: visible = depthInMetres > 85 && depthInMetres < TITANIC;
+  $: visible = depthInMetres > 85 && depthInMetres < LIMIT;
 </script>
 
 {#if visible}
-  <div class="gauge" class:bottom={depthInMetres >= TITANIC - 1} transition:fade>
+  <div class="gauge" class:bottom={depthInMetres >= LIMIT - 1} transition:fade>
     <DepthGauge {depthInMetres} />
     <PressureGauge pressure={depthInMetres / 10} />
   </div>

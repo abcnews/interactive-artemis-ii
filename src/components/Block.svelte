@@ -1,6 +1,6 @@
 <script lang="ts">
   import { depth as depthPixels } from '../lib/stores';
-  import { COLUMNS, ROWS_PER_METRE, SCREENS, TITANIC } from '../lib/constants';
+  import { COLUMNS, ROWS_PER_METRE, SCREENS, LIMIT } from '../lib/constants';
   import BlockImage from './BlockImage.svelte';
   import type { BlockImage as BlockImageType } from '../index';
 
@@ -14,8 +14,8 @@
   $: deep = depth > 3000;
   $: position =
     align === 'top'
-      ? `top: calc(${(depth / TITANIC) * SCREENS} * 100vh - 70vh)`
-      : `bottom: calc(${(1 - depth / TITANIC) * SCREENS} * 100vh)`;
+      ? `top: calc(${(depth / LIMIT) * SCREENS} * 100vh - 70vh)`
+      : `bottom: calc(${(1 - depth / LIMIT) * SCREENS} * 100vh)`;
 </script>
 
 <div class="block u-layout" class:deep={depth > 3000} style={position}>
