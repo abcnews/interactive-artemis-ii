@@ -7,4 +7,14 @@ export default defineConfig({
   server: {
     cors: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        dir: "dist",
+        entryFileNames: "[name].js",
+        format: "iife",
+        name: "artemis2", // global variable name
+      },
+    },
+  },
 });

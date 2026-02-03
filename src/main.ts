@@ -3,11 +3,17 @@ import "./app.css";
 import App from "./App.svelte";
 import { whenOdysseyLoaded } from "@abcnews/env-utils";
 
-// Odyssey format required
-await whenOdysseyLoaded;
+let app: any;
 
-const app = mount(App, {
-  target: document.querySelector(".Header")!,
-});
+const init = async () => {
+  // Odyssey format required
+  await whenOdysseyLoaded;
+
+  app = mount(App, {
+    target: document.querySelector(".Header")!,
+  });
+};
+
+init();
 
 export default app;

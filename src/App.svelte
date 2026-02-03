@@ -4,4 +4,6 @@
   });
 </script>
 
+<div>Hello World!!!</div>
+
 <style lang="scss"></style>
