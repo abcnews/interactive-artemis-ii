@@ -8,7 +8,7 @@
   } from "./lib/darkModeSwitcher";
 
   $effect(() => {
-    setMode(document.documentElement.getAttribute("data-scheme") as string);
+    setMode(document.body.getAttribute("data-scheme") as string);
     loadDarkModeObserver();
     return () => unloadDarkModeObserver();
   });
