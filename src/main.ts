@@ -7,7 +7,11 @@ import Timeout from "await-timeout";
 let app: any;
 
 async function waitForOdysseyWithTimeout() {
-  return Timeout.wrap(whenOdysseyLoaded, 1000, "Timed out waiting for Odyssey to load");
+  return Timeout.wrap(
+    whenOdysseyLoaded,
+    1000,
+    "Timed out waiting for Odyssey to load",
+  );
 }
 
 const init = async () => {
