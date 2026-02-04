@@ -9,5 +9,10 @@
   <body>
     <div class="Header"></div>
     <script type="module" src="/src/main.ts"></script>
+    <script async>
+      window.addEventListener("DOMContentLoaded", () => {
+        window.dispatchEvent(new CustomEvent("odyssey:api"));
+      });
+    </script>
   </body>
 </html>
