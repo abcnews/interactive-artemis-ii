@@ -6,6 +6,13 @@ const makeOdysseyDark = () => {
   header?.classList.add("is-dark");
   header.dataset.scheme = "dark";
   main.dataset.scheme = "dark";
+
+  const blocks = document.querySelectorAll(".Block") as NodeListOf<HTMLElement>;
+
+  blocks.forEach((block) => {
+    block.classList.add("has-dark");
+    block.dataset.scheme = "dark";
+  });
 };
 
 const makeOdysseyLight = () => {
@@ -17,6 +24,13 @@ const makeOdysseyLight = () => {
   header?.classList.remove("is-dark");
   header.dataset.scheme = "light";
   main.dataset.scheme = "light";
+
+  const blocks = document.querySelectorAll(".Block") as NodeListOf<HTMLElement>;
+
+  blocks.forEach((block) => {
+    block.classList.remove("has-dark");
+    block.dataset.scheme = "light";
+  });
 };
 
 export const setMode = (dataScheme: string) => {

@@ -5,7 +5,7 @@
 
 <div class="stage-root">
   <!-- <Rocket /> -->
-  <Rocket3D />
+  <!-- <Rocket3D /> -->
 </div>
 
 <style lang="scss">
@@ -15,12 +15,6 @@
     position: fixed;
     top: 0;
     left: 0;
-    // background-image: radial-gradient(
-    //   circle,
-    //   rgb(129, 43, 43),
-    //   rgb(103, 103, 70),
-    //   rgb(22, 64, 22)
-    // );
     z-index: -1;
   }
 </style>

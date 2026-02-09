@@ -72,8 +72,8 @@
 
       rocket.traverse(function (object: any) {
         if (!object.isMesh) return;
-        object.material.color.set(0xffffff);
-        object.material.wireframe = true;
+        // object.material.color.set(0xffffff);
+        // object.material.wireframe = true;
         object.material.needsUpdate = true;
       });
 
@@ -110,9 +110,9 @@
 
     renderer.render(scene, camera);
 
-    const delta = targetRocketPosition * Math.sin(Math.PI * 2 * t);
+    const delta = targetRocketPosition * Math.cos(Math.PI * 2 * t) * 0.5;
     if (rocket) {
-      rocket.rotation.y += 0.01;
+      rocket.rotation.y += 0.05;
       rocket.position.y = delta;
     }
 
