@@ -1,10 +1,12 @@
 /* Default (light) theme */
 :root {
   --interactive-color-header: #3d3d3d;
+  --interactive-color-background: #eee;
   
 }
 
 /* Dark theme using class */
 :root.is-dark-mode {
   --interactive-color-header: hsl(0, 0%, 81%);
+  --interactive-color-background: #1a1a1a;
 }

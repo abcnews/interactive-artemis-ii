@@ -1,12 +1,8 @@
 <script lang="ts">
-  import { untrack } from "svelte";
-
-  $effect(() => {
-    untrack(() => {
-      console.log("onMount");
-    });
-  });
+  import stars from "../assets/stars.jpg";
 </script>
+
+<img src={stars} alt="stars" class="" />
 
 <style lang="scss">
   :global {

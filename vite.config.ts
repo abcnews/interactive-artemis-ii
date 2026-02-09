@@ -7,6 +7,7 @@ export default defineConfig(({ command }) => {
   return {
     plugins: [svelte(), loadingScript()],
     server: {
+      origin: "http://127.0.0.1:5173",
       cors: true,
     },
     base:

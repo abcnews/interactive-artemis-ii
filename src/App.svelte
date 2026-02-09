@@ -10,6 +10,7 @@
   } from "./lib/darkModeSwitcher";
 
   $effect(() => {
+    /* Auto dark mode for Odyssey */
     setMode(document.body.getAttribute("data-scheme") as string);
     loadDarkModeObserver();
     return () => unloadDarkModeObserver();
@@ -30,10 +31,19 @@
 
 <style lang="scss">
   :global {
-    /* Odyssey overrides */
+    /*
+      Odyssey overrides
+     */
+
+    /* Remove long panel transitions */
     .Block-content[class*="u-richtext"] > *::before {
       transition: unset !important;
     }
+
+    /* 
+      Fix extended margins on 2nd panel if no embedded media
+      https://github.com/abcnews/odyssey/issues/99
+     */
     .Main > .Block.is-piecemeal > .Block-content > :first-child {
       margin-top: 40vh !important;
     }
