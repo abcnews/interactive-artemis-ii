@@ -29,4 +29,10 @@
 </Portal>
 
 
-<style lang="scss"></style>
+<style lang="scss">
+  :global {
+    .Block-content[class*=u-richtext]>*::before {
+      transition: unset !important;
+    }
+  }
+</style>
