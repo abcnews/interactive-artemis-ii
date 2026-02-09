@@ -69,6 +69,14 @@
     let loader = new GLTFLoader();
     loader.load(rocketModelUrl, (gltf: Record<string, any>) => {
       rocket = gltf.scene;
+
+      rocket.traverse(function (object: any) {
+        if (!object.isMesh) return;
+        object.material.color.set(0xffffff);
+        object.material.wireframe = true;
+        object.material.needsUpdate = true;
+      });
+
       rocket.position.y = 50;
       scene.add(rocket);
     });
@@ -104,7 +112,7 @@
 
     const delta = targetRocketPosition * Math.sin(Math.PI * 2 * t);
     if (rocket) {
-      rocket.rotation.y += 0.1;
+      rocket.rotation.y += 0.01;
       rocket.position.y = delta;
     }
 
