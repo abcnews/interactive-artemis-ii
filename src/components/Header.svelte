@@ -24,15 +24,15 @@
       .Header-content h1 {
         font-size: 3.2rem !important;
         color: var(--interactive-color-header);
-        text-align: center;
+        // text-align: center;
       }
 
       .Header-byline > ul {
-        justify-content: center;
+        // justify-content: center;
       }
 
       .Header-meta > div {
-        justify-content: center;
+        // justify-content: center;
       }
     }
   }

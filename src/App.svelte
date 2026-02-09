@@ -28,11 +28,14 @@
   <Timeline></Timeline>
 </Portal>
 
-
 <style lang="scss">
   :global {
-    .Block-content[class*=u-richtext]>*::before {
+    /* Odyssey overrides */
+    .Block-content[class*="u-richtext"] > *::before {
       transition: unset !important;
+    }
+    .Main > .Block.is-piecemeal > .Block-content > :first-child {
+      margin-top: 40vh !important;
     }
   }
 </style>
