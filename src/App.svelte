@@ -8,7 +8,10 @@
     unloadDarkModeObserver,
     setMode,
   } from "./lib/darkModeSwitcher";
+
   import { scroll } from "./stores/scroll.svelte";
+
+  import { onMount } from "svelte";
 
   $effect(() => {
     /* Auto dark mode for Odyssey */
