@@ -10,8 +10,6 @@
   } from "./lib/darkModeSwitcher";
   import { scroll } from "./stores/scroll.svelte";
 
-  $inspect(scroll.page);
-
   $effect(() => {
     /* Auto dark mode for Odyssey */
     setMode(document.body.getAttribute("data-scheme") as string);

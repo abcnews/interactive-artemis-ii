@@ -1,8 +1,4 @@
-<script lang="ts">
-  import stars from "../assets/stars.jpg";
-</script>
-
-<img src={stars} alt="stars" class="" />
+<script lang="ts"></script>
 
 <style lang="scss">
   :global {
