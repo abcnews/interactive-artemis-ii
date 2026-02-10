@@ -8,6 +8,9 @@
     unloadDarkModeObserver,
     setMode,
   } from "./lib/darkModeSwitcher";
+  import { scroll } from "./stores/scroll.svelte";
+
+  $inspect(scroll.page);
 
   $effect(() => {
     /* Auto dark mode for Odyssey */
@@ -28,6 +31,8 @@
 <Portal target="#timelinemount">
   <Timeline></Timeline>
 </Portal>
+
+<svelte:window bind:scrollY={scroll.page} />
 
 <style lang="scss">
   :global {
