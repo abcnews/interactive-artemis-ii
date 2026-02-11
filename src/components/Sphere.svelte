@@ -13,5 +13,5 @@
   <T.SphereGeometry args={[1, 16, 16]} />
 
   
-  <T.MeshBasicMaterial {color} wireframe={true} />
+  <T.MeshStandardMaterial {color} wireframe={false} />
 </T.Mesh>

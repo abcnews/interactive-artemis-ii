@@ -7,6 +7,9 @@
 </div>
 
 <style lang="scss">
+  @use "sass:math";
+  @use "sass:string";
+
   :root {
     --bg-gradient: linear-gradient(to bottom, #f5f7fa 0%, #c3cfe2 100%);
     --star-color: #707688; /* Darker stars for light background */
@@ -24,11 +27,11 @@
   }
 
   @function multiple-box-shadow($n) {
-    $value: "#{random(2000)}px #{random(2000)}px var(--star-color)";
+    $value: "#{math.random(2000)}px #{math.random(2000)}px var(--star-color)";
     @for $i from 2 through $n {
-      $value: "#{$value} , #{random(2000)}px #{random(2000)}px var(--star-color)";
+      $value: "#{$value} , #{math.random(2000)}px #{math.random(2000)}px var(--star-color)";
     }
-    @return unquote($value);
+    @return string.unquote($value);
   }
 
   $shadows-small: multiple-box-shadow(700);
