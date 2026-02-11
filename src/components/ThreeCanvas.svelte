@@ -2,7 +2,6 @@
   import { Canvas, T } from "@threlte/core";
   import Scene from "./ThreeScene.svelte";
   import Sphere from "./Sphere.svelte";
-  import { OrbitControls } from "@threlte/extras";
 </script>
 
 <div class="stage-root">
@@ -13,9 +12,7 @@
       oncreate={(ref) => {
         ref.lookAt(0, 1, 0);
       }}
-    >
-      <OrbitControls enableDamping />
-    </T.PerspectiveCamera>
+    ></T.PerspectiveCamera>
 
     <Scene />
     <Sphere />

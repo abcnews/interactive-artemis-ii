@@ -1,3 +1,5 @@
+<script lang="ts"></script>
+
 <div class="stars-background">
   <div id="stars"></div>
   <div id="stars2"></div>
