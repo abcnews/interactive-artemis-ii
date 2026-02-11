@@ -16,7 +16,7 @@
 
     <T.DirectionalLight position={[0, 10, 10]} />
 
-    <Scene />
+    <!-- <Scene /> -->
     <Sphere />
   </Canvas>
 </div>

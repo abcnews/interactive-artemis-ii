@@ -1,6 +1,6 @@
 <script lang="ts">
   import Rocket from "./Rocket.svelte";
-  import Rocket3D from "./Rocket3D.svelte";
+  // import Rocket3D from "./Rocket3D.svelte";
   import Stars from "./Stars.svelte";
   import ThreeCanvas from "./ThreeCanvas.svelte";
 </script>

@@ -14,5 +14,15 @@ export default defineConfig(({ command }) => {
       command === "serve"
         ? "/"
         : "https://www.abc.net.au/res/sites/news-projects/interactive-artemis-ii/dist/",
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            three: ["three", '@threlte/core', '@threlte/extras'],
+          },
+        },
+      },
+      chunkSizeWarningLimit: 1000,
+    },
   };
 });
