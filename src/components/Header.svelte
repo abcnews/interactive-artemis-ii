@@ -11,20 +11,28 @@
 
       .Header-content {
         margin-inline: 16px;
+
+        h1 {
+          font-family: "Orbitron", sans-serif;
+          font-optical-sizing: auto;
+          font-weight: 900;
+          font-style: normal;
+          overflow-wrap: break-word;
+        }
       }
 
       .Header-content h1 {
-        font-size: 3.2rem !important;
+        font-size: 3rem !important;
         color: var(--interactive-color-header);
-        // text-align: center;
+        text-align: center;
       }
 
       .Header-byline > ul {
-        // justify-content: center;
+        justify-content: center;
       }
 
       .Header-meta > div {
-        // justify-content: center;
+        justify-content: center;
       }
     }
   }

@@ -1,12 +1,15 @@
+/* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 /* Default (light) theme */
 :root {
-  --interactive-color-header: #3d3d3d;
+  --interactive-color-header: #3e5f70;
   --interactive-color-background: #eee;
   
 }
 
 /* Dark theme using class */
 :root.is-dark-mode {
-  --interactive-color-header: hsl(0, 0%, 81%);
+  --interactive-color-header: hsl(195, 25%, 78%);
   --interactive-color-background: #1a1a1a;
 }
