@@ -1,7 +1,9 @@
 {
   "version": "5",
   "specifiers": {
+    "npm:@abcnews/alternating-case-to-object@^3.2.0": "3.2.0",
     "npm:@abcnews/env-utils@6": "6.0.0",
+    "npm:@abcnews/mount-utils@3": "3.0.0",
     "npm:@sveltejs/vite-plugin-svelte@^6.2.4": "6.2.4_svelte@5.50.1__acorn@8.15.0_vite@7.3.1__@types+node@24.10.13__sass-embedded@1.97.3__picomatch@4.0.3_@types+node@24.10.13_sass-embedded@1.97.3",
     "npm:@threlte/core@^8.3.1": "8.3.1_svelte@5.50.1__acorn@8.15.0_three@0.182.0",
     "npm:@threlte/extras@^9.7.1": "9.7.1_svelte@5.50.1__acorn@8.15.0_three@0.182.0_@types+three@0.182.0",
@@ -20,8 +22,17 @@
     "npm:vite@^7.3.1": "7.3.1_@types+node@24.10.13_sass-embedded@1.97.3_picomatch@4.0.3"
   },
   "npm": {
+    "@abcnews/alternating-case-to-object@3.2.0": {
+      "integrity": "sha512-oJm6s2C4nK/ksogWaHAqnDjHb+oJu6Qu44XzamZCbJiGBllmI2gUzoVKvTFBVDTbGdVkUcLnLYYIix+ZOLVl6w==",
+      "dependencies": [
+        "tslib"
+      ]
+    },
     "@abcnews/env-utils@6.0.0": {
       "integrity": "sha512-MNJB5qIneMxDwc+qh1lPbxdCQ2Uj7yszc9hHhWHp3rXPXZ02G5dq1yBJfcSa/EdKj6x0Rcq7fXVR493VUQdW3g=="
+    },
+    "@abcnews/mount-utils@3.0.0": {
+      "integrity": "sha512-jE9edpjfOrbkBOpPWu+gI8WU9flZRDCQ/xcnF1LpornwmeYghyiYeE4zFKEkgjUPCp6sdbvLSi0DOlW0C6f6mg=="
     },
     "@bufbuild/protobuf@2.11.0": {
       "integrity": "sha512-sBXGT13cpmPR5BMgHE6UEEfEaShh5Ror6rfN3yEK5si7QVrtZg8LEPQb0VVhiLRUslD2yLnXtnRzG035J/mZXQ=="
@@ -1049,7 +1060,9 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
+        "npm:@abcnews/alternating-case-to-object@^3.2.0",
         "npm:@abcnews/env-utils@6",
+        "npm:@abcnews/mount-utils@3",
         "npm:@sveltejs/vite-plugin-svelte@^6.2.4",
         "npm:@threlte/core@^8.3.1",
         "npm:@threlte/extras@^9.7.1",

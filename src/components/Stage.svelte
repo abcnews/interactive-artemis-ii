@@ -8,8 +8,8 @@
 <div class="stage-root">
   <!-- <Rocket /> -->
   <!-- <Rocket3D /> -->
-    <Stars />
-    <ThreeCanvas />
+  <Stars />
+  <ThreeCanvas />
 </div>
 
 <style lang="scss">

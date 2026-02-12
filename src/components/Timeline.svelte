@@ -5,6 +5,6 @@
 
 <style lang="scss">
   .timeline-root {
-    height: 400000px;
+    height: 400px;
   }
 </style>
