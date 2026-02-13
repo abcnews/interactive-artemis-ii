@@ -1,9 +1,24 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
+  interface Props {
+    containerKey: string;
+  }
+
+  let { containerKey }: Props = $props();
+
   onMount(() => {
-    const spacer = document.querySelector("[data-key='spacer']") as HTMLElement;
-    spacer.style = `--grid-template-rows: minmax(200px, auto) minmax(500px, auto) minmax(300px, auto) minmax(5px, auto)`;
+    const container = document.querySelector(
+      `[data-key='${containerKey}']`,
+    ) as HTMLElement;
+
+    const spacers = container.querySelectorAll<HTMLElement>("[id^='spacer']");
+
+    console.log(spacers);
+
+    for (const spacer of spacers) {
+      spacer.style.setProperty("margin-top", "500px", "important");
+    }
   });
 </script>
 
@@ -32,7 +47,8 @@
         display: grid;
         align-items: start;
         min-height: unset !important;
-        grid-template-rows: var(--grid-template-rows);
+        // grid-auto-rows: minmax(200px, auto);
+        // grid-template-rows: var(--grid-template-rows);
       }
     }
   }

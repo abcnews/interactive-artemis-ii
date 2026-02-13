@@ -38,7 +38,7 @@
 </Portal>
 
 <Portal>
-  <TimeSpacer></TimeSpacer>
+  <TimeSpacer containerKey="spacer"></TimeSpacer>
 </Portal>
 
 <svelte:window bind:scrollY={scroll.page} />

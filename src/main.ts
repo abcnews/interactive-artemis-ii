@@ -8,9 +8,6 @@ import { isMount, getMountValue, selectMounts } from "@abcnews/mount-utils";
 
 let app: any;
 
-const mounts = selectMounts("spacer");
-console.log(mounts);
-
 async function waitForOdysseyWithTimeout() {
   return Timeout.wrap(
     whenOdysseyLoaded,
