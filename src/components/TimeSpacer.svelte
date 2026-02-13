@@ -3,12 +3,12 @@
 
 <style lang="scss">
   :global {
-    .Main > .Block.is-piecemeal > .Block-content > :first-child {
+    .Block.is-piecemeal > .Block-content > :first-child {
       margin-top: 0px !important;
       margin-bottom: 0px !important;
     }
 
-    .Main > .Block.is-piecemeal > .Block-content:nth-child(2) > p:first-child {
+    .Block.is-piecemeal > .Block-content:nth-child(2) > p:first-child {
       margin-top: 0vh !important;
     }
 
@@ -25,7 +25,10 @@
       display: grid;
       align-items: start;
       min-height: unset !important;
-      grid-template-rows: 200px; // <---- adjust and add more dynamically later
+      grid-template-rows: minmax(2px, auto) minmax(50px, auto) minmax(2px, auto) minmax(
+          5px,
+          auto
+        );
     }
   }
 </style>
