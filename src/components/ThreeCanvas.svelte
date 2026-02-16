@@ -2,6 +2,7 @@
   import { Canvas, T } from "@threlte/core";
   import Scene from "./ThreeScene.svelte";
   import Sphere from "./Sphere.svelte";
+  import CanvasPortalTarget from '~/src/components/CanvasPortalTarget.svelte'
 </script>
 
 <div class="stage-root">
