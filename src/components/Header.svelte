@@ -1,4 +1,14 @@
-<script lang="ts"></script>
+<script lang="ts">
+  import Headline from "./Headline.svelte";
+  import { onMount } from "svelte";
+
+  let headline: HTMLElement | null;
+
+  onMount(() => {
+    headline = document.querySelector<HTMLElement>(".Header-content h1");
+      console.log(headline);
+  });
+</script>
 
 <style lang="scss">
   :global {
@@ -18,6 +28,7 @@
           font-weight: 900;
           font-style: normal;
           overflow-wrap: break-word;
+          opacity: 0;
         }
       }
 

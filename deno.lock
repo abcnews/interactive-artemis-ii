@@ -19,6 +19,7 @@
     "npm:three@0.182": "0.182.0",
     "npm:typescript@~5.9.3": "5.9.3",
     "npm:vite-plugin-script-loader@^0.0.4": "0.0.4_rollup@4.57.1_vite@7.3.1__@types+node@24.10.13__sass-embedded@1.97.3__picomatch@4.0.3_@types+node@24.10.13_sass-embedded@1.97.3",
+    "npm:vite-tsconfig-paths@^6.1.1": "6.1.1_vite@7.3.1__@types+node@24.10.13__sass-embedded@1.97.3__picomatch@4.0.3_typescript@5.9.3_@types+node@24.10.13_sass-embedded@1.97.3",
     "npm:vite@^7.3.1": "7.3.1_@types+node@24.10.13_sass-embedded@1.97.3_picomatch@4.0.3"
   },
   "npm": {
@@ -547,6 +548,12 @@
     "colorjs.io@0.5.2": {
       "integrity": "sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw=="
     },
+    "debug@4.4.3": {
+      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+      "dependencies": [
+        "ms"
+      ]
+    },
     "deepmerge@4.3.1": {
       "integrity": "sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A=="
     },
@@ -621,6 +628,9 @@
       "os": ["darwin"],
       "scripts": true
     },
+    "globrex@0.1.2": {
+      "integrity": "sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg=="
+    },
     "has-flag@4.0.0": {
       "integrity": "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ=="
     },
@@ -669,6 +679,9 @@
     },
     "mri@1.2.0": {
       "integrity": "sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA=="
+    },
+    "ms@2.1.3": {
+      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
     },
     "nanoid@3.3.11": {
       "integrity": "sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==",
@@ -996,6 +1009,16 @@
     "troika-worker-utils@0.52.0": {
       "integrity": "sha512-W1CpvTHykaPH5brv5VHLfQo9D1OYuo0cSBEUQFFT/nBUzM8iD6Lq2/tgG/f1OelbAS1WtaTPQzE5uM49egnngw=="
     },
+    "tsconfck@3.1.6_typescript@5.9.3": {
+      "integrity": "sha512-ks6Vjr/jEw0P1gmOVwutM3B7fWxoWBL2KRDb1JfqGVawBmO5UsvmWOQFGHBPl5yxYz4eERr19E6L7NMv+Fej4w==",
+      "dependencies": [
+        "typescript"
+      ],
+      "optionalPeers": [
+        "typescript"
+      ],
+      "bin": true
+    },
     "tslib@2.8.1": {
       "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
     },
@@ -1017,6 +1040,15 @@
       "dependencies": [
         "hash-sum",
         "rollup",
+        "vite"
+      ]
+    },
+    "vite-tsconfig-paths@6.1.1_vite@7.3.1__@types+node@24.10.13__sass-embedded@1.97.3__picomatch@4.0.3_typescript@5.9.3_@types+node@24.10.13_sass-embedded@1.97.3": {
+      "integrity": "sha512-2cihq7zliibCCZ8P9cKJrQBkfgdvcFkOOc3Y02o3GWUDLgqjWsZudaoiuOwO/gzTzy17cS5F7ZPo4bsnS4DGkg==",
+      "dependencies": [
+        "debug",
+        "globrex",
+        "tsconfck",
         "vite"
       ]
     },
@@ -1078,6 +1110,7 @@
         "npm:three@0.182",
         "npm:typescript@~5.9.3",
         "npm:vite-plugin-script-loader@^0.0.4",
+        "npm:vite-tsconfig-paths@^6.1.1",
         "npm:vite@^7.3.1"
       ]
     }

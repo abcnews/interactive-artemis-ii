@@ -5,10 +5,7 @@
     "target": "ES2022",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "types": [
-      "svelte",
-      "vite/client"
-    ],
+    "types": ["svelte", "vite/client"],
     /**
      * Typecheck JS in `.svelte` and `.js` files by default.
      * Disable checkJs if you'd like to use dynamic types in JS.
@@ -19,11 +16,12 @@
     "checkJs": true,
     "moduleDetection": "force",
     "composite": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "paths": {
+      "@src/*": ["./src/*"],
+      "@lib/*": ["./src/lib/*"],
+      "~/*": ["./*"]
+    }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.svelte"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }
