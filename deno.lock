@@ -12,6 +12,7 @@
     "npm:@types/node@^24.10.13": "24.10.13",
     "npm:@types/three@0.182": "0.182.0",
     "npm:await-timeout@^1.1.1": "1.1.1",
+    "npm:effect@^3.19.17": "3.19.17",
     "npm:sass-embedded@^1.97.3": "1.97.3",
     "npm:svelte-check@^4.3.6": "4.3.6_svelte@5.50.1__acorn@8.15.0_typescript@5.9.3",
     "npm:svelte-portal@^2.2.1": "2.2.1",
@@ -413,6 +414,9 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
+    "@standard-schema/spec@1.0.0": {
+      "integrity": "sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA=="
+    },
     "@sveltejs/acorn-typescript@1.0.8_acorn@8.15.0": {
       "integrity": "sha512-esgN+54+q0NjB0Y/4BomT9samII7jGwNy/2a3wNZbT2A2RpmXsXwUt24LvLhx6jUq2gVk4cWEvcRO6MFQbOfNA==",
       "dependencies": [
@@ -569,6 +573,13 @@
     "earcut@2.2.4": {
       "integrity": "sha512-/pjZsA1b4RPHbeWZQn66SWS8nZZWLQQ23oE3Eam7aroEFGEvwKAsJfZ9ytiEMycfzXWpca4FA9QIOehf7PocBQ=="
     },
+    "effect@3.19.17": {
+      "integrity": "sha512-MChgn9z0y3KJ2DJ+VsZt1bdVDJ0bDIZt9zm4s3iPpRLzgcEGDOIP8pwADjAWifaP0S672nlRE5rZPBbyDcjn1g==",
+      "dependencies": [
+        "@standard-schema/spec",
+        "fast-check"
+      ]
+    },
     "esbuild@0.27.3": {
       "integrity": "sha512-8VwMnyGCONIs6cWue2IdpHxHnAjzxnw2Zr7MkVxB2vjmQ2ivqGFb4LEG3SMnv0Gb2F/G/2yA8zUaiL1gywDCCg==",
       "optionalDependencies": [
@@ -609,6 +620,12 @@
       "integrity": "sha512-8fOS+GIGCQZl/ZIlhl59htOlms6U8NvX6ZYgYHpRU/b6tVSh3uHkOHZikl3D4cMbYM0JlpBe+p/BkZEi8J9XIQ==",
       "dependencies": [
         "@jridgewell/sourcemap-codec"
+      ]
+    },
+    "fast-check@3.23.2": {
+      "integrity": "sha512-h5+1OzzfCC3Ef7VbtKdcv7zsstUQwUDlYpUTvjeUsJAssPgLn7QzbboPtL5ro04Mq0rPOsMzl7q5hIbRs2wD1A==",
+      "dependencies": [
+        "pure-rand"
       ]
     },
     "fdir@6.5.0_picomatch@4.0.3": {
@@ -706,6 +723,9 @@
         "picocolors",
         "source-map-js"
       ]
+    },
+    "pure-rand@6.1.0": {
+      "integrity": "sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA=="
     },
     "readdirp@4.1.2": {
       "integrity": "sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg=="
@@ -1103,6 +1123,7 @@
         "npm:@types/node@^24.10.13",
         "npm:@types/three@0.182",
         "npm:await-timeout@^1.1.1",
+        "npm:effect@^3.19.17",
         "npm:sass-embedded@^1.97.3",
         "npm:svelte-check@^4.3.6",
         "npm:svelte-portal@^2.2.1",

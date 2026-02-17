@@ -1,19 +1,26 @@
 <script lang="ts">
+  // Component imports
   import Portal from "svelte-portal";
   import Header from "./components/Header.svelte";
-  import Stage from "./components/Stage.svelte";
+  import BackgroundStage from "./components/BackgroundStage.svelte";
   import Timeline from "./components/Timeline.svelte";
+  import TimeSpacer from "./components/TimeSpacer.svelte";
+  import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
+
+  // Stores
+  import { scroll } from "./stores/scroll.svelte";
+
+  // Utilities
   import {
     loadDarkModeObserver,
     unloadDarkModeObserver,
     setMode,
   } from "./lib/darkModeSwitcher";
-  import TimeSpacer from "./components/TimeSpacer.svelte";
 
-  import { scroll } from "./stores/scroll.svelte";
-
+  // Other imports
   import { onMount } from "svelte";
 
+  // Component props
   let { testing }: { testing: boolean } = $props();
 
   $effect(() => {
@@ -22,6 +29,8 @@
     loadDarkModeObserver();
     return () => unloadDarkModeObserver();
   });
+
+  
 </script>
 
 <Portal target=".Header">
@@ -29,16 +38,18 @@
 </Portal>
 
 <Portal target="[data-key='body']">
-  <Stage></Stage>
+  <BackgroundStage></BackgroundStage>
 </Portal>
 
-<Portal target="#timelinemount">
+<UtilTransformSpacers />
+
+<!-- <Portal target="#timelinemount">
   <Timeline></Timeline>
-</Portal>
+</Portal> -->
 
-<Portal>
+<!-- <Portal>
   <TimeSpacer containerKey="spacer"></TimeSpacer>
-</Portal>
+</Portal> -->
 
 <svelte:window bind:scrollY={scroll.page} />
 

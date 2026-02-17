@@ -10,7 +10,7 @@
   });
 </script>
 
-<Headline />
+<!-- <Headline /> -->
 
 <style lang="scss">
   :global {
@@ -30,7 +30,6 @@
           font-weight: 900;
           font-style: normal;
           overflow-wrap: break-word;
-          opacity: 0;
         }
       }
 
@@ -42,6 +41,7 @@
 
       .Header-byline > ul {
         justify-content: center;
+        margin-top: 3em !important;
       }
 
       .Header-meta > div {

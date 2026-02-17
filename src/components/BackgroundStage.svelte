@@ -8,7 +8,7 @@
 <div class="stage-root">
   <!-- <Rocket /> -->
   <!-- <Rocket3D /> -->
-  <Stars />
+  <!-- <Stars /> -->
   <ThreeCanvas />
 </div>
 
