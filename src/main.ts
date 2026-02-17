@@ -27,5 +27,13 @@ const init = async () => {
 
 init();
 
+const program = Effect.sync(() => {
+  console.log("Hello, World!");
+  return 1;
+});
+
+const result = Effect.runSync(program);
+
+console.log("exit code:", result);
 
 export default app;
