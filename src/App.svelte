@@ -15,7 +15,6 @@
   import { onMount } from "svelte";
 
   let { testing }: { testing: boolean } = $props();
-  console.log(testing);
 
   $effect(() => {
     /* Auto dark mode for Odyssey */

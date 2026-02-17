@@ -6,9 +6,11 @@
 
   onMount(() => {
     headline = document.querySelector<HTMLElement>(".Header-content h1");
-      console.log(headline);
+    console.log(headline);
   });
 </script>
+
+<Headline />
 
 <style lang="scss">
   :global {
