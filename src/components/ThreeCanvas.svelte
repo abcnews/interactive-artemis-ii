@@ -4,19 +4,28 @@
   import Sphere from "./Sphere.svelte";
   import CanvasPortalTarget from "~/src/components/CanvasPortalTarget.svelte";
   import * as THREE from "three";
+  import { Spring } from "svelte/motion";
 
   import type { Snippet } from "svelte";
+
+  import { scroll } from "../stores/scroll.svelte";
+
+  const pos = new Spring(1);
+
+  $effect(() => {
+    pos.target = scroll.page / 300;
+  });
 </script>
 
 <div class="stage-root">
   <Canvas>
     <T.PerspectiveCamera
       makeDefault
-      position={[0, 0, 10]}
+      position={[1, pos.current - 20, 3]}
       oncreate={(ref) => {
-        ref.lookAt(0, 4, 0);
+        ref.lookAt(4, 0, 0);
       }}
-      fov={60}
+      fov={90}
       near={0.01}
       far={1000}
     ></T.PerspectiveCamera>

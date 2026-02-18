@@ -49,9 +49,3 @@
     </T.Mesh>
   {/snippet}
 </Align>
-
-<!-- <Environment url="/textures/equirectangular/hdr/shanghai_riverside_1k.hdr" /> -->
-
-<!-- <T.PerspectiveCamera makeDefault position.y={0} position.z={20} fov={90}>
-  <OrbitControls enableDamping enablePan={false} enableZoom={false} />
-</T.PerspectiveCamera> -->
