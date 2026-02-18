@@ -27,7 +27,16 @@
   import { onMount } from "svelte";
 
   // Component props
-  let { testing }: { testing: boolean } = $props();
+  type AppProps = {
+    prefersColorScheme: any;
+  };
+
+  let { prefersColorScheme }: AppProps = $props();
+  let isABC = $derived(getApplication() !== null ? true : false);
+
+  $effect(() => {
+    console.log($prefersColorScheme);
+  });
 
   function initAutoDarkMode() {
     /* Auto dark mode for Odyssey */
@@ -36,12 +45,12 @@
     return () => unloadDarkModeObserver();
   }
 
-  $effect(() => {
-    getApplication() !== null && initAutoDarkMode();
+  onMount(() => {
+    isABC && initAutoDarkMode();
   });
 </script>
 
-{#if getApplication() !== null}
+{#if isABC}
   <Portal target={".Header"}>
     <Header></Header>
   </Portal>
