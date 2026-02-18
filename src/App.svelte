@@ -6,6 +6,12 @@
   import Timeline from "./components/Timeline.svelte";
   import TimeSpacer from "./components/TimeSpacer.svelte";
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
+  import {
+    getApplication,
+    getGeneration,
+    getTier,
+    whenOdysseyLoaded,
+  } from "@abcnews/env-utils";
 
   // Stores
   import { scroll } from "./stores/scroll.svelte";
@@ -23,33 +29,31 @@
   // Component props
   let { testing }: { testing: boolean } = $props();
 
-  $effect(() => {
+  function initAutoDarkMode() {
     /* Auto dark mode for Odyssey */
     setMode(document.body.getAttribute("data-scheme") as string);
     loadDarkModeObserver();
     return () => unloadDarkModeObserver();
-  });
+  }
 
-  
+  $effect(() => {
+    getApplication() !== null && initAutoDarkMode();
+  });
 </script>
 
-<Portal target=".Header">
-  <Header></Header>
-</Portal>
+{#if getApplication() !== null}
+  <Portal target={".Header"}>
+    <Header></Header>
+  </Portal>
 
-<Portal target="[data-key='body']">
-  <BackgroundStage></BackgroundStage>
-</Portal>
+  <Portal target="[data-key='body']">
+    <BackgroundStage></BackgroundStage>
+  </Portal>
 
-<UtilTransformSpacers />
-
-<!-- <Portal target="#timelinemount">
-  <Timeline></Timeline>
-</Portal> -->
-
-<!-- <Portal>
-  <TimeSpacer containerKey="spacer"></TimeSpacer>
-</Portal> -->
+  <UtilTransformSpacers />
+{:else}
+  <p>This web app needs to be attached to an ABC News CoreMedia article.</p>
+{/if}
 
 <svelte:window bind:scrollY={scroll.page} />
 

@@ -2,10 +2,9 @@ import { mount } from "svelte";
 import "./app.css";
 
 import App from "./App.svelte";
-import { whenOdysseyLoaded } from "@abcnews/env-utils";
+import { getApplication, whenOdysseyLoaded } from "@abcnews/env-utils";
 import Timeout from "await-timeout";
 import { isMount, getMountValue, selectMounts } from "@abcnews/mount-utils";
-import { Effect, Console } from "effect";
 
 let app: any;
 
@@ -26,14 +25,5 @@ const init = async () => {
 };
 
 init();
-
-const program = Effect.sync(() => {
-  console.log("Hello, World!");
-  return 1;
-});
-
-const result = Effect.runSync(program);
-
-console.log("exit code:", result);
 
 export default app;

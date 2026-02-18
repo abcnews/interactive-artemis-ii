@@ -17,17 +17,16 @@ Utility component to add spacing in the DOM
       includeOwnUsed: true,
     });
 
-    function processSpacers(spacers: Mount[], index = 0) {
+    function processSpacers([first, ...rest]: Mount[]) {
       // Base case: if we've processed all spacers, return
-      if (index >= spacers.length) {
+      if (!first) {
         return;
       }
 
       // Process current spacer
-      const spacer = spacers[index];
-      const values = getMountValue(spacer);
+      const values = getMountValue(first);
       const parsedValues = parse(values);
-      const spacerHTMLElement = spacer as unknown as HTMLElement;
+      const spacerHTMLElement = first as unknown as HTMLElement;
       const gap = parsedValues.gap;
 
       console.log(parsedValues);
@@ -39,7 +38,7 @@ Utility component to add spacing in the DOM
       );
 
       // Recursive case: process next spacer
-      processSpacers(spacers, index + 1);
+      processSpacers(rest);
     }
 
     processSpacers(spacers);
