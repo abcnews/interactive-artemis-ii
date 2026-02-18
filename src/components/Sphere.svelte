@@ -15,7 +15,7 @@
   const scale = new Spring(1);
 
   $effect(() => {
-    scale.target = scroll.page / 80000;
+    // scale.target = scroll.page / 80000;
   });
 </script>
 

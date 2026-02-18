@@ -1,5 +1,5 @@
 <script lang="ts">
-  import backgroundVideo from "~/src/assets/Overview 01-1_ProRes4444_16x9-1-hevc-safari.mp4?url";
+  import backgroundVideo from "~/src/assets/Overview 01-1_ProRes4444_16x9-1-vp9-chrome.webm?url";
 </script>
 
 <video

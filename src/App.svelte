@@ -12,6 +12,7 @@
     getTier,
     whenOdysseyLoaded,
   } from "@abcnews/env-utils";
+  import { type Readable } from "svelte/store";
 
   // Stores
   import { scroll } from "./stores/scroll.svelte";
@@ -27,8 +28,8 @@
   import { onMount } from "svelte";
 
   // Component props
-  type AppProps = {
-    prefersColorScheme: any;
+  export type AppProps = {
+    prefersColorScheme: Readable<string>;
   };
 
   let { prefersColorScheme }: AppProps = $props();
