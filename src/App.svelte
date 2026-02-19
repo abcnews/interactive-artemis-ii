@@ -41,16 +41,14 @@
 
   function initAutoDarkMode() {
     /* Auto dark mode for Odyssey */
-    // setMode(document.body.getAttribute("data-scheme") as string);
-
-    // Dark mode default forced for now
-    setMode("dark");
+    setMode(document.body.getAttribute("data-scheme") as string);
     loadDarkModeObserver();
     return () => unloadDarkModeObserver();
   }
 
   onMount(() => {
-    isABC && initAutoDarkMode();
+    // No dark mode for now
+    // isABC && initAutoDarkMode();
   });
 </script>
 

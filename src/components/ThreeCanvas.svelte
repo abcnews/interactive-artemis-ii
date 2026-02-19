@@ -1,10 +1,13 @@
 <script lang="ts">
   import { Canvas, T } from "@threlte/core";
-  import Scene from "./ThreeScene.svelte";
+  import Block from "./ThreeBlock.svelte";
   import Sphere from "./Sphere.svelte";
+  import Aremis3D from "./Aremis3D.svelte";
   import CanvasPortalTarget from "~/src/components/CanvasPortalTarget.svelte";
+
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
+
 
   import type { Snippet } from "svelte";
 
@@ -47,8 +50,11 @@
       <T.PointsMaterial size={0.1} color="#ffffff" />
     </T.Points>
 
-    <Scene />
+    <Block />
     <Sphere />
+    <Aremis3D />
+
+    <!-- Portal Threlte components into a single canvas -->
     <CanvasPortalTarget />
   </Canvas>
 </div>

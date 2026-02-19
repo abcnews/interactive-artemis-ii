@@ -1,7 +1,6 @@
 <script lang="ts">
   import HeaderText from "./HeaderText.svelte";
   import { Canvas, T } from "@threlte/core";
-  import Scene from "./ThreeScene.svelte";
   import Sphere from "./Sphere.svelte";
   import CanvasPortalTarget from "~/src/components/CanvasPortalTarget.svelte";
   import { Text } from "@threlte/extras";
