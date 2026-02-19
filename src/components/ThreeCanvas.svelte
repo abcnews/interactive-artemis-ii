@@ -31,6 +31,7 @@
     ></T.PerspectiveCamera>
 
     <T.DirectionalLight position={[0, 10, 10]} />
+    <T.AmbientLight intensity={0.15} />
 
     <T.Points>
       <T.BufferGeometry

@@ -1,15 +1,16 @@
 /* Font imports */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 
 /* Default (light) theme */
 :root {
-  --interactive-color-header: #3e5f70;
-  --interactive-color-background: #eee;
-  
+  --interactive-color-header: hsl(195, 25%, 78%);
+  --interactive-color-background: #1a1a1a;
+  --od-colour-text-primary: #8f2929;
 }
 
 /* Dark theme using class */
 :root.is-dark-mode {
   --interactive-color-header: hsl(195, 25%, 78%);
   --interactive-color-background: #1a1a1a;
+  --od-colour-text-primary: #3623b4;
 }
