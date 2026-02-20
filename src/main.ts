@@ -1,9 +1,8 @@
-import { mount } from "svelte";
+// Global CSS styles
 import "./app.css";
-import type { Component, SvelteComponent } from "svelte";
-import { type Readable } from "svelte/store";
 
-import App from "./App.svelte";
+// General imports
+import { mount } from "svelte";
 import {
   getApplication,
   whenOdysseyLoaded,
@@ -13,19 +12,22 @@ import Timeout from "await-timeout";
 import { isMount, getMountValue, selectMounts } from "@abcnews/mount-utils";
 import type { ComponentProps } from "svelte";
 
+// Component imports
+import App from "./App.svelte";
+
+const props: ComponentProps<typeof App> = {
+  prefersColorScheme,
+};
+
 let app;
 
 async function waitForOdysseyWithTimeout() {
   return Timeout.wrap(
     whenOdysseyLoaded,
-    1000,
+    5000,
     "Timed out waiting for Odyssey to load",
   );
 }
-
-const props: ComponentProps<typeof App> = {
-  prefersColorScheme,
-};
 
 const init = async () => {
   await waitForOdysseyWithTimeout();

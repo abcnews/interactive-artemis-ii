@@ -47,8 +47,6 @@
         display: grid;
         align-items: start;
         min-height: unset !important;
-        // grid-auto-rows: minmax(200px, auto);
-        // grid-template-rows: var(--grid-template-rows);
       }
     }
   }
