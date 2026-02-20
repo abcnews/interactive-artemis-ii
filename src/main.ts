@@ -11,7 +11,7 @@ import {
 } from "@abcnews/env-utils";
 import Timeout from "await-timeout";
 import { isMount, getMountValue, selectMounts } from "@abcnews/mount-utils";
-import { type AppProps } from "./App.svelte";
+import type { ComponentProps } from "svelte";
 
 let app;
 
@@ -23,7 +23,7 @@ async function waitForOdysseyWithTimeout() {
   );
 }
 
-const props: AppProps = {
+const props: ComponentProps<typeof App> = {
   prefersColorScheme,
 };
 

@@ -1,3 +1,7 @@
+<!--
+  The main app component
+-->
+
 <script lang="ts">
   // Component imports
   import Portal from "svelte-portal";
@@ -68,26 +72,4 @@
 
 <svelte:window bind:scrollY={scroll.page} />
 
-<style lang="scss">
-  :global {
-    /*
-      Odyssey overrides
-     */
-
-    /* Remove long panel transitions */
-    .Block-content[class*="u-richtext"] > *::before {
-      transition: unset !important;
-    }
-
-    /* 
-      Fix extended margins on 2nd panel if no embedded media
-      https://github.com/abcnews/odyssey/issues/99
-     */
-    // .Main > .Block.is-piecemeal > .Block-content > :first-child {
-    //   margin-top: 40vh !important;
-    // }
-    .Main > .Block.is-piecemeal > .Block-content:nth-child(2) > :first-child {
-      margin-top: 40vh !important;
-    }
-  }
-</style>
+<style lang="scss"></style>

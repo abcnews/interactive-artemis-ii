@@ -14,3 +14,20 @@
   --interactive-color-background: #1a1a1a;
   --od-colour-text-primary: #3623b4;
 }
+
+/*
+  Odyssey overrides
+ */
+
+/* Remove long panel transitions */
+.Block-content[class*="u-richtext"] > *::before {
+  transition: unset !important;
+}
+
+/*
+  Fix extended margins on 2nd panel if no embedded media
+  https://github.com/abcnews/odyssey/issues/99
+ */
+.Main > .Block.is-piecemeal > .Block-content:nth-child(2) > :first-child {
+  margin-top: 40vh !important;
+}

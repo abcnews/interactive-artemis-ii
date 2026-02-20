@@ -8,15 +8,10 @@
 </script>
 
 <div class="stage-root">
-  <!-- <Rocket /> -->
-  <!-- <Rocket3D /> -->
-  <!-- <Stars /> -->
   <ThreeCanvas />
-  
     <div class="background-video" style:opacity={scroll.page < 1000 ? 1 : 0}>
       <VideoBackground />
     </div>
-  
 </div>
 
 <style lang="scss">
