@@ -15,30 +15,29 @@ jobs:
       - name: Set up Deno
         uses: denoland/setup-deno@v2
         with:
-          cache: true
           deno-version: v2.x
       - name: Install deps
         run: deno install
       - name: Build app
         run: deno task build
 
+        # Deploy dist to GitHub Pages
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/  # built static site goes here
+
   deploy:
-      # Add a dependency to the build job
-      needs: build
+    runs-on: ubuntu-24.04
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
   
-      # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-      permissions:
-        pages: write      # to deploy to Pages
-        id-token: write   # to verify the deployment originates from an appropriate source
-  
-      # Deploy to the github-pages environment
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-  
-      # Specify runner + deployment step
-      runs-on: ubuntu-latest
-      steps:
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
