@@ -1,0 +1,33 @@
+/* Font imports */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+
+/* Default (light) theme */
+:root {
+  --interactive-color-header: hsl(195, 25%, 78%);
+  --interactive-color-background: #1a1a1a;
+  --od-colour-text-primary: #8f2929;
+}
+
+/* Dark theme using class */
+:root.is-dark-mode {
+  --interactive-color-header: hsl(195, 25%, 78%);
+  --interactive-color-background: #1a1a1a;
+  --od-colour-text-primary: #3623b4;
+}
+
+/*
+  Odyssey overrides
+ */
+
+/* Remove long panel transitions */
+.Block-content[class*="u-richtext"] > *::before {
+  transition: unset !important;
+}
+
+/*
+  Fix extended margins on 2nd panel if no embedded media
+  https://github.com/abcnews/odyssey/issues/99
+ */
+.Main > .Block.is-piecemeal > .Block-content:nth-child(2) > :first-child {
+  margin-top: 40vh !important;
+}
