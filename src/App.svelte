@@ -7,15 +7,8 @@
   import Portal from "svelte-portal";
   import Header from "./components/Header.svelte";
   import BackgroundStage from "./components/BackgroundStage.svelte";
-  import Timeline from "./components/Timeline.svelte";
-  import TimeSpacer from "./components/TimeSpacer.svelte";
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
-  import {
-    getApplication,
-    getGeneration,
-    getTier,
-    whenOdysseyLoaded,
-  } from "@abcnews/env-utils";
+  import { getApplication } from "@abcnews/env-utils";
   import { type Readable } from "svelte/store";
 
   // Stores
@@ -39,10 +32,6 @@
   let { prefersColorScheme }: AppProps = $props();
   let isABC = $derived(getApplication() !== null ? true : false);
 
-  $effect(() => {
-    console.log($prefersColorScheme);
-  });
-
   function initAutoDarkMode() {
     /* Auto dark mode for Odyssey */
     setMode(document.body.getAttribute("data-scheme") as string);
@@ -54,15 +43,19 @@
     // No dark mode for now
     // isABC && initAutoDarkMode();
   });
+
+  $effect(() => {
+    console.log(`Prefers color scheme: ${$prefersColorScheme}`);
+  });
 </script>
 
 {#if isABC}
   <Portal target={".Header"}>
-    <Header></Header>
+    <Header />
   </Portal>
 
   <Portal target="[data-key='body']">
-    <BackgroundStage></BackgroundStage>
+    <BackgroundStage />
   </Portal>
 
   <UtilTransformSpacers />

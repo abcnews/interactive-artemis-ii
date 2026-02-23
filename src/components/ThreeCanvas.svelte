@@ -3,11 +3,10 @@
   import Block from "./ThreeBlock.svelte";
   import Sphere from "./Sphere.svelte";
   import Aremis3D from "./Aremis3D.svelte";
-  import CanvasPortalTarget from "~/src/components/CanvasPortalTarget.svelte";
+  import { Portal, PortalTarget } from "@threlte/extras";
 
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
-
 
   import type { Snippet } from "svelte";
 
@@ -55,7 +54,8 @@
     <Aremis3D />
 
     <!-- Portal Threlte components into a single canvas -->
-    <CanvasPortalTarget />
+    <!-- <CanvasPortalTarget /> -->
+    <PortalTarget></PortalTarget>
   </Canvas>
 </div>
 

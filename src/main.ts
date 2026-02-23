@@ -1,16 +1,23 @@
+/*
+
+Main interactive entry-point
+
+*/
+
 // Global CSS styles
 import "./app.css";
+
+// Type imports
+import type { ComponentProps } from "svelte";
 
 // General imports
 import { mount } from "svelte";
 import {
-  getApplication,
   whenOdysseyLoaded,
   prefersColorScheme,
 } from "@abcnews/env-utils";
 import Timeout from "await-timeout";
-import { isMount, getMountValue, selectMounts } from "@abcnews/mount-utils";
-import type { ComponentProps } from "svelte";
+
 
 // Component imports
 import App from "./App.svelte";
@@ -19,7 +26,7 @@ const props: ComponentProps<typeof App> = {
   prefersColorScheme,
 };
 
-let app;
+let app: any;
 
 async function waitForOdysseyWithTimeout() {
   return Timeout.wrap(
