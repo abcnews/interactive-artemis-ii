@@ -26,7 +26,7 @@ const props: ComponentProps<typeof App> = {
   prefersColorScheme,
 };
 
-let app: any;
+let app;
 
 async function waitForOdysseyWithTimeout() {
   return Timeout.wrap(

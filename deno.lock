@@ -1,6 +1,7 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@valibot/valibot@^1.2.0": "1.2.0",
     "npm:@abcnews/alternating-case-to-object@^3.2.0": "3.2.0",
     "npm:@abcnews/env-utils@6": "6.0.0",
     "npm:@abcnews/mount-utils@3": "3.0.0",
@@ -19,9 +20,15 @@
     "npm:svelte@^5.50.1": "5.50.1_acorn@8.15.0",
     "npm:three@0.182": "0.182.0",
     "npm:typescript@~5.9.3": "5.9.3",
+    "npm:valibot@^1.2.0": "1.2.0_typescript@5.9.3",
     "npm:vite-plugin-script-loader@^0.0.4": "0.0.4_rollup@4.57.1_vite@7.3.1__@types+node@24.10.13__sass-embedded@1.97.3__picomatch@4.0.3_@types+node@24.10.13_sass-embedded@1.97.3",
     "npm:vite-tsconfig-paths@^6.1.1": "6.1.1_vite@7.3.1__@types+node@24.10.13__sass-embedded@1.97.3__picomatch@4.0.3_typescript@5.9.3_@types+node@24.10.13_sass-embedded@1.97.3",
     "npm:vite@^7.3.1": "7.3.1_@types+node@24.10.13_sass-embedded@1.97.3_picomatch@4.0.3"
+  },
+  "jsr": {
+    "@valibot/valibot@1.2.0": {
+      "integrity": "61c118a4d027ed55912caf381c78f0a178f335f46ad0c4bcb136498dc1ef2285"
+    }
   },
   "npm": {
     "@abcnews/alternating-case-to-object@3.2.0": {
@@ -1052,6 +1059,15 @@
     "undici-types@7.16.0": {
       "integrity": "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="
     },
+    "valibot@1.2.0_typescript@5.9.3": {
+      "integrity": "sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==",
+      "dependencies": [
+        "typescript"
+      ],
+      "optionalPeers": [
+        "typescript"
+      ]
+    },
     "varint@6.0.0": {
       "integrity": "sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg=="
     },
@@ -1110,6 +1126,9 @@
     }
   },
   "workspace": {
+    "dependencies": [
+      "jsr:@valibot/valibot@^1.2.0"
+    ],
     "packageJson": {
       "dependencies": [
         "npm:@abcnews/alternating-case-to-object@^3.2.0",
@@ -1130,6 +1149,7 @@
         "npm:svelte@^5.50.1",
         "npm:three@0.182",
         "npm:typescript@~5.9.3",
+        "npm:valibot@^1.2.0",
         "npm:vite-plugin-script-loader@^0.0.4",
         "npm:vite-tsconfig-paths@^6.1.1",
         "npm:vite@^7.3.1"

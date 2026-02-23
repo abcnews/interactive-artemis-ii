@@ -1,6 +1,5 @@
 <script lang="ts">
   import Rocket from "./Rocket.svelte";
-  import Stars from "./Stars.svelte";
   import ThreeCanvas from "./ThreeCanvas.svelte";
   import VideoBackground from "./VideoBackground.svelte";
   import { scroll } from "~/src/stores/scroll.svelte";

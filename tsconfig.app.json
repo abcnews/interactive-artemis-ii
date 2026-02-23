@@ -18,8 +18,8 @@
     "composite": true,
     "emitDeclarationOnly": true,
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./*"],
     },
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
 }

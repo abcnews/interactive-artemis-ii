@@ -10,7 +10,18 @@ Utility component to add spacing in the DOM
     selectMounts,
     type Mount,
   } from "@abcnews/mount-utils";
-  import { parse } from "@abcnews/alternating-case-to-object";
+  import { parse as parseA2O } from "@abcnews/alternating-case-to-object";
+  import * as v from "valibot";
+
+  const ParsedSchema = v.object({
+    gap: v.number(),
+  });
+
+  type ParsedData = v.InferOutput<typeof ParsedSchema>;
+
+  function getParsedData(data: unknown): ParsedData {
+    return v.parse(ParsedSchema, data);
+  }
 
   function processSpacers([first, ...rest]: Mount[]) {
     if (!first) {
@@ -20,7 +31,7 @@ Utility component to add spacing in the DOM
 
     // Process current spacer
     const values = getMountValue(first);
-    const parsedValues = parse(values);
+    const parsedValues = getParsedData(parseA2O(values));
     const spacerHTMLElement = first as unknown as HTMLElement;
     const gap = parsedValues.gap;
 
