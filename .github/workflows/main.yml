@@ -16,7 +16,7 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           cache: true
-          deno-version: v2.1.x
+          deno-version: v2.x
       - name: Install deps
         run: deno install
       - name: Build app
