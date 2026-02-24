@@ -5,19 +5,27 @@
 :root {
   --interactive-color-header: hsl(0, 100%, 100%);
   --interactive-color-background: hsla(0, 0%, 6%, 1);
-  --od-colour-text-primary: #8f2929;
+
+  /* Panels */
+  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 1);
+  --interactive-panel-background: hsla(0, 0%, 94%, 0.8);
 }
 
 /* Dark theme using class */
 :root.is-dark-mode {
   --interactive-color-header: hsl(0, 100%, 100%);
-  --interactive-color-background: hsla(0, 0%, 6%, 1);
-  --od-colour-text-primary: #3623b4;
+  --interactive-color-background: hsla(0, 0%, 6%, 0.8);
+
+  /* Panels */
+  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 1);
+  --interactive-panel-background: hsla(0, 0%, 6%, 0.8);
 }
 
 [data-key="panel"] {
-  border: 1px solid white;
+  border: var(--interactive-panel-border);
   border-radius: 12px;
+  background-color: var(--interactive-panel-background);
+  backdrop-filter: blur(10px);
 }
 
 /*
