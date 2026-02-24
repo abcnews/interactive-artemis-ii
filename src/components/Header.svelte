@@ -34,14 +34,38 @@
         text-align: center;
       }
 
+      .Header-byline {
+        text-align: center;
+        color: white;
+
+        ul * {
+          color: hsla(215, 64%, 89%, 1) !important;
+        }
+
+        ul a {
+          background-color: rgba(71, 81, 98, 0.6) !important;
+        }
+      }
+
       .Header-byline > ul {
         justify-content: center;
         margin-top: 3em !important;
+      }
+
+      .Header-meta * {
+        color: hsla(215, 64%, 89%, 1);
       }
 
       .Header-meta > div {
         justify-content: center;
       }
     }
+
+    /* html:not(.is-dark-mode) {
+      .Header-content {
+        background-color: grey;
+        border-radius: 16px;
+      }
+    } */
   }
 </style>

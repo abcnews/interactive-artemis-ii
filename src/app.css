@@ -4,15 +4,20 @@
 /* Default (light) theme */
 :root {
   --interactive-color-header: hsl(0, 100%, 100%);
-  --interactive-color-background: #1a1a1a;
+  --interactive-color-background: hsla(0, 0%, 6%, 1);
   --od-colour-text-primary: #8f2929;
 }
 
 /* Dark theme using class */
 :root.is-dark-mode {
   --interactive-color-header: hsl(0, 100%, 100%);
-  --interactive-color-background: #1a1a1a;
+  --interactive-color-background: hsla(0, 0%, 6%, 1);
   --od-colour-text-primary: #3623b4;
+}
+
+[data-key="panel"] {
+  border: 1px solid white;
+  border-radius: 12px;
 }
 
 /*

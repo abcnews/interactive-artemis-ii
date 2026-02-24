@@ -16,6 +16,8 @@
   // Stores
   import { scroll } from "./stores/scroll.svelte";
 
+  $inspect(scroll.currentSection);
+
   // Utilities
   import {
     loadDarkModeObserver,
@@ -36,14 +38,15 @@
 
   function initAutoDarkMode() {
     /* Auto dark mode for Odyssey */
-    setMode(document.body.getAttribute("data-scheme") as string);
+    // setMode(document.body.getAttribute("data-scheme") as string);
+    setMode("dark");
     loadDarkModeObserver();
     return () => unloadDarkModeObserver();
   }
 
   onMount(() => {
     // No dark mode for now
-    // isABC && initAutoDarkMode();
+    isABC && initAutoDarkMode();
   });
 </script>
 

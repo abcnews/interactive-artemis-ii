@@ -33,6 +33,7 @@
     "effect": "^3.19.17",
     "eslint-plugin-neverthrow": "^1.1.4",
     "neverthrow": "^8.2.0",
+    "svelte-inview": "^4.0.4",
     "svelte-portal": "^2.2.1",
     "three": "^0.182.0",
     "valibot": "^1.2.0",
