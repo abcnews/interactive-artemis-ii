@@ -10,7 +10,7 @@
       const count = 100000;
       const pos = new Float32Array(count * 3);
       for (let i = 0; i < count * 3; i++) {
-        pos[i] = (Math.random() - 0.5) * 10000;
+        pos[i] = (Math.random() - 0.5) * 5000;
       }
       geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
     }}

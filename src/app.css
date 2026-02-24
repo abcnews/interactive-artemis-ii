@@ -3,14 +3,14 @@
 
 /* Default (light) theme */
 :root {
-  --interactive-color-header: hsl(195, 25%, 78%);
+  --interactive-color-header: hsl(0, 100%, 100%);
   --interactive-color-background: #1a1a1a;
   --od-colour-text-primary: #8f2929;
 }
 
 /* Dark theme using class */
 :root.is-dark-mode {
-  --interactive-color-header: hsl(195, 25%, 78%);
+  --interactive-color-header: hsl(0, 100%, 100%);
   --interactive-color-background: #1a1a1a;
   --od-colour-text-primary: #3623b4;
 }
@@ -19,10 +19,10 @@
   Odyssey overrides
  */
 
-/* Remove long panel transitions */
-.Block-content[class*="u-richtext"] > *::before {
-  transition: unset !important;
-}
+/*
+  NOTE: (No longer using Odyssey blocks
+  so some of these are probably unnecessary)
+ */
 
 /*
   Fix extended margins on 2nd panel if no embedded media
@@ -30,4 +30,9 @@
  */
 .Main > .Block.is-piecemeal > .Block-content:nth-child(2) > :first-child {
   margin-top: 40vh !important;
+}
+
+/* Remove long panel transitions */
+.Block-content[class*="u-richtext"] > *::before {
+  transition: unset !important;
 }

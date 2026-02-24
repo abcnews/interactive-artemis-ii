@@ -1,21 +1,17 @@
 <script lang="ts">
-  import Headline from "./Headline.svelte";
   import { onMount } from "svelte";
 
   let headline: HTMLElement | null;
 
   onMount(() => {
     headline = document.querySelector<HTMLElement>(".Header-content h1");
-    console.log(headline);
   });
 </script>
-
-<!-- <Headline /> -->
 
 <style lang="scss">
   :global {
     .Header {
-      height: 100dvh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -25,11 +21,10 @@
         margin-inline: 16px;
 
         h1 {
-          font-family: "Orbitron", sans-serif;
-          font-optical-sizing: auto;
+          font-family: abcsans, "fallback sans", sans-serif;
           font-weight: 900;
-          font-style: normal;
           overflow-wrap: break-word;
+          text-transform: uppercase;
         }
       }
 

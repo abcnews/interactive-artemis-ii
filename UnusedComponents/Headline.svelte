@@ -1,7 +1,6 @@
 <script lang="ts">
   import HeaderText from "./HeaderText.svelte";
   import { Canvas, T } from "@threlte/core";
-  import Sphere from "./Sphere.svelte";
   import { Text } from "@threlte/extras";
   import { Text3DGeometry } from "@threlte/extras";
 

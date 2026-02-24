@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Rocket from "./Rocket.svelte";
   import ThreeCanvas from "./ThreeCanvas.svelte";
   import VideoBackground from "./VideoBackground.svelte";
   import { scroll } from "~/src/stores/scroll.svelte";
@@ -7,7 +6,7 @@
 </script>
 
 <div class="stage-root">
-  <ThreeCanvas />
+  <!-- <ThreeCanvas /> -->
     <div class="background-video" style:opacity={scroll.page < 1000 ? 1 : 0}>
       <VideoBackground />
     </div>

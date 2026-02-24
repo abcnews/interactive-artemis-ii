@@ -1,14 +1,15 @@
 <script lang="ts">
   import { Canvas, T } from "@threlte/core";
-  import Block from "./ThreeBlock.svelte";
+  import { Spring } from "svelte/motion";
+
   import Sphere from "./Sphere.svelte";
   import Aremis3D from "./Aremis3D.svelte";
   import Starfield from "./Starfield.svelte";
 
-  import { Spring } from "svelte/motion";
-
+  // Stores
   import { scroll } from "../stores/scroll.svelte";
 
+  // Local state
   const position = new Spring(1);
 
   $effect(() => {
@@ -33,7 +34,6 @@
     <T.AmbientLight intensity={0.15} />
 
     <Starfield />
-    <Block />
     <Sphere />
     <Aremis3D />
   </Canvas>

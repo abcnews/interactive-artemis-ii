@@ -45,10 +45,6 @@
     // No dark mode for now
     // isABC && initAutoDarkMode();
   });
-
-  $effect(() => {
-    console.log(`Prefers color scheme: ${$prefersColorScheme}`);
-  });
 </script>
 
 {#if isABC}
