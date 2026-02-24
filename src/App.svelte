@@ -64,6 +64,6 @@
   <p>This web app needs to be attached to an ABC News CoreMedia article.</p>
 {/if}
 
-<svelte:window bind:scrollY={scroll.page} />
+<svelte:window bind:scrollY={scroll.pageScroll} />
 
 <style lang="scss"></style>

@@ -13,7 +13,7 @@
   const position = new Spring(1);
 
   $effect(() => {
-    position.target = scroll.page / 300;
+    position.target = scroll.pageScroll / 300;
   });
 </script>
 
