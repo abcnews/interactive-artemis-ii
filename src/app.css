@@ -28,6 +28,13 @@
   backdrop-filter: blur(10px);
 }
 
+#content > p,
+#content > h2,
+#content h3,
+#content ul {
+  color: white;
+}
+
 /*
   Odyssey overrides
  */
