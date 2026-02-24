@@ -34,6 +34,7 @@
         font-size: 3.5rem !important;
         color: var(--interactive-color-header);
         text-align: center;
+        text-shadow: 0 0 4px hsla(0, 0%, 100%, 1);
 
         @include breakpoints.for-small-mobile-only {
           font-size: 2.5rem !important;
