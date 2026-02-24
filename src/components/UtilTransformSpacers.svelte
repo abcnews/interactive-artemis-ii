@@ -14,6 +14,8 @@ Utility component to add spacing in the DOM
   import * as v from "valibot";
   import { Effect, Match } from "effect";
 
+  import effectTry from "~/src/lib/effectTry";
+
   const ParsedSchema = v.object({
     gap: v.number("Expected to be a number"),
   });
@@ -24,18 +26,9 @@ Utility component to add spacing in the DOM
     return v.parse(ParsedSchema, data);
   }
 
-  const effectTry = <A, E>(effect: Effect.Effect<A, E>) => {
-    try {
-      const value = Effect.runSync(effect);
-      return [null, value] as const;
-    } catch (error) {
-      return [error as E, null] as const;
-    }
-  };
-
   function processSpacers([first, ...rest]: Mount[]) {
     if (!first) {
-      // Finished processing
+      // Nothing left to do
       return;
     }
 

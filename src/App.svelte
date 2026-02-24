@@ -9,6 +9,8 @@
   import BackgroundStage from "./components/BackgroundStage.svelte";
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
   import { getApplication } from "@abcnews/env-utils";
+
+  // Type imports
   import { type Readable } from "svelte/store";
 
   // Stores

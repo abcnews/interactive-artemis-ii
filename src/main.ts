@@ -12,21 +12,16 @@ import type { ComponentProps } from "svelte";
 
 // General imports
 import { mount } from "svelte";
-import {
-  whenOdysseyLoaded,
-  prefersColorScheme,
-} from "@abcnews/env-utils";
+import { whenOdysseyLoaded, prefersColorScheme } from "@abcnews/env-utils";
 import Timeout from "await-timeout";
-
 
 // Component imports
 import App from "./App.svelte";
+import Fallback from "./Fallback.svelte";
 
 const props: ComponentProps<typeof App> = {
   prefersColorScheme,
 };
-
-let app;
 
 async function waitForOdysseyWithTimeout() {
   return Timeout.wrap(
@@ -36,14 +31,31 @@ async function waitForOdysseyWithTimeout() {
   );
 }
 
+async function tryMount(target: HTMLElement) {
+  try {
+    await waitForOdysseyWithTimeout();
+    return [
+      null,
+      mount(App, {
+        target: target,
+        props: props,
+      }),
+    ];
+  } catch (error) {
+    return [
+      error,
+      mount(Fallback, {
+        target: target,
+      }),
+    ];
+  }
+}
+
 const init = async () => {
-  await waitForOdysseyWithTimeout();
-  app = mount(App, {
-    target: document.body,
-    props: props,
-  });
+  const [error, result] = await tryMount(document.body);
+  if (error) console.error(error);
+  return result;
 };
 
-init();
-
-export default app;
+const instance = init();
+export default instance;
