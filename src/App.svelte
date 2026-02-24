@@ -8,6 +8,8 @@
   import Header from "./components/Header.svelte";
   import BackgroundStage from "./components/BackgroundStage.svelte";
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
+  import Debug from "./components/Debug.svelte";
+
   import { getApplication } from "@abcnews/env-utils";
 
   // Type imports
@@ -15,8 +17,6 @@
 
   // Stores
   import { scroll } from "./stores/scroll.svelte";
-
-  $inspect(scroll.currentSection);
 
   // Utilities
   import {
@@ -60,6 +60,9 @@
   </Portal>
 
   <UtilTransformSpacers />
+
+  <!-- TODO: Make the debug a query param in URL -->
+  <Debug />
 {:else}
   <p>This web app needs to be attached to an ABC News CoreMedia article.</p>
 {/if}

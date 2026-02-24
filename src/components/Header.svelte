@@ -9,6 +9,8 @@
 </script>
 
 <style lang="scss">
+  @use "../styles/breakpoints.scss";
+
   :global {
     .Header {
       height: 100vh;
@@ -23,15 +25,35 @@
         h1 {
           font-family: abcsans, "fallback sans", sans-serif;
           font-weight: 900;
-          overflow-wrap: break-word;
+          /* overflow-wrap: break-word; */
           text-transform: uppercase;
         }
       }
 
       .Header-content h1 {
-        font-size: 3rem !important;
+        font-size: 3.5rem !important;
         color: var(--interactive-color-header);
         text-align: center;
+
+        @include breakpoints.for-small-mobile-only {
+          font-size: 2.5rem !important;
+        }
+
+        @include breakpoints.for-tablet-up {
+          font-size: 3.5rem !important;
+        }
+
+        @include breakpoints.for-large-tablet-up {
+          font-size: 4.5rem !important;
+        }
+
+        @include breakpoints.for-desktop-up {
+          font-size: 5.5rem !important;
+        }
+
+        @include breakpoints.for-large-desktop-up {
+          font-size: 6.5rem !important;
+        }
       }
 
       .Header-byline {

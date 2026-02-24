@@ -5,7 +5,7 @@ Main interactive entry-point
 */
 
 // Global CSS styles
-import "./app.css";
+import "./styles/app.scss";
 
 // Type imports
 import type { ComponentProps } from "svelte";

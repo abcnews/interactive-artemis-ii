@@ -7,7 +7,7 @@
 
 <div class="stage-root">
   <!-- <ThreeCanvas /> -->
-    <div class="background-video" style:opacity={scroll.page < 1000 ? 1 : 0}>
+    <div class="background-video" style:opacity={scroll.pageScroll < 1000 ? 1 : 0}>
       <VideoBackground />
     </div>
 </div>

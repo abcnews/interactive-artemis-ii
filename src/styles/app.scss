@@ -7,8 +7,8 @@
   --interactive-color-background: hsla(0, 0%, 6%, 1);
 
   /* Panels */
-  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 1);
-  --interactive-panel-background: hsla(0, 0%, 94%, 0.8);
+  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 0.3);
+  --interactive-panel-background: hsla(0, 0%, 94%, 0.7);
 }
 
 /* Dark theme using class */
@@ -17,15 +17,16 @@
   --interactive-color-background: hsla(0, 0%, 6%, 0.8);
 
   /* Panels */
-  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 1);
-  --interactive-panel-background: hsla(0, 0%, 6%, 0.8);
+  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 0.9);
+  --interactive-panel-background: hsla(0, 0%, 6%, 0.7);
 }
 
 [data-key="panel"] {
   border: var(--interactive-panel-border);
   border-radius: 12px;
   background-color: var(--interactive-panel-background);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(7px);
+  box-shadow: 0 0px 30px hsla(0, 0%, 100%, 0.2);
 }
 
 #content > p,
