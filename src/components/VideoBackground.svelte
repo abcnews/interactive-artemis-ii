@@ -1,21 +1,26 @@
 <script lang="ts">
-  import backgroundVideo from "~/src/assets/Overview 01-1_ProRes4444_16x9-1-vp9-chrome.webm?url";
-  import backgroundVideoPortrait from "~/src/assets/Overview 01-1_ProRes4444_390x844-1-vp9-chrome.webm?url";
+  import backgroundVideo from "~/src/assets/Header_Video_Landscape.webm?url";
+  import backgroundVideoPortrait from "~/src/assets/Header_Video_Portrait.webm?url";
+
+  import { screen } from "~/src/stores/screen.svelte";
+
+  function isLandscape(width: number, height: number) {
+    return width > height ? true : false;
+  }
 </script>
 
-<!-- <div class="video-container"> -->
-<video autoplay muted loop playsinline preload="auto" src={backgroundVideo}
+<video
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  src={isLandscape(screen.innerWidth, screen.innerHeight)
+    ? backgroundVideo
+    : backgroundVideoPortrait}
 ></video>
 
-<!-- </div> -->
-
 <style lang="scss">
-  /* .video-container {
-
-    video {
-      object-fit: cover;
-    }
-  } */
 
   video {
     /* width: 100%; */
@@ -33,7 +38,8 @@
     @media (orientation: portrait) {
       top: 0;
       left: 50%;
-      width: 100vh;
+      // width: 100vh;
+      height: 100vh;
       transform: translateX(-50%);
     }
   }
