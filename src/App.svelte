@@ -8,6 +8,7 @@
   import Header from "./components/Header.svelte";
   import BackgroundStage from "./components/BackgroundStage.svelte";
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
+  import UtilGetPanelData from "./components/UtilGetPanelData.svelte";
   import Debug from "./components/Debug.svelte";
 
   import { getApplication } from "@abcnews/env-utils";
@@ -17,6 +18,9 @@
 
   // Stores
   import { scroll } from "./stores/scroll.svelte";
+  import { screen } from "./stores/screen.svelte";
+
+  // $inspect(screen.innerWidth, screen.innerHeight)
 
   // Utilities
   import {
@@ -60,6 +64,7 @@
   </Portal>
 
   <UtilTransformSpacers />
+  <UtilGetPanelData />
 
   <!-- TODO: Make the debug a query param in URL -->
   <Debug />
@@ -67,6 +72,10 @@
   <p>This web app needs to be attached to an ABC News CoreMedia article.</p>
 {/if}
 
-<svelte:window bind:scrollY={scroll.pageScroll} />
+<svelte:window
+  bind:scrollY={scroll.pageScroll}
+  bind:innerWidth={screen.innerWidth}
+  bind:innerHeight={screen.innerHeight}
+/>
 
 <style lang="scss"></style>
