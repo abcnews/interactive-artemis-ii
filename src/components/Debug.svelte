@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { scroll } from "~/src/stores/scroll.svelte"
+  import { scroll } from "~/src/stores/scroll.svelte";
 </script>
 
 <div class="debug-root">
-  Scroll: {scroll.pageScroll}
+  <div>Section: {scroll.currentSection}</div>
+  <div>Scroll: {scroll.pageScroll}</div>
 </div>
 
 <style lang="scss">

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import VideoBackground from "./VideoBackground.svelte";
 
   let headline: HTMLElement | null;
 
@@ -8,25 +9,30 @@
   });
 </script>
 
+<div class="background-image">
+  <VideoBackground></VideoBackground>
+</div>
+
 <style lang="scss">
   @use "../styles/breakpoints.scss";
 
   :global {
     .Header {
-      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      height: 100dvh;
 
       .Header-content {
         margin-inline: 16px;
 
         h1 {
-          font-family: abcsans, "fallback sans", sans-serif;
-          font-weight: 900;
-          /* overflow-wrap: break-word; */
+          font-family:
+            ABCSansNova-CondensedBold, "abcsans condensed" !important;
+          font-weight: 700;
           text-transform: uppercase;
+          font-stretch: condensed;
         }
       }
 
@@ -90,5 +96,15 @@
         border-radius: 16px;
       }
     } */
+
+    .background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100dvh;
+      background-color: transparent;
+      z-index: -1;
+    }
   }
 </style>
