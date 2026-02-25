@@ -21,11 +21,7 @@
 ></video>
 
 <style lang="scss">
-
   video {
-    /* width: 100%; */
-    /* height: 100%; */
-    /* object-fit: cover; */
     position: absolute;
 
     @media (orientation: landscape) {
@@ -38,8 +34,7 @@
     @media (orientation: portrait) {
       top: 0;
       left: 50%;
-      // width: 100vh;
-      height: 100vh;
+      height: 100dvh;
       transform: translateX(-50%);
     }
   }
