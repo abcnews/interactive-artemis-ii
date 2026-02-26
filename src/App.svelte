@@ -11,6 +11,8 @@
   import UtilGetPanelData from "./components/UtilGetPanelData.svelte";
   import Debug from "./components/Debug.svelte";
 
+  // Standard imports
+  import { ElementSize } from "runed";
   import { getApplication } from "@abcnews/env-utils";
 
   // Type imports
@@ -19,8 +21,6 @@
   // Stores
   import { scroll } from "./stores/scroll.svelte";
   import { screen } from "./stores/screen.svelte";
-
-  // $inspect(screen.innerWidth, screen.innerHeight)
 
   // Utilities
   import {
@@ -38,10 +38,16 @@
   };
 
   let { prefersColorScheme }: AppProps = $props();
+
   let isABC = $derived(getApplication() !== null ? true : false);
+  let bodyEl = $state() as HTMLElement;
 
   function initAutoDarkMode() {
     /* Auto dark mode for Odyssey */
+    /*
+      Previously we would detect user preference, but we're just going to push people
+      into dark mode for now. This may change in future.
+      */
     // setMode(document.body.getAttribute("data-scheme") as string);
     setMode("dark");
     loadDarkModeObserver();
@@ -51,6 +57,7 @@
   onMount(() => {
     // No dark mode for now
     isABC && initAutoDarkMode();
+    scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
 </script>
 
@@ -72,6 +79,7 @@
   <p>This web app needs to be attached to an ABC News CoreMedia article.</p>
 {/if}
 
+<svelte:body bind:this={bodyEl} />
 <svelte:window
   bind:scrollY={scroll.pageScroll}
   bind:innerWidth={screen.innerWidth}

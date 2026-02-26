@@ -1,3 +1,8 @@
+interface ElementSize {
+  readonly width: number;
+  readonly height: number;
+}
+
 import { screen } from "./screen.svelte";
 
 type Section = string;
@@ -10,6 +15,7 @@ type PanelData = {
 class Scroll {
   // State
   #pageScroll = $state(0);
+  bodyElSize: ElementSize = $state({ width: 0, height: 0 });
   panelsData: PanelData[] = $state([]);
   currentSection: Section = $derived.by(() => {
     const find = (index: number): Section => {
