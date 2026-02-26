@@ -14,6 +14,7 @@
   // Standard imports
   import { ElementSize } from "runed";
   import { getApplication } from "@abcnews/env-utils";
+  import { SvelteURLSearchParams, SvelteURL } from "svelte/reactivity";
 
   // Type imports
   import { type Readable } from "svelte/store";
@@ -42,12 +43,16 @@
   let isABC = $derived(getApplication() !== null ? true : false);
   let bodyEl = $state() as HTMLElement;
 
+  const paramsString = window.location.search;
+  const params = new SvelteURLSearchParams(paramsString);
+  const isDebug = $derived(params.get("debug") === "true");
+
   function initAutoDarkMode() {
     /* Auto dark mode for Odyssey */
     /*
       Previously we would detect user preference, but we're just going to push people
       into dark mode for now. This may change in future.
-      */
+    */
     // setMode(document.body.getAttribute("data-scheme") as string);
     setMode("dark");
     loadDarkModeObserver();
@@ -57,6 +62,8 @@
   onMount(() => {
     // No dark mode for now
     isABC && initAutoDarkMode();
+
+    // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
 </script>
@@ -73,8 +80,9 @@
   <UtilTransformSpacers />
   <UtilGetPanelData />
 
-  <!-- TODO: Make the debug a query param in URL -->
-  <Debug />
+  {#if isDebug}
+    <Debug />
+  {/if}
 {:else}
   <p>This web app needs to be attached to an ABC News CoreMedia article.</p>
 {/if}
