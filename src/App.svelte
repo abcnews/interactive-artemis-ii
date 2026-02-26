@@ -66,13 +66,15 @@
     // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
-
-  $inspect("progressThrough", scroll.progressThrough).with(console.log);
 </script>
 
 {#if isABC}
   <Portal target={".Header"}>
-    <Header />
+    <Header
+      fadeOutProgress={scroll.currentSection.name === "initial"
+        ? scroll.progressThrough
+        : 1}
+    />
   </Portal>
 
   <Portal target="[data-key='body']">

@@ -25,9 +25,12 @@ class Scroll {
   get pageScroll() {
     return this.#pageScroll;
   }
+  // Use getters and setters so we can round to nearest integer
   set pageScroll(scrollY: number) {
     this.#pageScroll = Math.round(scrollY);
   }
+
+  // The bottom the screen
   pageScrollBottom = $derived(this.pageScroll + screen.innerHeight);
 
   bodyElSize: ElementSize = $state({ width: 0, height: 0 });
@@ -71,7 +74,7 @@ class Scroll {
     if (height === 0) {
       return 0;
     } else {
-      return toNumber(round(this.pixelsThroughSection / height, { places: 2 }));
+      return toNumber(round(this.pixelsThroughSection / height, { places: 3 }));
     }
   });
 

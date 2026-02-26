@@ -2,6 +2,12 @@
   import { onMount } from "svelte";
   import VideoBackground from "./VideoBackground.svelte";
 
+  type Props = {
+    fadeOutProgress: number;
+  };
+
+  let { fadeOutProgress }: Props = $props()
+
   let headline: HTMLElement | null;
 
   onMount(() => {
@@ -9,7 +15,7 @@
   });
 </script>
 
-<div class="background-image">
+<div class="background-image" style:opacity={1 - fadeOutProgress}>
   <VideoBackground></VideoBackground>
 </div>
 
