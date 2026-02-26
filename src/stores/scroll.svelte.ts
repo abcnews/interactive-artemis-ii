@@ -5,7 +5,7 @@ type ElementSize = {
 
 import { screen } from "./screen.svelte";
 import { Previous } from "runed";
-import { round, toNumber } from "decimalish";
+import { round } from "decimalish";
 
 type PanelData = {
   name: string;
@@ -74,7 +74,7 @@ class Scroll {
     if (height === 0) {
       return 0;
     } else {
-      return toNumber(round(this.pixelsThroughSection / height, { places: 3 }));
+      return Number(round(this.pixelsThroughSection / height, { places: 3 }));
     }
   });
 

@@ -15,7 +15,7 @@
   });
 </script>
 
-<div class="background-image" style:opacity={1 - fadeOutProgress}>
+<div class="background" style:--fade-out-progress={1 - fadeOutProgress}>
   <VideoBackground></VideoBackground>
 </div>
 
@@ -103,7 +103,7 @@
       }
     } */
 
-    .background-image {
+    .background {
       position: absolute;
       top: 0;
       left: 0;
@@ -111,6 +111,8 @@
       height: 100dvh;
       background-color: transparent;
       z-index: -1;
+      opacity: var(--fade-out-progress);
+      // transition: opacity 1s ease-in-out;
     }
   }
 </style>
