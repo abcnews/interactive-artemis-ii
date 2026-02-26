@@ -1,10 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import * as v from "valibot";
-  import { parse as parseAlternatingCaseToObject } from "@abcnews/alternating-case-to-object";
+  import { parse as parseA2O } from "@abcnews/alternating-case-to-object";
 
   import { scroll } from "~/src/stores/scroll.svelte";
-  import { screen } from "~/src/stores/screen.svelte";
 
   const ParsedSchema = v.object({
     key: v.string("Expected to be a string"),
@@ -16,15 +15,12 @@
     return v.parse(ParsedSchema, data);
   }
 
-  onMount(() => {
+  $effect(() => {
     const panels = document.querySelectorAll<HTMLElement>("[data-key='panel']");
-
     const mapped = [...panels].map((panel, index) => {
-      console.log(index);
-
       return {
         name: panel.dataset.tag
-          ? getParsedData(parseAlternatingCaseToObject(panel.dataset.tag)).key
+          ? getParsedData(parseA2O(panel.dataset.tag)).key
           : "notset",
         downPage: panel.offsetTop,
         height: panels[index + 1]
@@ -32,8 +28,6 @@
           : scroll.bodyElSize.height - panel.offsetTop,
       };
     });
-
-    console.log(mapped);
     scroll.setPanelsData(mapped);
   });
 </script>
