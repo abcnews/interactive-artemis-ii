@@ -3,7 +3,7 @@
 </script>
 
 <div class="debug-root">
-  <div>Section: {scroll.currentSection}</div>
+  <div>Section: {scroll.currentSection.name}</div>
   <div>Scroll: {scroll.pageScroll}</div>
 </div>
 

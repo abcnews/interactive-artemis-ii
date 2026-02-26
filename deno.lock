@@ -13,6 +13,7 @@
     "npm:@types/three@0.182": "0.182.0",
     "npm:await-timeout@^1.1.1": "1.1.1",
     "npm:await-to-js@3": "3.0.0",
+    "npm:decimalish@~0.1.2": "0.1.2",
     "npm:effect@^3.19.17": "3.19.17",
     "npm:eslint-plugin-neverthrow@^1.1.4": "1.1.4_@typescript-eslint+parser@8.56.1__eslint@10.0.2__typescript@5.9.3_eslint@10.0.2_typescript@5.9.3",
     "npm:neverthrow@^8.2.0": "8.2.0",
@@ -733,6 +734,9 @@
       "dependencies": [
         "ms"
       ]
+    },
+    "decimalish@0.1.2": {
+      "integrity": "sha512-DDsK0ToUu5ZHy4ebEL8L432g1zgSqIoCTIu+hT5gG8V7YpKfo/48g59VMkPJbqLqtPe2X0lm0XR+nfkkEJ9T0w=="
     },
     "deep-is@0.1.4": {
       "integrity": "sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ=="
@@ -1613,6 +1617,7 @@
         "npm:@types/three@0.182",
         "npm:await-timeout@^1.1.1",
         "npm:await-to-js@3",
+        "npm:decimalish@~0.1.2",
         "npm:effect@^3.19.17",
         "npm:eslint-plugin-neverthrow@^1.1.4",
         "npm:neverthrow@^8.2.0",

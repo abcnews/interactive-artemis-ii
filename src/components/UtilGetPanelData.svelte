@@ -4,6 +4,7 @@
   import { parse as parseAlternatingCaseToObject } from "@abcnews/alternating-case-to-object";
 
   import { scroll } from "~/src/stores/scroll.svelte";
+  import { screen } from "~/src/stores/screen.svelte";
 
   const ParsedSchema = v.object({
     key: v.string("Expected to be a string"),
@@ -18,14 +19,18 @@
   onMount(() => {
     const panels = document.querySelectorAll<HTMLElement>("[data-key='panel']");
 
-    const mapped = [...panels].map((panel) => {
-      if (panel.dataset.tag) {
-        return {
-          name: getParsedData(parseAlternatingCaseToObject(panel.dataset.tag))
-            .key,
-          downPage: panel.offsetTop,
-        };
-      } else return { name: "notset", downPage: panel.offsetTop };
+    const mapped = [...panels].map((panel, index) => {
+      console.log(index);
+
+      return {
+        name: panel.dataset.tag
+          ? getParsedData(parseAlternatingCaseToObject(panel.dataset.tag)).key
+          : "notset",
+        downPage: panel.offsetTop,
+        height: panels[index + 1]
+          ? panels[index + 1].offsetTop - panel.offsetTop
+          : scroll.bodyElSize.height - panel.offsetTop,
+      };
     });
 
     console.log(mapped);

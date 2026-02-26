@@ -66,6 +66,8 @@
     // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
+
+  $inspect("progressThrough", scroll.progressThrough).with(console.log);
 </script>
 
 {#if isABC}

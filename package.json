@@ -30,6 +30,7 @@
     "@threlte/extras": "^9.7.1",
     "await-timeout": "^1.1.1",
     "await-to-js": "^3.0.0",
+    "decimalish": "^0.1.2",
     "effect": "^3.19.17",
     "eslint-plugin-neverthrow": "^1.1.4",
     "neverthrow": "^8.2.0",
