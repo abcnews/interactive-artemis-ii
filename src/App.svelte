@@ -14,7 +14,8 @@
   // Standard imports
   import { ElementSize } from "runed";
   import { getApplication } from "@abcnews/env-utils";
-  import { SvelteURLSearchParams, SvelteURL } from "svelte/reactivity";
+  import { SvelteURLSearchParams } from "svelte/reactivity";
+  import { Throttled } from "runed";
 
   // Type imports
   import { type Readable } from "svelte/store";
@@ -33,6 +34,9 @@
   // Other imports
   import { onMount } from "svelte";
 
+  // Constants
+  const SCROLL_THROTTLE = 50;
+
   // Component props
   export type AppProps = {
     prefersColorScheme: Readable<string>;
@@ -43,6 +47,13 @@
   let isABC = $derived(getApplication() !== null ? true : false);
   let bodyEl = $state() as HTMLElement;
 
+  // Throttle the page scroll for increased performance
+  let throttledPageScroll = new Throttled(() => scroll.pageScroll, SCROLL_THROTTLE);
+  $effect(() => {
+    scroll.throttledPageScroll = throttledPageScroll.current;
+  });
+
+  // Enable debug mode with ?debug=true OR &debug=true (if ? already present)
   const paramsString = window.location.search;
   const params = new SvelteURLSearchParams(paramsString);
   const isDebug = $derived(params.get("debug") === "true");
@@ -66,6 +77,8 @@
     // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
+
+  
 </script>
 
 {#if isABC}

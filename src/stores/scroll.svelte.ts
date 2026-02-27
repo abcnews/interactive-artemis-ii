@@ -30,8 +30,11 @@ class Scroll {
     this.#pageScroll = Math.round(scrollY);
   }
 
+  // Throttled in App.svelte due to Runed not working outside component root
+  throttledPageScroll = $state(0);
+
   // The bottom the screen
-  pageScrollBottom = $derived(this.pageScroll + screen.innerHeight);
+  pageScrollBottom = $derived(this.throttledPageScroll + screen.innerHeight);
 
   bodyElSize: ElementSize = $state({ width: 0, height: 0 });
   panelsData: PanelData[] = $state([]);

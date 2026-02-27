@@ -4,7 +4,7 @@
 
 <div class="debug-root">
   <div>Section: {scroll.currentSection.name}</div>
-  <div>Scroll: {scroll.pageScroll}</div>
+  <div>Scroll: {scroll.throttledPageScroll}</div>
   <div>Progress: {scroll.progressThrough}</div>
 </div>
 
