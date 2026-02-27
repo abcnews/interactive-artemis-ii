@@ -52,10 +52,7 @@
   let scrollY = $state(0);
 
   // Throttle the page scroll for increased performance
-  let throttledPageScroll = new Throttled(
-    () => scrollY,
-    SCROLL_THROTTLE,
-  );
+  let throttledPageScroll = new Throttled(() => scrollY, SCROLL_THROTTLE);
   $effect(() => {
     scroll.pageScroll = throttledPageScroll.current;
   });
@@ -84,6 +81,8 @@
     // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
+
+  $inspect(scroll.panelsNow).with(console.log);
 </script>
 
 {#if isABC}

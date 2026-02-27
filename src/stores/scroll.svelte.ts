@@ -30,12 +30,20 @@ class Scroll {
     this.#pageScroll = Math.round(scrollY);
   }
 
-
   // The bottom the screen
   pageScrollBottom = $derived(this.pageScroll + screen.innerHeight);
 
   bodyElSize: ElementSize = $state({ width: 0, height: 0 });
   panelsData: PanelData[] = $state([]);
+  panelsCurrent = $derived.by(() => {
+    return this.panelsData.map((panel) => {
+      return {
+        pixelsFromTop:
+          screen.innerHeight - (this.pageScrollBottom - panel.downPage),
+        ...panel,
+      };
+    });
+  });
   currentSection: Section = $derived.by(() => {
     if (this.panelsData.length === 0) {
       return {
