@@ -17,6 +17,7 @@
     "npm:effect@^3.19.17": "3.19.17",
     "npm:eslint-plugin-neverthrow@^1.1.4": "1.1.4_@typescript-eslint+parser@8.56.1__eslint@10.0.2__typescript@5.9.3_eslint@10.0.2_typescript@5.9.3",
     "npm:neverthrow@^8.2.0": "8.2.0",
+    "npm:rand-seed@3": "3.0.0",
     "npm:runed@~0.37.1": "0.37.1_svelte@5.50.1__acorn@8.16.0",
     "npm:sass-embedded@^1.97.3": "1.97.3",
     "npm:svelte-check@^4.3.6": "4.3.6_svelte@5.50.1__acorn@8.16.0_typescript@5.9.3",
@@ -1142,6 +1143,9 @@
     "pure-rand@6.1.0": {
       "integrity": "sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA=="
     },
+    "rand-seed@3.0.0": {
+      "integrity": "sha512-Zy8wnL6whyIAGOX2i9Mn1Orq3t9TNizGUk8euxamr60Z3PmspwFeT+vCZPcYMAR5nOztnAKPtVi3jt8EzmCB6g=="
+    },
     "readdirp@4.1.2": {
       "integrity": "sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg=="
     },
@@ -1621,6 +1625,7 @@
         "npm:effect@^3.19.17",
         "npm:eslint-plugin-neverthrow@^1.1.4",
         "npm:neverthrow@^8.2.0",
+        "npm:rand-seed@3",
         "npm:runed@~0.37.1",
         "npm:sass-embedded@^1.97.3",
         "npm:svelte-check@^4.3.6",
