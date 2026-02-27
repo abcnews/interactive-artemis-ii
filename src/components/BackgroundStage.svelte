@@ -1,11 +1,9 @@
 <script lang="ts">
   import ThreeCanvas from "./ThreeCanvas.svelte";
-  import { scroll } from "~/src/stores/scroll.svelte";
-  import { fade } from "svelte/transition";
 </script>
 
 <div class="stage-root">
-  <!-- <ThreeCanvas /> -->
+  <ThreeCanvas />
 </div>
 
 <style lang="scss">

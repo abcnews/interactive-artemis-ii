@@ -6,22 +6,13 @@
   import Aremis3D from "./Aremis3D.svelte";
   import Starfield from "./Starfield.svelte";
 
-  // Stores
-  import { scroll } from "../stores/scroll.svelte";
-
-  // Local state
-  const position = new Spring(1);
-
-  $effect(() => {
-    position.target = scroll.pageScroll / 300;
-  });
 </script>
 
 <div class="stage-root">
   <Canvas>
     <T.PerspectiveCamera
       makeDefault
-      position={[1, position.current - 20, 3]}
+      position={[0, 0, 3]}
       oncreate={(ref) => {
         ref.lookAt(4, 0, 0);
       }}

@@ -47,10 +47,16 @@
   let isABC = $derived(getApplication() !== null ? true : false);
   let bodyEl = $state() as HTMLElement;
 
+  // Bind to window scroll
+  let scrollY = $state(0);
+
   // Throttle the page scroll for increased performance
-  let throttledPageScroll = new Throttled(() => scroll.pageScroll, SCROLL_THROTTLE);
+  let throttledPageScroll = new Throttled(
+    () => scrollY,
+    SCROLL_THROTTLE,
+  );
   $effect(() => {
-    scroll.throttledPageScroll = throttledPageScroll.current;
+    scroll.pageScroll = throttledPageScroll.current;
   });
 
   // Enable debug mode with ?debug=true OR &debug=true (if ? already present)
@@ -77,8 +83,6 @@
     // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
-
-  
 </script>
 
 {#if isABC}
@@ -106,7 +110,7 @@
 
 <svelte:body bind:this={bodyEl} />
 <svelte:window
-  bind:scrollY={scroll.pageScroll}
+  bind:scrollY
   bind:innerWidth={screen.innerWidth}
   bind:innerHeight={screen.innerHeight}
 />
