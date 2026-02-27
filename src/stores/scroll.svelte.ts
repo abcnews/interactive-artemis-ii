@@ -36,13 +36,26 @@ class Scroll {
   panelsData: PanelData[] = $state([]);
   panelsCurrent = $derived.by(() => {
     return this.panelsData.map((panel) => {
-      const pixelsFromBottom = (this.pageScrollBottom - panel.downPage)
+      const { downPage } = panel;
+
+      const pixelsFromBottom = this.pageScrollBottom - downPage;
       const pixelsFromTop =
-        screen.innerHeight - (this.pageScrollBottom - panel.downPage);
+        screen.innerHeight - (this.pageScrollBottom - downPage);
+      const inViewport =
+        pixelsFromTop > 0 && pixelsFromTop < screen.innerHeight;
+      const progressUntilNext = Number(
+        round(pixelsFromTop / panel.height, { places: 3 }),
+      );
+      const screenProgress = Number(
+        round(pixelsFromTop / screen.innerHeight, { places: 3 }),
+      );
+
       return {
         pixelsFromTop,
         pixelsFromBottom,
-        inViewport: pixelsFromTop > 0 && pixelsFromTop < screen.innerHeight,
+        inViewport,
+        progressUntilNext,
+        screenProgress,
         ...panel,
       };
     });
@@ -77,16 +90,16 @@ class Scroll {
     return find(this.panelsData.length - 1);
   });
   previousSection = new Previous(() => this.currentSection);
-  pixelsThroughSection = $derived.by(() => {
+  pixelsUntilNextSection = $derived.by(() => {
     const { downPage } = this.currentSection;
     return this.pageScrollBottom - downPage;
   });
-  progressThrough = $derived.by(() => {
+  progressUntilNextSection = $derived.by(() => {
     const { height } = this.currentSection;
     if (height === 0) {
       return 0;
     } else {
-      return Number(round(this.pixelsThroughSection / height, { places: 3 }));
+      return Number(round(this.pixelsUntilNextSection / height, { places: 3 }));
     }
   });
 

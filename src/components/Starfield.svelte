@@ -1,7 +1,7 @@
 <script lang="ts">
   import { T } from "@threlte/core";
   import * as THREE from "three";
-  import Rand, { PRNG } from 'rand-seed';
+  import Rand from 'rand-seed';
 
   const rand = new Rand('artemis-ii');
 </script>

@@ -85,6 +85,7 @@
 
   const getItemsVisible = (currentSectionName: string) => {
     const result = Match.value(currentSectionName).pipe(
+      Match.withReturnType<string[]>(),
       Match.when("intro", () => ["starfield"]),
       Match.when("sls", () => ["starfield", "artemis"]),
       Match.when("takeoff", () => ["starfield", "artemis"]),
@@ -99,13 +100,15 @@
       itemsVisible: getItemsVisible(scroll.currentSection.name),
     };
   });
+
+  $inspect(scroll.panelsCurrent).with(console.log);
 </script>
 
 {#if isABC}
   <Portal target={".Header"}>
     <Header
       fadeOutProgress={scroll.currentSection.name === "initial"
-        ? scroll.progressThrough
+        ? scroll.progressUntilNextSection
         : 1}
     />
   </Portal>

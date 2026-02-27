@@ -5,7 +5,7 @@
 <div class="debug-root">
   <div>Section: {scroll.currentSection.name}</div>
   <div>Scroll: {scroll.pageScroll}</div>
-  <div>Progress: {scroll.progressThrough}</div>
+  <div>Progress: {scroll.progressUntilNextSection}</div>
 </div>
 
 <style lang="scss">
