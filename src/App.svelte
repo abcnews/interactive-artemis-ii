@@ -10,6 +10,7 @@
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
   import UtilGetPanelData from "./components/UtilGetPanelData.svelte";
   import Debug from "./components/Debug.svelte";
+  import ThreeCanvas from "./components/ThreeCanvas.svelte";
 
   // Standard imports
   import { ElementSize } from "runed";
@@ -95,7 +96,9 @@
   </Portal>
 
   <Portal target="[data-key='body']">
-    <BackgroundStage />
+    <BackgroundStage>
+      <ThreeCanvas />
+    </BackgroundStage>
   </Portal>
 
   <UtilTransformSpacers />

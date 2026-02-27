@@ -1,9 +1,9 @@
 <script lang="ts">
-  import ThreeCanvas from "./ThreeCanvas.svelte";
+  let { children } = $props();
 </script>
 
 <div class="stage-root">
-  <ThreeCanvas />
+  {@render children()}
 </div>
 
 <style lang="scss">
