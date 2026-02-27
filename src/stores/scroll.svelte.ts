@@ -32,14 +32,17 @@ class Scroll {
 
   // The bottom the screen
   pageScrollBottom = $derived(this.pageScroll + screen.innerHeight);
-
   bodyElSize: ElementSize = $state({ width: 0, height: 0 });
   panelsData: PanelData[] = $state([]);
   panelsCurrent = $derived.by(() => {
     return this.panelsData.map((panel) => {
+      const pixelsFromBottom = (this.pageScrollBottom - panel.downPage)
+      const pixelsFromTop =
+        screen.innerHeight - (this.pageScrollBottom - panel.downPage);
       return {
-        pixelsFromTop:
-          screen.innerHeight - (this.pageScrollBottom - panel.downPage),
+        pixelsFromTop,
+        pixelsFromBottom,
+        inViewport: pixelsFromTop > 0 && pixelsFromTop < screen.innerHeight,
         ...panel,
       };
     });
