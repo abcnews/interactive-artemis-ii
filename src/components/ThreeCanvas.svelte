@@ -5,7 +5,6 @@
   import Sphere from "./Sphere.svelte";
   import Aremis3D from "./Aremis3D.svelte";
   import Starfield from "./Starfield.svelte";
-  import { includes } from "valibot";
 
   const { itemsVisible = [] } = $props();
 </script>
@@ -24,13 +23,15 @@
     ></T.PerspectiveCamera>
 
     <T.DirectionalLight position={[0, 10, 10]} />
-    <T.AmbientLight intensity={0.15} />
+    <T.AmbientLight intensity={0.1} />
 
     {#if itemsVisible.includes("starfield")}
       <Starfield />
     {/if}
-    <Sphere />
-    <Aremis3D />
+    <!-- <Sphere /> -->
+    {#if itemsVisible.includes("artemis")}
+      <Aremis3D />
+    {/if}
   </Canvas>
 </div>
 

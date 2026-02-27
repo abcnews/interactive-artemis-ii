@@ -17,9 +17,10 @@
   import { getApplication } from "@abcnews/env-utils";
   import { SvelteURLSearchParams } from "svelte/reactivity";
   import { Throttled } from "runed";
+  import { Match } from "effect";
 
   // Type imports
-  import { type Readable } from "svelte/store";
+  import { get, type Readable } from "svelte/store";
 
   // Stores
   import { scroll } from "./stores/scroll.svelte";
@@ -82,7 +83,22 @@
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
 
-  $inspect(scroll.panelsCurrent).with(console.log);
+  const getItemsVisible = (currentSectionName: string) => {
+    const result = Match.value(currentSectionName).pipe(
+      Match.when("intro", () => ["starfield"]),
+      Match.when("sls", () => ["starfield", "artemis"]),
+      Match.when("takeoff", () => ["starfield", "artemis"]),
+      Match.orElse(() => []),
+    );
+
+    return result;
+  };
+
+  const threeCanvasState = $derived.by(() => {
+    return {
+      itemsVisible: getItemsVisible(scroll.currentSection.name),
+    };
+  });
 </script>
 
 {#if isABC}
@@ -96,7 +112,7 @@
 
   <Portal target="[data-key='body']">
     <BackgroundStage>
-      <ThreeCanvas />
+      <ThreeCanvas {...threeCanvasState} />
     </BackgroundStage>
   </Portal>
 
