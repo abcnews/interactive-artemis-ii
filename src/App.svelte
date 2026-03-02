@@ -101,7 +101,7 @@
     };
   });
 
-  $inspect(scroll.panelsCurrent).with(console.log);
+  // $inspect(scroll.panelsCurrent).with(console.log);
 </script>
 
 {#if isABC}
