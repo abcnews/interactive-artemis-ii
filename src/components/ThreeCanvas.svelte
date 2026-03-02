@@ -4,6 +4,7 @@
 
   import Sphere from "./Sphere.svelte";
   import Aremis3D from "./Aremis3D.svelte";
+  import Orion from "./Orion.svelte";
   import Starfield from "./Starfield.svelte";
 
   const { itemsVisible = [] } = $props();
@@ -28,9 +29,13 @@
     {#if itemsVisible.includes("starfield")}
       <Starfield />
     {/if}
-    <!-- <Sphere /> -->
+
     {#if itemsVisible.includes("artemis")}
-      <Aremis3D />
+      <Aremis3D position={[0, 0, -150]} />
+    {/if}
+
+    {#if itemsVisible.includes("orion")}
+      <Orion position={[0, 0, 10]} />
     {/if}
   </Canvas>
 </div>

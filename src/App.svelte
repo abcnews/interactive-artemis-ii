@@ -11,6 +11,7 @@
   import UtilGetPanelData from "./components/UtilGetPanelData.svelte";
   import Debug from "./components/Debug.svelte";
   import ThreeCanvas from "./components/ThreeCanvas.svelte";
+  import Panels from "./components/Panels.svelte";
 
   // Standard imports
   import { ElementSize } from "runed";
@@ -77,7 +78,7 @@
 
   onMount(() => {
     // No dark mode for now
-    isABC && initAutoDarkMode();
+    if (isABC) initAutoDarkMode();
 
     // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);
@@ -87,8 +88,9 @@
     const result = Match.value(currentSectionName).pipe(
       Match.withReturnType<string[]>(),
       Match.when("intro", () => ["starfield"]),
-      Match.when("sls", () => ["starfield", "artemis"]),
+      Match.when("sls", () => ["starfield", "orion"]),
       Match.when("takeoff", () => ["starfield", "artemis"]),
+      Match.when("excitement", () => ["starfield"]),
       Match.orElse(() => []),
     );
 
@@ -105,7 +107,7 @@
 </script>
 
 {#if isABC}
-  <Portal target={".Header"}>
+  <Portal target=".Header">
     <Header
       fadeOutProgress={scroll.currentSection.name === "initial"
         ? scroll.progressUntilNextSection
@@ -118,6 +120,8 @@
       <ThreeCanvas {...threeCanvasState} />
     </BackgroundStage>
   </Portal>
+
+  <Panels />
 
   <UtilTransformSpacers />
   <UtilGetPanelData />

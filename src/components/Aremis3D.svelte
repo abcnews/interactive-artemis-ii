@@ -16,11 +16,13 @@
   const gltf = $derived(useGltf(path));
 </script>
 
-{#await gltf}
-  <!-- Loading -->
-{:then model}
+<!-- {#await gltf}
+
+{:then model} -->
+
+{#if $gltf}
   <T
-    is={model.scene}
+    is={$gltf.scene}
     {position}
     oncreate={(ref) => {
       ref.traverse((child) => {
@@ -32,6 +34,7 @@
       });
     }}
   />
-{:catch error}
-  <!-- Error -->
-{/await}
+{/if}
+<!-- {:catch error}
+
+{/await} -->
