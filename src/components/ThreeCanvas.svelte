@@ -16,6 +16,7 @@
 </script>
 
 <div class="stage-root">
+  <!-- renderMode="always" -->
   <Canvas>
     <T.PerspectiveCamera
       makeDefault
@@ -28,7 +29,7 @@
       far={1000}
     ></T.PerspectiveCamera>
 
-    <T.DirectionalLight position={[0, 10, 10]} />
+    <T.DirectionalLight position={[10, 10, 10]} />
     <T.AmbientLight intensity={0.1} />
 
     {#if itemsVisible.includes("starfield")}
@@ -38,8 +39,9 @@
     {#if itemsVisible.includes("artemis")}
       <Aremis3D position={[0, 0, -150]} />
     {/if}
-
+ 
     {#if itemsVisible.includes("orion")}
+      <!-- <Sphere position={[0, 0, 0]} /> -->
       <Orion position={[0, 0, 10]} {orionRotation} />
     {/if}
   </Canvas>

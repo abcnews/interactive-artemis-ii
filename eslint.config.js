@@ -22,7 +22,8 @@ export default defineConfig(
 			"no-undef": 'off',
 			"no-unused-vars": 'off',
 			"@typescript-eslint/no-unused-vars": 'off',
-			"svelte/require-store-reactive-access": "off"
+			"svelte/require-store-reactive-access": "off",
+			"svelte/no-inspect": "off"
 		}
 	},
 	{
