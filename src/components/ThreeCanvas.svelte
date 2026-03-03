@@ -7,7 +7,12 @@
   import Orion from "./Orion.svelte";
   import Starfield from "./Starfield.svelte";
 
-  const { itemsVisible = [] } = $props();
+  type Props = {
+    itemsVisible: string[];
+    orionRotation?: [number, number, number];
+  };
+
+  let { itemsVisible = [], orionRotation }: Props = $props();
 </script>
 
 <div class="stage-root">
@@ -35,7 +40,7 @@
     {/if}
 
     {#if itemsVisible.includes("orion")}
-      <Orion position={[0, 0, 10]} />
+      <Orion position={[0, 0, 10]} {orionRotation} />
     {/if}
   </Canvas>
 </div>

@@ -84,26 +84,36 @@
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
 
-  const getItemsVisible = (currentSectionName: string) => {
-    const result = Match.value(currentSectionName).pipe(
-      Match.withReturnType<string[]>(),
-      Match.when("intro", () => ["starfield"]),
-      Match.when("sls", () => ["starfield", "orion"]),
-      Match.when("takeoff", () => ["starfield", "artemis"]),
-      Match.when("excitement", () => ["starfield"]),
-      Match.orElse(() => []),
-    );
-
-    return result;
+  type SceneState = {
+    itemsVisible: string[];
+    orionRotation?: [number, number, number];
   };
 
-  const threeCanvasState = $derived.by(() => {
-    return {
-      itemsVisible: getItemsVisible(scroll.currentSection.name),
-    };
-  });
+  const getSceneState = (
+    currentSectionName: string,
+    sectionProgress: number,
+  ): SceneState => {
+    return Match.value(currentSectionName).pipe(
+      Match.withReturnType<{
+        itemsVisible: string[];
+        orionRotation?: [number, number, number];
+      }>(),
+      Match.when("intro", () => ({ itemsVisible: ["starfield"] })),
+      Match.when("sls", () => ({
+        itemsVisible: ["starfield", "orion"],
+        orionRotation: [sectionProgress * Math.PI * 2, 0, 0],
+      })),
+      Match.when("takeoff", () => ({ itemsVisible: ["starfield", "artemis"] })),
+      Match.when("excitement", () => ({ itemsVisible: ["starfield"] })),
+      Match.orElse(() => ({ itemsVisible: [] })),
+    );
+  };
 
-  // $inspect(scroll.panelsCurrent).with(console.log);
+  const threeCanvasState: SceneState = $derived.by(() => {
+    // Use the 0-1 progress of the current section
+    const progress = scroll.progressUntilNextSection ?? 0;
+    return getSceneState(scroll.currentSection.name, progress);
+  });
 </script>
 
 {#if isABC}
