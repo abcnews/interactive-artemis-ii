@@ -84,6 +84,12 @@
     scroll.bodyElSize = new ElementSize(() => bodyEl);
   });
 
+  // Define static states to maintain referential equality and reduce allocation
+  const STATE_INTRO = { itemsVisible: ["starfield"] };
+  const STATE_TAKEOFF = { itemsVisible: ["starfield", "artemis"] };
+  const STATE_EXCITEMENT = { itemsVisible: ["starfield"] };
+  const STATE_DEFAULT = { itemsVisible: [] };
+
   type SceneState = {
     itemsVisible: string[];
     orionRotation?: [number, number, number];
@@ -94,25 +100,23 @@
     sectionProgress: number,
   ): SceneState => {
     return Match.value(currentSectionName).pipe(
-      Match.withReturnType<{
-        itemsVisible: string[];
-        orionRotation?: [number, number, number];
-      }>(),
-      Match.when("intro", () => ({ itemsVisible: ["starfield"] })),
+      Match.withReturnType<SceneState>(),
+      Match.when("intro", () => STATE_INTRO),
       Match.when("sls", () => ({
         itemsVisible: ["starfield", "orion"],
         orionRotation: [sectionProgress * Math.PI * 2, 0, 0],
       })),
-      Match.when("takeoff", () => ({ itemsVisible: ["starfield", "artemis"] })),
-      Match.when("excitement", () => ({ itemsVisible: ["starfield"] })),
-      Match.orElse(() => ({ itemsVisible: [] })),
+      Match.when("takeoff", () => STATE_TAKEOFF),
+      Match.when("excitement", () => STATE_EXCITEMENT),
+      Match.orElse(() => STATE_DEFAULT),
     );
   };
 
   const threeCanvasState: SceneState = $derived.by(() => {
     // Use the 0-1 progress of the current section
     const progress = scroll.progressUntilNextSection ?? 0;
-    return getSceneState(scroll.currentSection.name, progress);
+    const name = scroll.currentSection?.name ?? "initial";
+    return getSceneState(name, progress);
   });
 </script>
 
