@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { T, useThrelte } from "@threlte/core";
+  import { T, useThrelte, useTask } from "@threlte/core";
   import { GLTF, useGltf, useDraco } from "@threlte/extras";
-  import { tweened } from "svelte/motion";
+  import { Spring } from "svelte/motion";
+  import { Tween } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
   import * as THREE from "three";
   const { invalidate } = useThrelte();
-
-  // import { fade } from "~/src/lib/transitions/test";
 
   // Assets
   import OrionGL from "~/src/assets/Orion_Draco_Optimized.glb?url";
@@ -24,6 +23,8 @@
     orionRotation = [0, 0, 0],
   }: Props = $props();
 
+  const progress = new Spring<[number, number, number]>([0, 0, 0]);
+
   const dracoLoader = useDraco();
 
   const gltf = $derived(
@@ -33,6 +34,7 @@
   );
 
   let scene = $state<THREE.Group | null>(null);
+  let model = $state<THREE.Group>();
   let trackedMaterials: THREE.Material[] = [];
   let trackedMasks: THREE.Mesh[] = [];
 
@@ -43,7 +45,7 @@
     side: THREE.FrontSide,
   });
 
-  const opacity = tweened(0, {
+  const opacity = new Tween(0, {
     duration: 3000,
     easing: cubicOut,
   });
@@ -81,13 +83,13 @@
       trackedMaterials = materials;
       trackedMasks = masks;
       scene = s;
-      opacity.set(1);
+      opacity.target = 1;
     }
   });
 
   $effect(() => {
     if (!scene) return;
-    const val = $opacity;
+    const val = opacity.current;
     const isTransparent = val < 1;
 
     // Optimized: Loop through flat arrays instead of traversing the scene graph
@@ -103,8 +105,20 @@
 
     invalidate();
   });
+
+  $effect(() => {
+    progress.target = orionRotation;
+  });
+
+  useTask((delta) => {
+    if (model) {
+      model.rotation.y += delta * 0.25;
+    }
+  });
 </script>
 
 {#if scene}
-  <T is={scene} {position} rotation={orionRotation} />
+  <T.Group {position} rotation={progress.current}>
+    <T is={scene} bind:ref={model} />
+  </T.Group>
 {/if}
