@@ -131,9 +131,15 @@
 
   <Portal target="[data-key='body']">
     <BackgroundStage>
-      <ThreeCanvas {...threeCanvasState} />
+      <ThreeCanvas
+        itemsVisible={threeCanvasState.itemsVisible}
+        orionRotation={threeCanvasState.orionRotation}
+        cameraZ={20}
+      />
     </BackgroundStage>
   </Portal>
+
+  <!-- cameraZ={scroll.pageScroll / 100} -->
 
   <Panels />
 

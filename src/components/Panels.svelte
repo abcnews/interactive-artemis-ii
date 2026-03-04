@@ -15,5 +15,9 @@
         padding: 30px 45px;
       }
     }
+
+    [data-tag="startpanelKEYintro"] {
+      background-color: hsla(0, 0%, 6%, 1.0) !important;
+    }
   }
 </style>

@@ -14,7 +14,7 @@
 /* Dark theme using class */
 :root.is-dark-mode {
   --interactive-color-header: hsl(0, 100%, 100%);
-  --interactive-color-background: hsla(0, 0%, 6%, 0.8);
+  --interactive-color-background: hsla(0, 0%, 6%, 1);
 
   /* Panels */
   --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 0.9);
