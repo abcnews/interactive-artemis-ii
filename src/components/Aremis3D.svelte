@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { T } from "@threlte/core";
+  import { T, useTask } from "@threlte/core";
   import { useGltf } from "@threlte/extras";
   import * as THREE from "three";
 
@@ -9,32 +9,37 @@
   type Props = {
     position?: [number, number, number];
     path?: string;
+    scale?: number;
   };
 
-  const { position = [0, 0, -200], path = artemis3D }: Props = $props();
+  const { position = [0, 0, 0], path = artemis3D, scale = 1 }: Props = $props();
 
-  const gltf = $derived(useGltf(path));
+  // svelte-ignore state_referenced_locally
+  const gltf = useGltf(path);
+
+  let rotationY = $state(0);
+
+  useTask(
+    (delta) => {
+      rotationY += delta * 0.1;
+    },
+    { autoInvalidate: false },
+  );
 </script>
-
-<!-- {#await gltf}
-
-{:then model} -->
 
 {#if $gltf}
   <T
     is={$gltf.scene}
     {position}
+    {scale}
+    rotation.y={rotationY}
     oncreate={(ref) => {
       ref.traverse((child) => {
         if (child instanceof THREE.Mesh) {
-          // child.material.metalness = 0.4;
-          // child.material.roughness = 0.8;
-          // child.material.needsUpdate = true;
+          child.material.transparent = true;
+          child.material.opacity = 0.5;
         }
       });
     }}
   />
 {/if}
-<!-- {:catch error}
-
-{/await} -->

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Canvas, T, useThrelte } from "@threlte/core";
-  import { HUD } from "@threlte/extras";
+  import { HUD, Grid } from "@threlte/extras";
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
 
@@ -10,13 +10,25 @@
   import Starfield from "./Starfield.svelte";
   import Scene from "./HUDScene.svelte";
 
+  export type ModelState = {
+    isVisible?: boolean;
+  };
+
   type Props = {
     itemsVisible: string[];
     orionRotation?: [number, number, number];
     cameraZ?: number;
+    starfieldState: ModelState;
+    orionState: ModelState;
   };
 
-  let { itemsVisible = [], orionRotation, cameraZ = 20 }: Props = $props();
+  let {
+    itemsVisible = [],
+    cameraZ = 200,
+    orionRotation,
+    starfieldState = { isVisible: false },
+    orionState = { isVisible: false },
+  }: Props = $props();
 </script>
 
 <div class="stage-root">
@@ -40,18 +52,21 @@
       <Scene />
     </HUD> -->
 
-    {#if itemsVisible.includes("starfield")}
+    {#if starfieldState.isVisible}
       <Starfield />
     {/if}
 
-    {#if itemsVisible.includes("artemis")}
-      <Aremis3D position={[0, 0, -150]} />
+    {#if orionState.isVisible}
+      <Orion position={[0, 0, 0]} orionRotation={undefined} />
     {/if}
 
-    {#if itemsVisible.includes("orion")}
-      <!-- <Sphere position={[0, 0, 0]} /> -->
-      <Orion position={[0, 0, 10]} orionRotation={undefined} />
+    {#if itemsVisible.includes("artemis")}
+      <Aremis3D position={[0, -46, 0]} scale={0.5} />
     {/if}
+
+    <Grid type="grid" infiniteGrid={true} plane="xy" cellColor="green" gridSize={1000}>
+      <T.BoxGeometry />
+    </Grid>
   </Canvas>
 </div>
 

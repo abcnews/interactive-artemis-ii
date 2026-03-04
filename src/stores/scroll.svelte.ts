@@ -37,17 +37,16 @@ class Scroll {
   panelsCurrent = $derived.by(() => {
     return this.panelsData.map((panel) => {
       const { downPage } = panel;
-
       const pixelsFromBottom = this.pageScrollBottom - downPage;
       const pixelsFromTop =
         screen.innerHeight - (this.pageScrollBottom - downPage);
       const inViewport =
         pixelsFromTop > 0 && pixelsFromTop < screen.innerHeight;
       const progressUntilNext = Number(
-        round(pixelsFromTop / panel.height, { places: 3 }),
+        round(1.0 - pixelsFromTop / panel.height, { places: 3 }),
       );
       const screenProgress = Number(
-        round(pixelsFromTop / screen.innerHeight, { places: 3 }),
+        round(1.0 - pixelsFromTop / screen.innerHeight, { places: 3 }),
       );
 
       return {

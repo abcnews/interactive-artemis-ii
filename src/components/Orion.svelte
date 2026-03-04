@@ -28,11 +28,10 @@
   const dracoLoader = useDraco();
   const viewport = useViewport();
 
-  const gltf = $derived(
-    useGltf(path, {
-      dracoLoader,
-    }),
-  );
+  // svelte-ignore state_referenced_locally
+  const gltf = useGltf(path, {
+    dracoLoader,
+  });
 
   let rotationY = $state(0);
 
@@ -48,10 +47,10 @@
   );
 </script>
 
-{#if $gltf?.scene}
-  <Float>
-    <T.Group {position} rotation.y={rotationY}>
-      <T is={$gltf?.scene} />
-    </T.Group>
-  </Float>
+{#if $gltf}
+  <!-- <Float> -->
+  <T.Group {position} rotation.y={rotationY}>
+    <T is={$gltf?.scene} />
+  </T.Group>
+  <!-- </Float> -->
 {/if}

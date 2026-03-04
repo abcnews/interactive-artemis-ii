@@ -6,7 +6,7 @@
     position?: [number, number, number];
   };
 
-  const { position = [0, 0, -200] }: Props = $props();
+  const { position = [0, 0, 0] }: Props = $props();
   const dracoLoader = useDraco();
 </script>
 

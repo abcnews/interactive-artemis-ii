@@ -10,7 +10,7 @@
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
   import UtilGetPanelData from "./components/UtilGetPanelData.svelte";
   import Debug from "./components/Debug.svelte";
-  import ThreeCanvas from "./components/ThreeCanvas.svelte";
+  import ThreeScene, { type ModelState } from "./components/ThreeScene.svelte";
   import Panels from "./components/Panels.svelte";
 
   // Standard imports
@@ -36,6 +36,7 @@
 
   // Other imports
   import { onMount } from "svelte";
+  import Starfield from "./components/Starfield.svelte";
 
   // Constants
   const SCROLL_THROTTLE = 50;
@@ -112,11 +113,60 @@
     );
   };
 
-  const threeCanvasState: SceneState = $derived.by(() => {
+  let threeCanvasState: SceneState = $derived.by(() => {
     // Use the 0-1 progress of the current section
     const progress = scroll.progressUntilNextSection ?? 0;
     const name = scroll.currentSection?.name ?? "initial";
     return getSceneState(name, progress);
+  });
+
+  let elementsVisible = $derived.by(() => {
+    console.log(scroll.panelsCurrent);
+  });
+
+  // $inspect(scroll.panelsCurrent).with(console.log);
+
+  
+
+  let starfieldState: ModelState = $derived.by(() => {
+    const takeoff = scroll.panelsCurrent.find(
+      (panel) => panel.name === "excitement",
+    );
+
+    if (!takeoff) {
+      return {};
+    }
+
+    if (scroll.pageScrollBottom > takeoff.downPage) {
+      return {
+        isVisible: true,
+      };
+    } else {
+      return {
+        isVisible: false,
+      };
+    }
+  });
+
+  let orionState: ModelState = $derived.by(() => {
+    const intro = scroll.panelsCurrent.find((panel) => panel.name === "intro");
+
+    if (!intro) {
+      return {};
+    }
+
+    if (
+      scroll.pageScrollBottom > intro.downPage &&
+      intro.screenProgress > 0.7
+    ) {
+      return {
+        isVisible: true,
+      };
+    } else {
+      return {
+        isVisible: false,
+      };
+    }
   });
 </script>
 
@@ -124,17 +174,21 @@
   <Portal target=".Header">
     <Header
       fadeOutProgress={scroll.currentSection.name === "initial"
-        ? scroll.progressUntilNextSection
-        : 1}
+        ? 0
+        : scroll.currentSection.name === "intro"
+          ? scroll.progressUntilNextSection
+          : 1}
     />
   </Portal>
 
   <Portal target="[data-key='body']">
     <BackgroundStage>
-      <ThreeCanvas
+      <ThreeScene
         itemsVisible={threeCanvasState.itemsVisible}
         orionRotation={threeCanvasState.orionRotation}
-        cameraZ={20}
+        cameraZ={15}
+        {starfieldState}
+        {orionState}
       />
     </BackgroundStage>
   </Portal>

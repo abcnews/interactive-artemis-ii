@@ -28,11 +28,9 @@
   const dracoLoader = useDraco();
   const viewport = useViewport();
 
-  const gltf = $derived(
-    useGltf(path, {
-      dracoLoader,
-    }),
-  );
+  const gltf = useGltf(path, {
+    dracoLoader,
+  });
 
   let scene = $state<THREE.Group | null>(null);
   let trackedMaterials: THREE.Material[] = [];

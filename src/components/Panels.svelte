@@ -9,15 +9,16 @@
       backdrop-filter: blur(7px);
       box-shadow: 0 0px 30px hsla(0, 0%, 100%, 0.2);
       width: calc(100% - 48px);
-      
+
       @include breakpoints.for-tablet-up {
         max-width: 600px;
         padding: 30px 45px;
       }
     }
 
+    // First panel opaque background to hide capsule
     [data-tag="startpanelKEYintro"] {
-      background-color: hsla(0, 0%, 6%, 1.0) !important;
+      background-color: var(--interactive-panel-background-opaque) !important;
     }
   }
 </style>
