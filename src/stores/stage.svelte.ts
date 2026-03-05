@@ -1,16 +1,19 @@
+import { SvelteMap } from "svelte/reactivity";
+
 import { scroll } from "./scroll.svelte";
 
-const transitions = new Map<string, { start: number; end: number }>();
+type Transition = {
+  start: number;
+  end: number;
+};
 
-transitions.set("stars-enter", {
-  start: 1000,
-  end: 2000,
-});
+// I DON'T THINK THIS WILL WORK ACTUALLY
 
 class Stage {
+  transitions = new SvelteMap<string, Transition>();
 
   starsProgress = $derived.by(() => {
-    const { start, end } = transitions.get("stars-enter")!;
+    const { start, end } = this.transitions.get("stars-enter")!;
     const current = scroll.pageScrollBottom;
 
     if (current < start) return 0;
@@ -21,7 +24,7 @@ class Stage {
   transitionsActive = $derived.by(() => {
     const active: Record<string, number> = {};
 
-    transitions.forEach((range, name) => {
+    this.transitions.forEach((range, name) => {
       const current = scroll.pageScrollBottom;
       if (current < range.start) {
         active[name] = 0;
@@ -33,10 +36,18 @@ class Stage {
         );
       }
     });
-
-    console.log(active);
     return active;
   });
+  getDownpage(nameOrDownpage: string) {
+    if (typeof nameOrDownpage === "string") {
+      const panelData = scroll.panelsData.find(
+        (panel) => panel.name === nameOrDownpage,
+      );
+      return panelData?.downPage || 0;
+    } else {
+      return nameOrDownpage;
+    }
+  }
 }
 
 export const stage = new Stage();

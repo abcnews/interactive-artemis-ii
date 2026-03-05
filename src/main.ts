@@ -59,3 +59,19 @@ const init = async () => {
 
 const instance = init();
 export default instance;
+
+
+/*
+  Development code
+
+  Code for development that I don't necessarily need in production.
+*/
+
+// Threlte's useViewport throws an error on teardown during hot reload.
+if (import.meta.env.DEV) {
+  window.addEventListener('unhandledrejection', (event) => {
+    if (event.reason?.message?.includes('getWorldPosition')) {
+      event.preventDefault() // suppresses the console error
+    }
+  })
+}

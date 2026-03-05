@@ -1,13 +1,15 @@
 <script lang="ts">
   import { T, useThrelte, useTask } from "@threlte/core";
   import { useGltf, useDraco, Float, useViewport } from "@threlte/extras";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { Spring } from "svelte/motion";
   import { Tween } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
   import * as THREE from "three";
 
   const { invalidate } = useThrelte();
+
+  import { ROTATION_SPEED } from "~/src/constants";
 
   // Assets
   import OrionGL from "~/src/assets/Orion_Draco_Optimized.glb?url";
@@ -41,9 +43,12 @@
     progress.target = orionRotation;
   });
 
-  useTask(
+  const { stop } = useTask(
     (delta) => {
-      rotationY += delta * 0.1;
+      const vp = viewport.current;
+      if (!vp) return; // guard against teardown race
+
+      rotationY += delta * ROTATION_SPEED;
     },
     { autoInvalidate: false },
   );
@@ -53,6 +58,10 @@
     return () => {
       mounted = false;
     };
+  });
+
+  onDestroy(() => {
+    stop();
   });
 </script>
 

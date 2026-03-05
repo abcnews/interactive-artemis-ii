@@ -24,6 +24,7 @@
     cameraZ?: number;
     starfieldState: ModelState;
     orionState: ModelState;
+    artemisState: ModelState
   };
 
   let {
@@ -32,7 +33,14 @@
     orionRotation,
     starfieldState = { isVisible: false },
     orionState = { isVisible: false },
+    artemisState = { isVisible: false },
   }: Props = $props();
+
+  let cameraZSpring = new Spring(0);
+
+  $effect(() => {
+    cameraZSpring.target = cameraZ;
+  });
 </script>
 
 <div class="stage-root">
@@ -40,7 +48,7 @@
   <Canvas>
     <T.PerspectiveCamera
       makeDefault
-      position={[0, 0, cameraZ]}
+      position={[0, 0, cameraZSpring.current]}
       oncreate={(ref) => {
         ref.lookAt(0, 0, 0);
       }}
@@ -56,14 +64,14 @@
       <Scene />
     </HUD> -->
 
-      <Starfield />
+      <!-- <Starfield /> -->
 
 
     {#if orionState.isVisible}
       <Orion position={[0, 0, 0]} orionRotation={undefined} />
     {/if}
 
-    {#if itemsVisible.includes("artemis")}
+    {#if artemisState.isVisible}
       <Aremis3D position={[0, -46, 0]} scale={0.5} />
     {/if} 
 

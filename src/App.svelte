@@ -19,6 +19,7 @@
   import { SvelteURLSearchParams } from "svelte/reactivity";
   import { Throttled } from "runed";
   import { Match } from "effect";
+  import { scaleLinear } from "d3-scale";
 
   // Type imports
   import { get, type Readable } from "svelte/store";
@@ -39,7 +40,7 @@
   import Starfield from "./components/Starfield.svelte";
 
   // Constants
-  const SCROLL_THROTTLE = 50;
+  const SCROLL_THROTTLE = 25;
 
   // Component props
   export type AppProps = {
@@ -53,6 +54,7 @@
 
   // Bind to window scroll
   let scrollY = $state(0);
+  let cameraZ = $state(20);
 
   // Throttle the page scroll for increased performance
   let throttledPageScroll = new Throttled(() => scrollY, SCROLL_THROTTLE);
@@ -164,6 +166,41 @@
       };
     }
   });
+
+  let artemisState: ModelState = $derived.by(() => {
+    const sls = scroll.panelsCurrent.find((panel) => panel.name === "orion");
+
+    if (!sls) {
+      return {};
+    }
+
+    if (scroll.pageScrollBottom > sls.downPage) {
+      return {
+        isVisible: true,
+      };
+    } else {
+      return {
+        isVisible: false,
+      };
+    }
+  });
+
+  const STARTING_ZOOM = 10;
+  const zoomScale = scaleLinear([0, 1], [STARTING_ZOOM, 30]).clamp(true);
+
+  let cameraZoom = $derived.by(() => {
+    if (scroll.pageScrollBottom < getDownpage("sls") - 300) return STARTING_ZOOM;
+    const panel = scroll.panelsCurrent.find((panel) => panel.name === "sls");
+    if (!panel) return STARTING_ZOOM;
+    return zoomScale(panel.progressUntilNext);
+  });
+
+  function getDownpage(name: string) {
+    const panelData = scroll.panelsData.find((panel) => panel.name === name);
+    return panelData?.downPage ?? 0;
+  }
+
+  $inspect(cameraZoom).with(console.log);
 </script>
 
 {#if isABC}
@@ -182,9 +219,10 @@
       <ThreeScene
         itemsVisible={threeCanvasState.itemsVisible}
         orionRotation={threeCanvasState.orionRotation}
-        cameraZ={15}
+        cameraZ={cameraZoom}
         {starfieldState}
         {orionState}
+        {artemisState}
       />
     </BackgroundStage>
   </Portal>
