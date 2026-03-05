@@ -13,7 +13,6 @@
   // Stores
   import { stage } from "~/src/stores/stage.svelte";
 
-
   export type ModelState = {
     isVisible?: boolean;
   };
@@ -24,7 +23,7 @@
     cameraZ?: number;
     starfieldState: ModelState;
     orionState: ModelState;
-    artemisState: ModelState
+    artemisState: ModelState;
   };
 
   let {
@@ -44,7 +43,6 @@
 </script>
 
 <div class="stage-root">
-  <!-- renderMode="always" -->
   <Canvas>
     <T.PerspectiveCamera
       makeDefault
@@ -60,24 +58,13 @@
     <T.DirectionalLight position={[10, 10, 10]} />
     <T.AmbientLight intensity={0.1} />
 
-    <!-- <HUD>
-      <Scene />
-    </HUD> -->
-
-      <!-- <Starfield /> -->
-
-
     {#if orionState.isVisible}
       <Orion position={[0, 0, 0]} orionRotation={undefined} />
     {/if}
 
     {#if artemisState.isVisible}
       <Aremis3D position={[0, -46, 0]} scale={0.5} />
-    {/if} 
-
-    <!-- <Grid type="grid" infiniteGrid={true} plane="xy" cellColor="green" gridSize={1000}>
-      <T.BoxGeometry />
-    </Grid> -->
+    {/if}
   </Canvas>
 </div>
 
