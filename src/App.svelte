@@ -185,22 +185,27 @@
     }
   });
 
-  const STARTING_ZOOM = 10;
-  const zoomScale = scaleLinear([0, 1], [STARTING_ZOOM, 30]).clamp(true);
+  const getCameraZoom = (
+    currentSectionName: string,
+    sectionProgress: number,
+  ): number => {
+    const STARTING_ZOOM = 10;
+    return Match.value(currentSectionName).pipe(
+      Match.withReturnType<number>(),
+      Match.when("sls", () => {
+        return scaleLinear([0, 1], [STARTING_ZOOM, 30]).clamp(true)(
+          sectionProgress,
+        );
+      }),
+      Match.orElse(() => STARTING_ZOOM),
+    );
+  };
 
   let cameraZoom = $derived.by(() => {
-    if (scroll.pageScrollBottom < getDownpage("sls") - 300) return STARTING_ZOOM;
-    const panel = scroll.panelsCurrent.find((panel) => panel.name === "sls");
-    if (!panel) return STARTING_ZOOM;
-    return zoomScale(panel.progressUntilNext);
+    const progress = scroll.progressUntilNextSection ?? 0;
+    const name = scroll.currentSection?.name ?? "initial";
+    return getCameraZoom(name, progress);
   });
-
-  function getDownpage(name: string) {
-    const panelData = scroll.panelsData.find((panel) => panel.name === name);
-    return panelData?.downPage ?? 0;
-  }
-
-  $inspect(cameraZoom).with(console.log);
 </script>
 
 {#if isABC}
