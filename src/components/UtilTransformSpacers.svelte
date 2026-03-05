@@ -13,11 +13,12 @@ Utility component to add spacing in the DOM
   import { parse as parseAlternatingCaseToObject } from "@abcnews/alternating-case-to-object";
   import * as v from "valibot";
   import { Effect, Match } from "effect";
+  import { screen } from "../stores/screen.svelte";
 
   import effectTry from "~/src/lib/effectTry";
 
   const ParsedSchema = v.object({
-    gap: v.number("Expected to be a number"),
+    gap: v.union([v.number(), v.string()]),
   });
 
   type ParsedData = v.InferOutput<typeof ParsedSchema>;
@@ -47,11 +48,25 @@ Utility component to add spacing in the DOM
         const spacerHTMLElement = first as unknown as HTMLElement;
         const gap = parsedValues.gap;
 
-        spacerHTMLElement.style.setProperty(
-          "margin-top",
-          `${typeof gap === "number" ? gap : 100}px`,
-          "important",
-        );
+        if (typeof gap === "string") {
+          spacerHTMLElement.style.setProperty(
+            "margin-top",
+            `${(screen.innerHeight * 0.95).toString()}px`,
+            "important",
+          );
+        } else if (typeof gap === "number") {
+          spacerHTMLElement.style.setProperty(
+            "margin-top",
+            `${gap}px`,
+            "important",
+          );
+        } else {
+          spacerHTMLElement.style.setProperty(
+            "margin-top",
+            "200px",
+            "important",
+          );
+        }
 
         // Recursively process the rest of the spacers
         processSpacers(rest);

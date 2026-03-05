@@ -1,6 +1,7 @@
 <script lang="ts">
   import { T, useThrelte, useTask } from "@threlte/core";
   import { useGltf, useDraco, Float, useViewport } from "@threlte/extras";
+  import { onMount } from "svelte";
   import { Spring } from "svelte/motion";
   import { Tween } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
@@ -34,6 +35,7 @@
   });
 
   let rotationY = $state(0);
+  let mounted = $state(false);
 
   $effect(() => {
     progress.target = orionRotation;
@@ -45,12 +47,17 @@
     },
     { autoInvalidate: false },
   );
+
+  onMount(() => {
+    mounted = true;
+    return () => {
+      mounted = false;
+    };
+  });
 </script>
 
-{#if $gltf}
-  <!-- <Float> -->
+{#if mounted && $gltf}
   <T.Group {position} rotation.y={rotationY}>
     <T is={$gltf?.scene} />
   </T.Group>
-  <!-- </Float> -->
 {/if}

@@ -124,10 +124,6 @@
     console.log(scroll.panelsCurrent);
   });
 
-  // $inspect(scroll.panelsCurrent).with(console.log);
-
-  
-
   let starfieldState: ModelState = $derived.by(() => {
     const takeoff = scroll.panelsCurrent.find(
       (panel) => panel.name === "excitement",

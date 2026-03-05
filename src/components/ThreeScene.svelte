@@ -8,7 +8,11 @@
   import Aremis3D from "./Aremis3D.svelte";
   import Orion from "./Orion.svelte";
   import Starfield from "./Starfield.svelte";
-  import Scene from "./HUDScene.svelte";
+  import HUDScene from "./HUDScene.svelte";
+
+  // Stores
+  import { stage } from "~/src/stores/stage.svelte";
+
 
   export type ModelState = {
     isVisible?: boolean;
@@ -52,9 +56,8 @@
       <Scene />
     </HUD> -->
 
-    {#if starfieldState.isVisible}
       <Starfield />
-    {/if}
+
 
     {#if orionState.isVisible}
       <Orion position={[0, 0, 0]} orionRotation={undefined} />
@@ -62,11 +65,11 @@
 
     {#if itemsVisible.includes("artemis")}
       <Aremis3D position={[0, -46, 0]} scale={0.5} />
-    {/if}
+    {/if} 
 
-    <Grid type="grid" infiniteGrid={true} plane="xy" cellColor="green" gridSize={1000}>
+    <!-- <Grid type="grid" infiniteGrid={true} plane="xy" cellColor="green" gridSize={1000}>
       <T.BoxGeometry />
-    </Grid>
+    </Grid> -->
   </Canvas>
 </div>
 

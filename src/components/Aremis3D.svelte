@@ -1,10 +1,12 @@
 <script lang="ts">
   import { T, useTask } from "@threlte/core";
-  import { useGltf } from "@threlte/extras";
+  import { useGltf, useDraco } from "@threlte/extras";
   import * as THREE from "three";
 
   // Assets
-  import artemis3D from "~/src/assets/NASA_SLS-block-1-v2.glb?url";
+  import artemis3D from "~/src/assets/NASA_SLS-block-1-v2-Optimized.glb?url";
+
+  const dracoLoader = useDraco();
 
   type Props = {
     position?: [number, number, number];
@@ -15,7 +17,9 @@
   const { position = [0, 0, 0], path = artemis3D, scale = 1 }: Props = $props();
 
   // svelte-ignore state_referenced_locally
-  const gltf = useGltf(path);
+  const gltf = useGltf(path, {
+    dracoLoader,
+  });
 
   let rotationY = $state(0);
 

@@ -1,11 +1,15 @@
 <script lang="ts">
   import { scroll } from "~/src/stores/scroll.svelte";
+  import { stage } from "~/src/stores/stage.svelte";
+
+
 </script>
 
 <div class="debug-root">
-  <div>Section: {scroll.currentSection.name}</div>
+  <!-- <div>Section: {scroll.currentSection.name}</div>
   <div>Scroll: {scroll.pageScroll}</div>
-  <div>Progress: {scroll.progressUntilNextSection}</div>
+  <div>Progress: {scroll.progressUntilNextSection}</div> -->
+<div>Active: {stage.transitionsActive}</div>
 </div>
 
 <style lang="scss">
