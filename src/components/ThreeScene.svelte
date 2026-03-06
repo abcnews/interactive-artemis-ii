@@ -42,6 +42,14 @@
   $effect(() => {
     cameraPositionSpring.target = cameraPosition;
   });
+
+  let artemisOpacity = $state(0);
+
+  $effect(() => {
+    setInterval(() => {
+      artemisOpacity = Math.random();
+    }, 100);
+  });
 </script>
 
 <div class="stage-root">
@@ -65,7 +73,7 @@
     {/if}
 
     {#if artemisState.isVisible}
-      <Artemis position={[0, -46, 0]} scale={0.5} />
+      <Artemis position={[0, -46, 0]} scale={0.5} opacity={artemisOpacity} />
     {/if}
   </Canvas>
 </div>

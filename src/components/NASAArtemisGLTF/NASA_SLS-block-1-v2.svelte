@@ -10,6 +10,9 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
   import { T, type Props } from "@threlte/core";
   import { useGltf, useDraco } from "@threlte/extras";
 
+  const ROUGHNESS = 0.7;
+  const METALNESS = 0.1;
+
   const dracoLoader = useDraco();
 
   let {
@@ -17,12 +20,14 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
     error,
     children,
     ref = $bindable(),
+    opacity = 0.5,
     ...props
   }: Props<THREE.Group> & {
     ref?: THREE.Group;
     children?: Snippet<[{ ref: THREE.Group }]>;
     fallback?: Snippet;
     error?: Snippet<[{ error: Error }]>;
+    opacity?: number;
   } = $props();
 
   type GLTFResult = {
@@ -45,47 +50,111 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
 
   const gltf = useGltf<GLTFResult>(gltfPath, { dracoLoader });
 
-  const standardMaterial = new THREE.MeshStandardMaterial({
-    roughness: 0.7,
-    metalness: 0.1,
-    opacity: 0.5,
-    transparent: true,
-    depthWrite: false,
-  });
 </script>
 
 <T.Group bind:ref dispose={false} {...props}>
   {#await gltf}
     {@render fallback?.()}
   {:then gltf}
-    <T.Mesh
-      geometry={gltf.nodes.core.geometry}
-      material={standardMaterial}
-    ></T.Mesh>
-    <T.Mesh
-      geometry={gltf.nodes["srb-left"].geometry}
-      material={standardMaterial}
-    ></T.Mesh>
-    <T.Mesh
-      geometry={gltf.nodes["core-left-fill"].geometry}
-      material={standardMaterial}
-    />
-    <T.Mesh
-      geometry={gltf.nodes["srb-right"].geometry}
-      material={standardMaterial}
-    />
-    <T.Mesh
-      geometry={gltf.nodes["core-right-fill"].geometry}
-      material={standardMaterial}
-    />
-    <T.Mesh geometry={gltf.nodes.las.geometry} material={standardMaterial} />
-    <T.Mesh geometry={gltf.nodes.csm.geometry} material={standardMaterial} />
-    <T.Mesh geometry={gltf.nodes.icps.geometry} material={standardMaterial} />
-    <T.Mesh geometry={gltf.nodes.lvsa.geometry} material={standardMaterial} />
-    <T.Mesh
-      geometry={gltf.nodes["rs-25"].geometry}
-      material={standardMaterial}
-    />
+    <T.Mesh geometry={gltf.nodes.core.geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes["srb-left"].geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes["core-left-fill"].geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes["srb-right"].geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes["core-right-fill"].geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes.las.geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes.csm.geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes.icps.geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes.lvsa.geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
+
+    <T.Mesh geometry={gltf.nodes["rs-25"].geometry}>
+      <T.MeshStandardMaterial
+        roughness={ROUGHNESS}
+        metalness={METALNESS}
+        {opacity}
+        transparent
+        depthWrite={false}
+      />
+    </T.Mesh>
   {:catch err}
     {@render error?.({ error: err })}
   {/await}

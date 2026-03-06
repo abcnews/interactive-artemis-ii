@@ -27,6 +27,7 @@
   // Stores
   import { scroll } from "./stores/scroll.svelte";
   import { screen } from "./stores/screen.svelte";
+  import { stage } from "./stores/stage.svelte";
 
   // Utilities
   import {
@@ -38,6 +39,7 @@
   // Other imports
   import { onMount } from "svelte";
   import Starfield from "./components/Starfield.svelte";
+  import { endsWith } from "valibot";
 
   // Constants
   const SCROLL_THROTTLE = 25;
@@ -186,8 +188,9 @@
   });
 
   const getCameraPosition = (
+    pageScrollBottom: number,
     currentSectionName: string,
-    sectionProgress: number,
+    scrollProgress: number,
   ): [number, number, number] => {
     const STARTING_POSITION: [number, number, number] = [0, 0, 10];
     const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 70]).clamp(true);
@@ -196,8 +199,8 @@
 
     const sectionPosition: [number, number, number] = [
       0,
-      yScale(sectionProgress),
-      zScale(sectionProgress),
+      yScale(scrollProgress),
+      zScale(scrollProgress),
     ];
 
     const position = Match.value(currentSectionName).pipe(
@@ -208,16 +211,31 @@
       Match.when("sls", () => {
         return sectionPosition;
       }),
+      Match.when("takeoff", () => sectionPosition),
+      Match.when("excitement", () => sectionPosition),
       Match.orElse(() => ENDING_POSITION),
     );
 
     return position;
   };
 
+  const getProgressBetweenSections = (start: string, end: string) => {
+    return scaleLinear(
+      [stage.getDownpage(start), stage.getDownpage(end)],
+      [0, 1],
+    ).clamp(false);
+  };
+
   let cameraPosition = $derived.by(() => {
     const progress = scroll.progressUntilNextSection ?? 0;
-    const name = scroll.currentSection?.name ?? "initial";
-    return getCameraPosition(name, progress);
+    const pageScrollBottom = scroll.pageScrollBottom;
+    const sectionName = scroll.currentSection?.name ?? "initial";
+
+    return getCameraPosition(
+      pageScrollBottom,
+      sectionName,
+      getProgressBetweenSections("sls", "takeoff")(pageScrollBottom),
+    );
   });
 </script>
 
