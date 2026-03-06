@@ -208,22 +208,14 @@
       Match.when("initial", () => STARTING_POSITION),
       Match.when("intro", () => STARTING_POSITION),
       Match.when("orion", () => STARTING_POSITION),
-      Match.when("sls", () => {
-        return sectionPosition;
-      }),
+      Match.when("artemis", () => sectionPosition),
+      Match.when("sls", () => sectionPosition),
       Match.when("takeoff", () => sectionPosition),
       Match.when("excitement", () => sectionPosition),
       Match.orElse(() => ENDING_POSITION),
     );
 
     return position;
-  };
-
-  const getProgressBetweenSections = (start: string, end: string) => {
-    return scaleLinear(
-      [stage.getDownpage(start), stage.getDownpage(end)],
-      [0, 1],
-    ).clamp(false);
   };
 
   let cameraPosition = $derived.by(() => {
@@ -234,7 +226,9 @@
     return getCameraPosition(
       pageScrollBottom,
       sectionName,
-      getProgressBetweenSections("sls", "takeoff")(pageScrollBottom),
+      stage.getProgressBetweenSections({ start: "artemis", end: "sls" })(
+        pageScrollBottom,
+      ),
     );
   });
 </script>

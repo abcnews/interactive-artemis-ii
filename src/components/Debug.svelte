@@ -5,7 +5,7 @@
 
 <div class="debug-root">
   <div>Section: {scroll.currentSection.name}</div>
-  <div>Scroll: {scroll.pageScroll}</div>
+  <div>Downpage: {scroll.pageScrollBottom}</div>
   <div>Progress: {scroll.progressUntilNextSection}</div> 
   <!-- <div>Active: {JSON.stringify(stage.transitionsActive)}</div> -->
 </div>

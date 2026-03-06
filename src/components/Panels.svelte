@@ -14,6 +14,10 @@
         max-width: 600px;
         padding: 30px 45px;
       }
+
+      img {
+        padding: 32px;
+      }
     }
 
     // First panel opaque background to hide capsule

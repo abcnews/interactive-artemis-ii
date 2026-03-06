@@ -1,5 +1,5 @@
 import { SvelteMap } from "svelte/reactivity";
-
+import { scaleLinear } from "d3-scale";
 import { scroll } from "./scroll.svelte";
 
 type Transition = {
@@ -47,6 +47,29 @@ class Stage {
     } else {
       return nameOrDownpage;
     }
+  }
+  getProgressBetweenSections({
+    start,
+    end,
+    startOffset = 0,
+    endOffset = 0,
+    domain = [0, 1],
+    clamp = false
+  }: {
+    start: string;
+    end: string;
+    startOffset?: number;
+    endOffset?: number;
+    domain?: [number, number];
+    clamp?: boolean;
+  }) {
+    return scaleLinear(
+      [
+        this.getDownpage(start) + startOffset,
+        this.getDownpage(end) + endOffset,
+      ],
+      domain,
+    ).clamp(clamp);
   }
 }
 
