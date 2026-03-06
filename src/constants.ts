@@ -1,1 +1,1 @@
-export const ROTATION_SPEED = 1.1;
+export const ROTATION_SPEED = 0;
