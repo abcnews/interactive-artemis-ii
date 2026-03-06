@@ -9,12 +9,13 @@
   import Sphere from "./Sphere.svelte";
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
   import Orion from "./Orion.svelte";
-  import Starfield from "./Starfield.svelte";
+  import Stardust from "./Stardust.svelte";
   import HUDScene from "./HUDScene.svelte";
 
   // Stores
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
+  import { duration } from "effect/Config";
 
   export type ModelState = {
     isVisible?: boolean;
@@ -57,21 +58,22 @@
 
   const whichScene = Match.type<{ downpage: number }>().pipe(
     Match.withReturnType<string>(),
-    Match.when({ downpage: (downpage) => downpage < 8000 }, () => "setup"),
-    Match.when({ downpage: (downpage) => downpage < 10000 }, () => "launch"),
-    Match.orElse(() => "setup"),
+    Match.when(
+      { downpage: (downpage) => downpage < stage.getDownpage("excitement") },
+      () => "setup",
+    ),
+    // Match.when({ downpage: (downpage) => downpage < 10000 }, () => "launch"),
+    Match.orElse(() => "launch"),
   );
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div class="stage-root setup" transition:fade>
+  <div class="stage-root setup" transition:fade={{ duration: 2000 }}>
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
         position={cameraPositionSpring.current}
-        oncreate={(ref) => {
-          // ref.lookAt(0, 0, 0);
-        }}
+        oncreate={(ref) => {}}
         fov={90}
         near={0.01}
         far={1000}
@@ -90,7 +92,31 @@
     </Canvas>
   </div>
 {:else}
-  <div class="stage-root launch"></div>
+  <div class="stage-root launch" transition:fade={{ duration: 2000 }}>
+    <Canvas
+      createRenderer={(canvas) => {
+        return new THREE.WebGLRenderer({
+          canvas,
+          logarithmicDepthBuffer: true,
+          antialias: true,
+        });
+      }}
+    >
+      <T.PerspectiveCamera
+        makeDefault
+        position={cameraPositionSpring.current}
+        oncreate={(ref) => {}}
+        fov={90}
+        near={0.01}
+        far={1000}
+      ></T.PerspectiveCamera>
+
+      <T.DirectionalLight position={[10, 10, 10]} />
+      <T.AmbientLight intensity={0.1} />
+
+      <Stardust />
+    </Canvas>
+  </div>
 {/if}
 
 <style lang="scss">
@@ -101,4 +127,8 @@
     top: 0;
     left: 0;
   }
+
+  // .launch {
+  //   background-color: #0052a2;
+  // }
 </style>

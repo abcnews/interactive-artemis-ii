@@ -15,8 +15,24 @@
         padding: 30px 45px;
       }
 
+      figure {
+        text-align: center;
+
+        [data-component="AspectRatioContainer"] {
+          max-width: 400px;
+          margin-inline: auto;
+          padding-bottom: 0;
+          height: auto;
+        }
+      }
+
       img {
         padding: 32px;
+        position: relative;
+
+        @include breakpoints.for-tablet-up {
+          padding: 48px;
+        }
       }
     }
 

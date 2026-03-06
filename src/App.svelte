@@ -38,7 +38,7 @@
 
   // Other imports
   import { onMount } from "svelte";
-  import Starfield from "./components/Starfield.svelte";
+  import Starfield from "./components/Stardust.svelte";
   import { endsWith } from "valibot";
 
   // Constants
@@ -190,28 +190,68 @@
   const getCameraPosition = (
     pageScrollBottom: number,
     currentSectionName: string,
-    scrollProgress: number,
   ): [number, number, number] => {
     const STARTING_POSITION: [number, number, number] = [0, 0, 10];
-    const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 70]).clamp(true);
+    const TAKEOFF_POSITION: [number, number, number] = [0, -40, 70];
+    const ENDING_POSITION: [number, number, number] = [0, -40, -1000];
     const yScale = scaleLinear([0, 1], [STARTING_POSITION[1], -40]).clamp(true);
-    const ENDING_POSITION: [number, number, number] = [0, yScale(1), zScale(1)];
 
-    const sectionPosition: [number, number, number] = [
-      0,
-      yScale(scrollProgress),
-      zScale(scrollProgress),
-    ];
+    function zoomFromArtemisToSls() {
+      const scrollProgress = stage.getProgressBetweenSections({
+        start: "artemis",
+        end: "sls",
+      })(pageScrollBottom);
+
+      const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 70]).clamp(
+        true,
+      );
+
+      const sectionPosition: [number, number, number] = [
+        0,
+        yScale(scrollProgress),
+        zScale(scrollProgress),
+      ];
+
+      return sectionPosition;
+    }
 
     const position = Match.value(currentSectionName).pipe(
       Match.withReturnType<[number, number, number]>(),
       Match.when("initial", () => STARTING_POSITION),
       Match.when("intro", () => STARTING_POSITION),
       Match.when("orion", () => STARTING_POSITION),
-      Match.when("artemis", () => sectionPosition),
-      Match.when("sls", () => sectionPosition),
-      Match.when("takeoff", () => sectionPosition),
-      Match.when("excitement", () => sectionPosition),
+      Match.when("artemis", () => zoomFromArtemisToSls()),
+      Match.when("sls", () => TAKEOFF_POSITION),
+      Match.when("takeoff", () => TAKEOFF_POSITION),
+      Match.when("excitement", () => TAKEOFF_POSITION),
+      Match.when("stratosphere", () => {
+        const scrollProgress = stage.getProgressBetweenSections({
+          start: "stratosphere",
+          end: "maxq",
+        })(pageScrollBottom);
+        const stratosphereZScale = scaleLinear([0, 1], [70, -40]).clamp(true);
+        const sectionPosition: [number, number, number] = [
+          0,
+          yScale(1),
+          stratosphereZScale(scrollProgress),
+        ];
+
+        return sectionPosition;
+      }),
+      Match.when("maxq", () => {
+        const scrollProgress = stage.getProgressBetweenSections({
+          start: "maxq",
+          end: "cornish",
+        })(pageScrollBottom);
+        const stratosphereZScale = scaleLinear([0, 1], [-40, -140]).clamp(true);
+        const sectionPosition: [number, number, number] = [
+          0,
+          yScale(1),
+          stratosphereZScale(scrollProgress),
+        ];
+
+        return sectionPosition;
+      }),
       Match.orElse(() => ENDING_POSITION),
     );
 
@@ -223,13 +263,7 @@
     const pageScrollBottom = scroll.pageScrollBottom;
     const sectionName = scroll.currentSection?.name ?? "initial";
 
-    return getCameraPosition(
-      pageScrollBottom,
-      sectionName,
-      stage.getProgressBetweenSections({ start: "artemis", end: "sls" })(
-        pageScrollBottom,
-      ),
-    );
+    return getCameraPosition(pageScrollBottom, sectionName);
   });
 </script>
 

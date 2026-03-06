@@ -66,7 +66,9 @@
 </script>
 
 {#if mounted && $gltf}
-  <T.Group {position} rotation.y={rotationY}>
-    <T is={$gltf?.scene} />
-  </T.Group>
+  <Float floatIntensity={5} rotationIntensity={2}>
+    <T.Group {position} rotation.y={rotationY}>
+      <T is={$gltf?.scene} />
+    </T.Group>
+  </Float>
 {/if}
