@@ -43,6 +43,7 @@
     "effect": "^3.19.17",
     "eslint-plugin-neverthrow": "^1.1.4",
     "neverthrow": "^8.2.0",
+    "prettier-plugin-svelte": "^3.5.1",
     "rand-seed": "^3.0.0",
     "runed": "^0.37.1",
     "svelte-inview": "^4.0.4",

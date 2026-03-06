@@ -185,26 +185,39 @@
     }
   });
 
-  const getCameraZoom = (
+  const getCameraPosition = (
     currentSectionName: string,
     sectionProgress: number,
-  ): number => {
-    const STARTING_ZOOM = 10;
-    return Match.value(currentSectionName).pipe(
-      Match.withReturnType<number>(),
+  ): [number, number, number] => {
+    const STARTING_POSITION: [number, number, number] = [0, 0, 10];
+    const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 70]).clamp(true);
+    const yScale = scaleLinear([0, 1], [STARTING_POSITION[1], -40]).clamp(true);
+    const ENDING_POSITION: [number, number, number] = [0, yScale(1), zScale(1)];
+
+    const sectionPosition: [number, number, number] = [
+      0,
+      yScale(sectionProgress),
+      zScale(sectionProgress),
+    ];
+
+    const position = Match.value(currentSectionName).pipe(
+      Match.withReturnType<[number, number, number]>(),
+      Match.when("initial", () => STARTING_POSITION),
+      Match.when("intro", () => STARTING_POSITION),
+      Match.when("orion", () => STARTING_POSITION),
       Match.when("sls", () => {
-        return scaleLinear([0, 1], [STARTING_ZOOM, 30]).clamp(true)(
-          sectionProgress,
-        );
+        return sectionPosition;
       }),
-      Match.orElse(() => STARTING_ZOOM),
+      Match.orElse(() => ENDING_POSITION),
     );
+
+    return position;
   };
 
-  let cameraZoom = $derived.by(() => {
+  let cameraPosition = $derived.by(() => {
     const progress = scroll.progressUntilNextSection ?? 0;
     const name = scroll.currentSection?.name ?? "initial";
-    return getCameraZoom(name, progress);
+    return getCameraPosition(name, progress);
   });
 </script>
 
@@ -224,7 +237,7 @@
       <ThreeScene
         itemsVisible={threeCanvasState.itemsVisible}
         orionRotation={threeCanvasState.orionRotation}
-        cameraZ={cameraZoom}
+        {cameraPosition}
         {starfieldState}
         {orionState}
         {artemisState}

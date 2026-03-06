@@ -21,9 +21,12 @@
     opacity?: number;
   };
 
-  const { position = [0, 0, 0], path = artemis3D, scale = 1, opacity = 0.5 }: Props = $props();
-
-  let mounted = $state(false);
+  const {
+    position = [0, 0, 0],
+    path = artemis3D,
+    scale = 1,
+    opacity = 0.5,
+  }: Props = $props();
 
   // svelte-ignore state_referenced_locally
   const gltf = useGltf(path, {
@@ -36,7 +39,7 @@
   let trackedMasks: THREE.Mesh[] = [];
 
   // Shared material for all depth masks to save memory
-  const depthMaterial = new THREE.MeshBasicMaterial({
+  const depthMaterial = new THREE.MeshStandardMaterial({
     colorWrite: false,
     depthWrite: true,
     side: THREE.FrontSide,
@@ -55,6 +58,7 @@
 
       s.traverse((child) => {
         if (child instanceof THREE.Mesh) {
+          console.log(child.name, child.material.type);
           if (child.userData.isDepthMask) return;
 
           if (child.material) {
@@ -111,16 +115,9 @@
     },
     { autoInvalidate: false },
   );
-
-  onMount(() => {
-    mounted = true;
-    return () => {
-      mounted = false;
-    };
-  });
 </script>
 
-{#if mounted && scene}
+{#if scene}
   <T.Group {position} {scale} rotation.y={rotationY}>
     <T is={scene} />
   </T.Group>

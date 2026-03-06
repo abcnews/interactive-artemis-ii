@@ -5,7 +5,7 @@
   import { Spring } from "svelte/motion";
 
   import Sphere from "./Sphere.svelte";
-  import Aremis3D from "./Aremis3D.svelte";
+  import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
   import Orion from "./Orion.svelte";
   import Starfield from "./Starfield.svelte";
   import HUDScene from "./HUDScene.svelte";
@@ -21,6 +21,7 @@
     itemsVisible: string[];
     orionRotation?: [number, number, number];
     cameraZ?: number;
+    cameraPosition: [number, number, number];
     starfieldState: ModelState;
     orionState: ModelState;
     artemisState: ModelState;
@@ -28,17 +29,18 @@
 
   let {
     itemsVisible = [],
-    cameraZ = 200,
     orionRotation,
+    cameraZ = 200,
+    cameraPosition,
     starfieldState = { isVisible: false },
     orionState = { isVisible: false },
     artemisState = { isVisible: false },
   }: Props = $props();
 
-  let cameraZSpring = new Spring(0);
+  let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0]);
 
   $effect(() => {
-    cameraZSpring.target = cameraZ;
+    cameraPositionSpring.target = cameraPosition;
   });
 </script>
 
@@ -46,7 +48,7 @@
   <Canvas>
     <T.PerspectiveCamera
       makeDefault
-      position={[0, 0, cameraZSpring.current]}
+      position={cameraPositionSpring.current}
       oncreate={(ref) => {
         ref.lookAt(0, 0, 0);
       }}
@@ -63,7 +65,7 @@
     {/if}
 
     {#if artemisState.isVisible}
-      <Aremis3D position={[0, -46, 0]} scale={0.5} />
+      <Artemis position={[0, -46, 0]} scale={0.5} />
     {/if}
   </Canvas>
 </div>
