@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Canvas, T, useThrelte } from "@threlte/core";
-  import { HUD, Grid, Stars } from "@threlte/extras";
+  import { HUD, Grid, Stars, Float } from "@threlte/extras";
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
   import { Match } from "effect";
@@ -15,10 +15,10 @@
   // Stores
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
-  import { duration } from "effect/Config";
 
   export type ModelState = {
     isVisible?: boolean;
+    shouldFloat?: boolean;
   };
 
   type Props = {
@@ -83,7 +83,13 @@
       <T.AmbientLight intensity={0.1} />
 
       {#if orionState.isVisible}
-        <Orion position={[0, 0, 0]} orionRotation={undefined} />
+        <Float
+          floatIntensity={orionState.shouldFloat ? 5: 0}
+          rotationIntensity={orionState.shouldFloat ? 2: 0}
+          rotationSpeed={[1, 0.5, 0.2]}
+        >
+          <Orion position={[0, 0, 0]} orionRotation={undefined} />
+        </Float>
       {/if}
 
       {#if artemisState.isVisible}
