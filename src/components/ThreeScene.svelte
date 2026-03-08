@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Canvas, T, useThrelte } from "@threlte/core";
-  import { HUD, Grid } from "@threlte/extras";
+  import { HUD, Grid, Stars } from "@threlte/extras";
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
   import { Match } from "effect";
@@ -9,7 +9,7 @@
   import Sphere from "./Sphere.svelte";
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
   import Orion from "./Orion.svelte";
-  import Stardust from "./Stardust.svelte";
+  import Starfield from "./Starfield.svelte";
   import HUDScene from "./HUDScene.svelte";
 
   // Stores
@@ -114,7 +114,7 @@
       <T.DirectionalLight position={[10, 10, 10]} />
       <T.AmbientLight intensity={0.1} />
 
-      <Stardust />
+      <Starfield />
     </Canvas>
   </div>
 {/if}

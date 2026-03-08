@@ -66,7 +66,7 @@
 </script>
 
 {#if mounted && $gltf}
-  <Float floatIntensity={5} rotationIntensity={2}>
+  <Float floatIntensity={5} rotationIntensity={2} rotationSpeed={[1, 0.5, 0.2]}>
     <T.Group {position} rotation.y={rotationY}>
       <T is={$gltf?.scene} />
     </T.Group>

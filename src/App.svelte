@@ -38,7 +38,7 @@
 
   // Other imports
   import { onMount } from "svelte";
-  import Starfield from "./components/Stardust.svelte";
+  import Starfield from "./components/Starfield.svelte";
   import { endsWith } from "valibot";
 
   // Constants
@@ -193,7 +193,7 @@
   ): [number, number, number] => {
     const STARTING_POSITION: [number, number, number] = [0, 0, 10];
     const TAKEOFF_POSITION: [number, number, number] = [0, -40, 70];
-    const ENDING_POSITION: [number, number, number] = [0, -40, -1000];
+    const ENDING_POSITION: [number, number, number] = [0, -40, -500];
     const yScale = scaleLinear([0, 1], [STARTING_POSITION[1], -40]).clamp(true);
 
     function zoomFromArtemisToSls() {
