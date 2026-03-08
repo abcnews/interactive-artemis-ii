@@ -6,7 +6,7 @@
     color?: string;
   }
 
-  const { position = [0, 0, 0], color = "darkgray" }: Props = $props();
+  const { position = [1, -38, 0], color = "darkgray" }: Props = $props();
 </script>
 
 <T.Mesh {position}>

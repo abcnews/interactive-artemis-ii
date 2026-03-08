@@ -16,6 +16,9 @@
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
 
+  // Constants
+  const FOV = 90;
+
   export type ModelState = {
     isVisible?: boolean;
     shouldFloat?: boolean;
@@ -74,7 +77,7 @@
         makeDefault
         position={cameraPositionSpring.current}
         oncreate={(ref) => {}}
-        fov={90}
+        fov={FOV}
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
@@ -84,8 +87,8 @@
 
       {#if orionState.isVisible}
         <Float
-          floatIntensity={orionState.shouldFloat ? 5: 0}
-          rotationIntensity={orionState.shouldFloat ? 2: 0}
+          floatIntensity={orionState.shouldFloat ? 5 : 0}
+          rotationIntensity={orionState.shouldFloat ? 2 : 0}
           rotationSpeed={[1, 0.5, 0.2]}
         >
           <Orion position={[0, 0, 0]} orionRotation={undefined} />
@@ -112,7 +115,7 @@
         makeDefault
         position={cameraPositionSpring.current}
         oncreate={(ref) => {}}
-        fov={90}
+        fov={FOV}
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
@@ -121,6 +124,8 @@
       <T.AmbientLight intensity={0.1} />
 
       <Starfield />
+
+      <Sphere />
     </Canvas>
   </div>
 {/if}

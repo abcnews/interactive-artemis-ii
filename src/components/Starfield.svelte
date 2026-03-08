@@ -16,6 +16,7 @@
     }
   });
 
+  // TODO: Make sure no stars are generated too close
   const generateStars = () => {
     const count = 10000;
     const positions = new Float32Array(count * 3);
