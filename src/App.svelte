@@ -259,7 +259,6 @@
   };
 
   let cameraPosition = $derived.by(() => {
-    const progress = scroll.progressUntilNextSection ?? 0;
     const pageScrollBottom = scroll.pageScrollBottom;
     const sectionName = scroll.currentSection?.name ?? "initial";
 

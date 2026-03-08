@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { T , useTask, useThrelte} from "@threlte/core";
+  import { T, useTask, useThrelte } from "@threlte/core";
   import * as THREE from "three";
   import Rand from "rand-seed";
 
@@ -15,17 +15,24 @@
       points.position.copy(camera.current.position);
     }
   });
+
+  const generateStars = () => {
+    const count = 10000;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i++) {
+      positions[i] = (rand.next() - 0.5) * 500;
+    }
+    return positions;
+  };
 </script>
 
 <T.Points bind:ref={points}>
   <T.BufferGeometry
-    oncreate={(geo) => {
-      const count = 10000;
-      const pos = new Float32Array(count * 3);
-      for (let i = 0; i < count * 3; i++) {
-        pos[i] = (rand.next() - 0.5) * 500;
-      }
-      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    oncreate={(geometry) => {
+      geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(generateStars(), 3),
+      );
     }}
   />
   <T.PointsMaterial size={0.1} color="#ffffff" />
