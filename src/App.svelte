@@ -191,10 +191,10 @@
     pageScrollBottom: number,
     currentSectionName: string,
   ): [number, number, number] => {
-    const STARTING_POSITION: [number, number, number] = [0, 0, 10];
-    const TAKEOFF_POSITION: [number, number, number] = [0, -40, 70];
-    const ENDING_POSITION: [number, number, number] = [0, -40, -500];
-    const yScale = scaleLinear([0, 1], [STARTING_POSITION[1], -40]).clamp(true);
+    const STARTING_POSITION: [number, number, number] = [0, 36, -60];
+    const TAKEOFF_POSITION: [number, number, number] = [0, 0, 0];
+    const ENDING_POSITION: [number, number, number] = [0, 0, -380];
+    const yScale = scaleLinear([0, 1], [STARTING_POSITION[1], 0]).clamp(true);
 
     function zoomFromArtemisToSls() {
       const scrollProgress = stage.getProgressBetweenSections({
@@ -202,7 +202,7 @@
         end: "sls",
       })(pageScrollBottom);
 
-      const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 70]).clamp(
+      const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 0]).clamp(
         true,
       );
 
@@ -229,7 +229,7 @@
           start: "stratosphere",
           end: "maxq",
         })(pageScrollBottom);
-        const stratosphereZScale = scaleLinear([0, 1], [70, -40]).clamp(true);
+        const stratosphereZScale = scaleLinear([0, 1], [0, -0.01]).clamp(true);
         const sectionPosition: [number, number, number] = [
           0,
           yScale(1),
@@ -243,7 +243,7 @@
           start: "maxq",
           end: "cornish",
         })(pageScrollBottom);
-        const stratosphereZScale = scaleLinear([0, 1], [-40, -140]).clamp(true);
+        const stratosphereZScale = scaleLinear([0, 1], [-0.01, -0.02]).clamp(true);
         const sectionPosition: [number, number, number] = [
           0,
           yScale(1),
@@ -264,6 +264,8 @@
 
     return getCameraPosition(pageScrollBottom, sectionName);
   });
+
+  // $inspect(cameraPosition).with(console.log)
 </script>
 
 {#if isABC}
@@ -289,8 +291,6 @@
       />
     </BackgroundStage>
   </Portal>
-
-  <!-- cameraZ={scroll.pageScroll / 100} -->
 
   <Panels />
 

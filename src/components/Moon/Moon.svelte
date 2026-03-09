@@ -4,27 +4,25 @@ Command: npx @threlte/gltf@3.0.1 --types --transform 3D-Moon-NASA-textures-v1.1.
 -->
 
 <script lang="ts">
-  import type * as THREE from "three";
+  import * as THREE from "three";
 
   import type { Snippet } from "svelte";
   import { T, type Props } from "@threlte/core";
   import { useGltf, useDraco } from "@threlte/extras";
 
-  import gltfPath from "./3D-Moon-NASA-textures-v1.1-transformed.glb?url";
+  import gltfPath from "./3D-Moon-NASA-textures-v1.1_compressed.glb?url";
 
   let {
     fallback,
     error,
     children,
     ref = $bindable(),
-    position = [0, -40, 0],
     ...props
   }: Props<THREE.Group> & {
     ref?: THREE.Group;
     children?: Snippet<[{ ref: THREE.Group }]>;
     fallback?: Snippet;
     error?: Snippet<[{ error: Error }]>;
-    position?: [number, number, number];
   } = $props();
 
   type GLTFResult = {
@@ -41,19 +39,29 @@ Command: npx @threlte/gltf@3.0.1 --types --transform 3D-Moon-NASA-textures-v1.1.
   });
 </script>
 
-<T.Group bind:ref dispose={false} {...props} {position}>
+<T.Group bind:ref dispose={false} {...props}>
   {#await gltf}
     {@render fallback?.()}
   {:then gltf}
     <T.Mesh
       geometry={gltf.nodes.Moon.geometry}
       material={gltf.materials["Material.001"]}
+      oncreate={(ref) => {
+        const mat = ref.material as THREE.MeshStandardMaterial;
+
+        const heightMap = mat.normalMap; // grab it before nulling
+        mat.normalMap = null;
+        mat.bumpMap = heightMap;
+        mat.bumpScale = 0.4;
+        mat.needsUpdate = true;
+        // mat.roughness = 1.0;
+      }}
     />
   {:catch err}
     {@render error?.({ error: err })}
   {/await}
 
-  {#if ref}}
+  {#if ref}
     {@render children?.({ ref })}
   {/if}
 </T.Group>

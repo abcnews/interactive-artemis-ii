@@ -51,7 +51,7 @@ Utility component to add spacing in the DOM
         if (typeof gap === "string") {
           spacerHTMLElement.style.setProperty(
             "margin-top",
-            `${(screen.innerHeight * 0.95).toString()}px`,
+            `${(screen.innerHeight * 0.98).toString()}px`,
             "important",
           );
         } else if (typeof gap === "number") {
