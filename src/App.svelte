@@ -35,6 +35,7 @@
     unloadDarkModeObserver,
     setMode,
   } from "./lib/darkModeSwitcher";
+  import { kmScale } from "./lib/utils";
 
   // Other imports
   import { onMount } from "svelte";
@@ -201,9 +202,7 @@
         end: "sls",
       })(pageScrollBottom);
 
-      const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 0]).clamp(
-        true,
-      );
+      const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 0]).clamp(true);
 
       const sectionPosition: [number, number, number] = [
         0,
@@ -228,7 +227,9 @@
           start: "stratosphere",
           end: "maxq",
         })(pageScrollBottom);
-        const stratosphereZScale = scaleLinear([0, 1], [0, -0.01]).clamp(true);
+        const stratosphereZScale = scaleLinear([0, 1], [0, kmScale(-12)]).clamp(
+          true,
+        );
         const sectionPosition: [number, number, number] = [
           0,
           yScale(1),
@@ -242,7 +243,27 @@
           start: "maxq",
           end: "cornish",
         })(pageScrollBottom);
-        const stratosphereZScale = scaleLinear([0, 1], [-0.01, -0.02]).clamp(true);
+        const stratosphereZScale = scaleLinear(
+          [0, 1],
+          [kmScale(-12), kmScale(-35)],
+        ).clamp(true);
+        const sectionPosition: [number, number, number] = [
+          0,
+          yScale(1),
+          stratosphereZScale(scrollProgress),
+        ];
+
+        return sectionPosition;
+      }),
+      Match.when("cornish", () => {
+        const scrollProgress = stage.getProgressBetweenSections({
+          start: "cornish",
+          end: "2mins",
+        })(pageScrollBottom);
+        const stratosphereZScale = scaleLinear(
+          [0, 1],
+          [kmScale(-35), kmScale(-85)],
+        ).clamp(true);
         const sectionPosition: [number, number, number] = [
           0,
           yScale(1),

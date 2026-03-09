@@ -12,7 +12,10 @@
   import Starfield from "./Starfield.svelte";
   import HUDScene from "./HUDScene.svelte";
   import Moon from "./Moon/Moon.svelte";
-  import Atmosphere from "./Atmosphere.svelte";
+  import Atmosphere from "./AtmosphereGlow.svelte";
+
+  // Utils
+  import { kmScale } from "~/src/lib/utils";
 
   // Stores
   import { scroll } from "~/src/stores/scroll.svelte";
@@ -125,7 +128,7 @@
         position={cameraPositionSpring.current}
         oncreate={(ref) => {}}
         fov={75}
-        near={0.01 / 1000}
+        near={kmScale(0.01)}
         far={500}
       ></T.PerspectiveCamera>
 
@@ -143,10 +146,21 @@
       </T.Group>
 
       <!-- Stratosphere -->
-      <Atmosphere radius={12 / 1000} colour="#3216ff" />
+      <Atmosphere radius={kmScale(12)} colour="#3216ff" />
+
+      <!-- <T.Mesh position={[0, 0, kmScale(-12.83)]} scale={1}>
+        <T.BoxGeometry args={[kmScale(0.5), kmScale(0.1), kmScale(0.1)]} />
+        <T.MeshNormalMaterial />
+      </T.Mesh> -->
 
       <!-- Mesosphere -->
-      <Atmosphere radius={50 / 1000} colour="#3216ff" />
+      <Atmosphere radius={kmScale(50)} colour="#3216ff" />
+
+      <!-- Thermosphere -->
+      <Atmosphere radius={kmScale(87)} colour="#3216ff" />
+
+      <!-- Exosphere -->
+      <Atmosphere radius={kmScale(700)} colour="#3216ff" />
     </Canvas>
   </div>
 {/if}
