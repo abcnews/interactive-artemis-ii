@@ -47,7 +47,9 @@
     artemisState = { isVisible: false },
   }: ComponentProps = $props();
 
-  let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0]);
+  let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0], {
+    precision: 0.00001,
+  });
   let artemisOpacity = $derived.by(() => {
     return stage.getProgressBetweenSections({
       start: "artemis",

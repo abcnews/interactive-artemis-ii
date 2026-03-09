@@ -56,7 +56,6 @@
 
   // Bind to window scroll
   let scrollY = $state(0);
-  let cameraZ = $state(20);
 
   // Throttle the page scroll for increased performance
   let throttledPageScroll = new Throttled(() => scrollY, SCROLL_THROTTLE);
