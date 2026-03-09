@@ -11,6 +11,7 @@
   import Orion from "./Orion.svelte";
   import Starfield from "./Starfield.svelte";
   import HUDScene from "./HUDScene.svelte";
+  import Moon from "./Moon/Moon.svelte";
 
   // Stores
   import { scroll } from "~/src/stores/scroll.svelte";
@@ -24,7 +25,7 @@
     shouldFloat?: boolean;
   };
 
-  type Props = {
+  type ComponentProps = {
     itemsVisible: string[];
     orionRotation?: [number, number, number];
     cameraZ?: number;
@@ -42,7 +43,7 @@
     starfieldState = { isVisible: false },
     orionState = { isVisible: false },
     artemisState = { isVisible: false },
-  }: Props = $props();
+  }: ComponentProps = $props();
 
   let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0]);
   let artemisOpacity = $derived.by(() => {
@@ -121,11 +122,14 @@
       ></T.PerspectiveCamera>
 
       <T.DirectionalLight position={[10, 10, 10]} />
-      <T.AmbientLight intensity={0.1} />
+      <T.AmbientLight intensity={0.5} />
 
       <Starfield />
 
-      <Sphere />
+      <!-- <Sphere /> -->
+      <Moon />
+
+     
     </Canvas>
   </div>
 {/if}
