@@ -15,6 +15,7 @@
   import Moon from "./Moon/Moon.svelte";
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
+  import ISS from "./ISS/ISS_stationary.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -52,9 +53,19 @@
     artemisState = { isVisible: false },
   }: ComponentProps = $props();
 
+  // Scaling of the International Space Station
+  // 1 unit = 1,000km = 1,000,000m
+  // ISS real width = 109m = 0.000109 units
+  const RAW_WIDTH = 111.99;
+  const REAL_SCALE = 0.000109 / RAW_WIDTH; // ≈ 9.73e-7
+
+  const VISIBILITY_MULTIPLIER = 500;
+  const ISS_SCALE = REAL_SCALE * VISIBILITY_MULTIPLIER; // ≈ 0.000487
+
   let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0], {
     precision: 0.00001,
   });
+
   let artemisOpacity = $derived.by(() => {
     return stage.getProgressBetweenSections({
       start: "artemis",
@@ -74,16 +85,12 @@
       return 0;
     }
 
-    // console.log(introPanel.screenProgress);
-
-    if (introPanel.screenProgress < 0.7) {
+    if (introPanel.screenProgress < 0.8) {
       return 0;
     } else {
       return 1;
     }
   });
-
-  $inspect(orionOpacity).with(console.log);
 
   $effect(() => {
     cameraPositionSpring.target = cameraPosition;
@@ -206,6 +213,20 @@
       >
         {#snippet children({ opacity })}
           <Atmosphere radius={kmScale(87)} colour="#3216ff" {opacity} />
+        {/snippet}
+      </Waypoint>
+
+      <Waypoint
+        position={[0, 0, kmScale(-340)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(300)}
+      >
+        {#snippet children({ opacity })}
+          <ISS
+            position={[0, kmScale(5), kmScale(-340)]}
+            scale={ISS_SCALE}
+            {opacity}
+          />
         {/snippet}
       </Waypoint>
 

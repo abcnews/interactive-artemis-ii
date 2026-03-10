@@ -59,6 +59,9 @@ export const getCameraPosition = (
     ),
     Match.when("maxq", () => travelSection("maxq", "cornish", -12, -35)),
     Match.when("cornish", () => travelSection("cornish", "2mins", -35, -85)),
+    Match.when("2mins", () =>
+      travelSection("2mins", "thermosphere", -85, -700),
+    ),
     Match.orElse(() => ENDING_POSITION),
   );
 

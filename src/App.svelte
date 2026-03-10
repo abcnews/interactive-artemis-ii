@@ -127,65 +127,6 @@
     console.log(scroll.panelsCurrent);
   });
 
-  // let starfieldState: ModelState = $derived.by(() => {
-  //   const takeoff = scroll.panelsCurrent.find(
-  //     (panel) => panel.name === "excitement",
-  //   );
-
-  //   if (!takeoff) {
-  //     return {};
-  //   }
-
-  //   if (scroll.pageScrollBottom > takeoff.downPage) {
-  //     return {
-  //       isVisible: true,
-  //     };
-  //   } else {
-  //     return {
-  //       isVisible: false,
-  //     };
-  //   }
-  // });
-
-  // let orionState: ModelState = $derived.by(() => {
-  //   const intro = scroll.panelsCurrent.find((panel) => panel.name === "intro");
-
-  //   if (!intro) {
-  //     return {};
-  //   }
-
-  //   if (
-  //     scroll.pageScrollBottom > intro.downPage &&
-  //     intro.screenProgress > 0.7
-  //   ) {
-  //     return {
-  //       isVisible: true,
-  //     };
-  //   } else {
-  //     return {
-  //       isVisible: false,
-  //     };
-  //   }
-  // });
-
-  // let artemisState: ModelState = $derived.by(() => {
-  //   const sls = scroll.panelsCurrent.find((panel) => panel.name === "orion");
-
-  //   if (!sls) {
-  //     return {};
-  //   }
-
-  //   if (scroll.pageScrollBottom > sls.downPage) {
-  //     return {
-  //       isVisible: true,
-  //     };
-  //   } else {
-  //     return {
-  //       isVisible: false,
-  //     };
-  //   }
-  // });
-
   function panelVisibility(panelName: string): ModelState {
     const panel = scroll.panelsCurrent.find((p) => p.name === panelName);
     if (!panel) return {};
@@ -202,8 +143,6 @@
 
     return getCameraPosition(pageScrollBottom, sectionName);
   });
-
-  // $inspect(cameraPosition).with(console.log);
 </script>
 
 {#if isABC}
