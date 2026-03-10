@@ -21,7 +21,7 @@ type TransitionWaypoint = {
 type CameraWaypoint = FixedWaypoint | TransitionWaypoint;
 
 const STARTING_POSITION: [number, number, number] = [0, 36, -60];
-const TAKEOFF_POSITION:  [number, number, number] = [0, 0, 0];
+const TAKEOFF_POSITION: [number, number, number] = [0, 0, 0];
 
 const WAYPOINTS: CameraWaypoint[] = [
   {
@@ -48,7 +48,7 @@ const WAYPOINTS: CameraWaypoint[] = [
     start: "excitement",
     end: "stratosphere",
     fromPosition: [0, 0, kmScale(0)],
-    toPosition:   [0, 0, kmScale(-10)],
+    toPosition: [0, 0, kmScale(-10)],
   },
   {
     type: "transition",
@@ -56,7 +56,7 @@ const WAYPOINTS: CameraWaypoint[] = [
     start: "maxq",
     end: "cornish",
     fromPosition: [0, 0, kmScale(-10)],
-    toPosition:   [0, 0, kmScale(-33)],
+    toPosition: [0, 0, kmScale(-33)],
   },
   {
     type: "transition",
@@ -64,7 +64,7 @@ const WAYPOINTS: CameraWaypoint[] = [
     start: "cornish",
     end: "2mins",
     fromPosition: [0, 0, kmScale(-35)],
-    toPosition:   [0, 0, kmScale(-85)],
+    toPosition: [0, 0, kmScale(-85)],
   },
   {
     type: "transition",
@@ -72,7 +72,7 @@ const WAYPOINTS: CameraWaypoint[] = [
     start: "2mins",
     end: "thermosphere",
     fromPosition: [0, 0, kmScale(-85)],
-    toPosition:   [0, 0, kmScale(-700)],
+    toPosition: [0, 0, kmScale(-700)],
   },
 ];
 
@@ -82,32 +82,50 @@ export const getCameraPosition = (
   pageScrollBottom: number,
   currentSectionName: string,
 ): [number, number, number] => {
+  /*
+  This is just a dev mode test to warn about overlapping transitions
+  */
+  if (import.meta.env.DEV) {
+    const matchingTransitions = WAYPOINTS.filter(
+      (w): w is TransitionWaypoint => {
+        if (w.type !== "transition") return false;
+        const isAfterStart = stage.getDownpage(w.start) <= pageScrollBottom;
+        const isBeforeEnd = stage.getDownpage(w.end) > pageScrollBottom;
+        return isAfterStart && isBeforeEnd;
+      },
+    );
 
-  const waypoint = WAYPOINTS.find((w) =>
-    w.type === "fixed"
-      ? w.sections.includes(currentSectionName)
-      : w.section === currentSectionName,
-  );
+    if (matchingTransitions.length > 1) {
+      console.warn(
+        `[cameraPosition] Overlapping transitions at scroll ${pageScrollBottom}:`,
+        matchingTransitions.map((w) => w.section).join(", "),
+      );
+    }
+  }
+
+  const waypoint = WAYPOINTS.find((w) => {
+    if (w.type === "fixed") {
+      return w.sections.includes(currentSectionName);
+    }
+    const start = w.start ?? w.section;
+    const isAfterStart = stage.getDownpage(start) <= pageScrollBottom;
+    const isBeforeEnd = stage.getDownpage(w.end) > pageScrollBottom;
+    return isAfterStart && isBeforeEnd;
+  });
 
   const position = Match.value(waypoint).pipe(
     Match.withReturnType<[number, number, number]>(),
-    Match.when(
-      { type: "fixed" },
-      (w) => w.position,
-    ),
-    Match.when(
-      { type: "transition" },
-      (w) => {
-        const progress = stage.getProgressBetweenSections({
-          start: w.start,
-          end: w.end,
-        })(pageScrollBottom);
+    Match.when({ type: "fixed" }, (w) => w.position),
+    Match.when({ type: "transition" }, (w) => {
+      const progress = stage.getProgressBetweenSections({
+        start: w.start,
+        end: w.end,
+      })(pageScrollBottom);
 
-        return w.fromPosition.map((from, i) =>
-          scaleLinear([0, 1], [from, w.toPosition[i]]).clamp(true)(progress),
-        ) as [number, number, number];
-      },
-    ),
+      return w.fromPosition.map((from, i) =>
+        scaleLinear([0, 1], [from, w.toPosition[i]]).clamp(true)(progress),
+      ) as [number, number, number];
+    }),
     Match.orElse(() => lastPosition),
   );
 
