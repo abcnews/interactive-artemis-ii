@@ -197,7 +197,7 @@
       <Waypoint
         position={[0, 0, kmScale(-50)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(50)}
+        visibleRange={kmScale(10)}
       >
         {#snippet children({ opacity })}
           <Atmosphere radius={kmScale(50)} colour="#3216ff" {opacity} />
@@ -208,7 +208,7 @@
       <Waypoint
         position={[0, 0, kmScale(-87)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(50)}
+        visibleRange={kmScale(30)}
       >
         {#snippet children({ opacity })}
           <Atmosphere radius={kmScale(87)} colour="#3216ff" {opacity} />

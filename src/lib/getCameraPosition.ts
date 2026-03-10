@@ -1,6 +1,5 @@
 import { Match } from "effect";
 import { scaleLinear } from "d3-scale";
-import { kmScale } from "./utils";
 import { stage } from "~/src/stores/stage.svelte";
 import {
   waypointStore,
@@ -15,6 +14,9 @@ TODO: Fix slight bug if a panel name isn't found it just returns
 the last position, and this could be in the middle of a Spring
 so it the camera position will sometimes seem inconsistent when
 scrolling fast up and down between sections.
+
+Possible easy half-fix by simply adding new transitions so there's
+no non-matches and have the from and to kms the same.
 
 */
 

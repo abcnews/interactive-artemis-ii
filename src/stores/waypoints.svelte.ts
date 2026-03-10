@@ -41,14 +41,6 @@ const INITIAL_WAYPOINTS: CameraWaypoint[] = [
   },
   {
     type: "transition",
-    section: "maxq",
-    start: "maxq",
-    end: "cornish",
-    fromPosition: [0, 0, kmScale(-10)],
-    toPosition: [0, 0, kmScale(-33)],
-  },
-  {
-    type: "transition",
     section: "cornish",
     start: "cornish",
     end: "2mins",

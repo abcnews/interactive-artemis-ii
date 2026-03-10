@@ -63,7 +63,7 @@ Utility component to add spacing in the DOM
             type: "transition",
             start: start,
             end: end,
-            fromPosition: [0, 0, kmScale(from)],
+            fromPosition: [0, 0, kmScale(-from)],
             toPosition: [0, 0, kmScale(-to)],
           },
         ];
@@ -83,6 +83,8 @@ Utility component to add spacing in the DOM
     });
 
     processTransitions(transitions);
+
+    console.log(additionalWaypoints)
 
     // TODO: Make this "additionalWaypoints" more declarative later if you can
     waypointStore.setAdditionalWaypoints(additionalWaypoints);
