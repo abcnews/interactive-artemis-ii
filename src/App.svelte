@@ -22,7 +22,7 @@
   import { scaleLinear } from "d3-scale";
 
   // Type imports
-  import { get, type Readable } from "svelte/store";
+  import { type Readable } from "svelte/store";
 
   // Stores
   import { scroll } from "./stores/scroll.svelte";
@@ -39,8 +39,6 @@
 
   // Other imports
   import { onMount } from "svelte";
-  import Starfield from "./components/Starfield.svelte";
-  import { endsWith } from "valibot";
 
   // Constants
   const SCROLL_THROTTLE = 25;
@@ -52,7 +50,7 @@
 
   let { prefersColorScheme }: AppProps = $props();
 
-  let isABC = $derived(getApplication() !== null ? true : false);
+  let isABC = $derived(getApplication() !== null);
   let bodyEl = $state() as HTMLElement;
 
   // Bind to window scroll
@@ -187,14 +185,30 @@
     }
   });
 
+  const STARTING_POSITION: [number, number, number] = [0, 36, -60];
+  const TAKEOFF_POSITION: [number, number, number] = [0, 0, 0];
+  const ENDING_POSITION: [number, number, number] = [0, 0, -380];
+
   const getCameraPosition = (
     pageScrollBottom: number,
     currentSectionName: string,
   ): [number, number, number] => {
-    const STARTING_POSITION: [number, number, number] = [0, 36, -60];
-    const TAKEOFF_POSITION: [number, number, number] = [0, 0, 0];
-    const ENDING_POSITION: [number, number, number] = [0, 0, -380];
     const yScale = scaleLinear([0, 1], [STARTING_POSITION[1], 0]).clamp(true);
+
+    function travelSection(
+      start: string,
+      end: string,
+      fromKm: number,
+      toKm: number,
+    ): [number, number, number] {
+      const progress = stage.getProgressBetweenSections({ start, end })(
+        pageScrollBottom,
+      );
+      const z = scaleLinear([0, 1], [kmScale(fromKm), kmScale(toKm)]).clamp(
+        true,
+      )(progress);
+      return [0, 0, z];
+    }
 
     function zoomFromArtemisToSls() {
       const scrollProgress = stage.getProgressBetweenSections({
@@ -222,56 +236,11 @@
       Match.when("sls", () => TAKEOFF_POSITION),
       Match.when("takeoff", () => TAKEOFF_POSITION),
       Match.when("excitement", () => TAKEOFF_POSITION),
-      Match.when("stratosphere", () => {
-        const scrollProgress = stage.getProgressBetweenSections({
-          start: "stratosphere",
-          end: "maxq",
-        })(pageScrollBottom);
-        const stratosphereZScale = scaleLinear([0, 1], [0, kmScale(-12)]).clamp(
-          true,
-        );
-        const sectionPosition: [number, number, number] = [
-          0,
-          yScale(1),
-          stratosphereZScale(scrollProgress),
-        ];
-
-        return sectionPosition;
-      }),
-      Match.when("maxq", () => {
-        const scrollProgress = stage.getProgressBetweenSections({
-          start: "maxq",
-          end: "cornish",
-        })(pageScrollBottom);
-        const stratosphereZScale = scaleLinear(
-          [0, 1],
-          [kmScale(-12), kmScale(-35)],
-        ).clamp(true);
-        const sectionPosition: [number, number, number] = [
-          0,
-          yScale(1),
-          stratosphereZScale(scrollProgress),
-        ];
-
-        return sectionPosition;
-      }),
-      Match.when("cornish", () => {
-        const scrollProgress = stage.getProgressBetweenSections({
-          start: "cornish",
-          end: "2mins",
-        })(pageScrollBottom);
-        const stratosphereZScale = scaleLinear(
-          [0, 1],
-          [kmScale(-35), kmScale(-85)],
-        ).clamp(true);
-        const sectionPosition: [number, number, number] = [
-          0,
-          yScale(1),
-          stratosphereZScale(scrollProgress),
-        ];
-
-        return sectionPosition;
-      }),
+      Match.when("stratosphere", () =>
+        travelSection("stratosphere", "maxq", 0, -12),
+      ),
+      Match.when("maxq", () => travelSection("maxq", "cornish", -12, -35)),
+      Match.when("cornish", () => travelSection("cornish", "2mins", -35, -85)),
       Match.orElse(() => ENDING_POSITION),
     );
 
@@ -285,7 +254,7 @@
     return getCameraPosition(pageScrollBottom, sectionName);
   });
 
-  // $inspect(cameraPosition).with(console.log)
+  $inspect(cameraPosition).with(console.log);
 </script>
 
 {#if isABC}
@@ -318,7 +287,7 @@
   <UtilGetPanelData />
 
   {#if isDebug}
-    <Debug />
+    <Debug {cameraPosition} />
   {/if}
 {:else}
   <p>This web app needs to be attached to an ABC News CoreMedia article.</p>

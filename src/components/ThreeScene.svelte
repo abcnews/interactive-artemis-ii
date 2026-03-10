@@ -12,7 +12,8 @@
   import Starfield from "./Starfield.svelte";
   import HUDScene from "./HUDScene.svelte";
   import Moon from "./Moon/Moon.svelte";
-  import Atmosphere from "./AtmosphereGlow.svelte";
+  import Atmosphere from "./Atmosphere.svelte";
+  import Waypoint from "./Waypoint.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -146,7 +147,15 @@
       </T.Group>
 
       <!-- Stratosphere -->
-      <Atmosphere radius={kmScale(12)} colour="#3216ff" />
+      <Waypoint
+        position={[0, 0, kmScale(-12)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(6)}
+      >
+        {#snippet children({ opacity })}
+          <Atmosphere radius={kmScale(12)} colour="#3216ff" {opacity} />
+        {/snippet}
+      </Waypoint>
 
       <!-- <T.Mesh position={[0, 0, kmScale(-12.83)]} scale={1}>
         <T.BoxGeometry args={[kmScale(0.5), kmScale(0.1), kmScale(0.1)]} />
@@ -154,13 +163,21 @@
       </T.Mesh> -->
 
       <!-- Mesosphere -->
-      <Atmosphere radius={kmScale(50)} colour="#3216ff" />
+      <Waypoint
+        position={[0, 0, kmScale(-50)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(30)}
+      >
+        {#snippet children({ opacity })}
+          <Atmosphere radius={kmScale(50)} colour="#3216ff" {opacity} />
+        {/snippet}
+      </Waypoint>
 
       <!-- Thermosphere -->
-      <Atmosphere radius={kmScale(87)} colour="#3216ff" />
+      <!-- <Atmosphere radius={kmScale(87)} colour="#3216ff" /> -->
 
       <!-- Exosphere -->
-      <Atmosphere radius={kmScale(700)} colour="#3216ff" />
+      <!-- <Atmosphere radius={kmScale(700)} colour="#3216ff" /> -->
     </Canvas>
   </div>
 {/if}

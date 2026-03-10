@@ -1,13 +1,16 @@
 <script lang="ts">
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
+
+  const { cameraPosition } = $props();
 </script>
 
 <div class="debug-root">
   <div>Section: {scroll.currentSection.name}</div>
   <div>Downpage: {scroll.pageScrollBottom}</div>
-  <div>Progress: {scroll.progressUntilNextSection}</div> 
+  <div>Progress: {scroll.progressUntilNextSection}</div>
   <!-- <div>Active: {JSON.stringify(stage.transitionsActive)}</div> -->
+  <div>Camera: {Math.abs(cameraPosition[2] * 1000).toFixed(2)}</div>
 </div>
 
 <style lang="scss">
