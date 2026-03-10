@@ -3,67 +3,114 @@ import { scaleLinear } from "d3-scale";
 import { kmScale } from "./utils";
 import { stage } from "~/src/stores/stage.svelte";
 
+type FixedWaypoint = {
+  type: "fixed";
+  sections: string[];
+  position: [number, number, number];
+};
+
+type TransitionWaypoint = {
+  type: "transition";
+  section: string;
+  start: string;
+  end: string;
+  fromPosition: [number, number, number];
+  toPosition: [number, number, number];
+};
+
+type CameraWaypoint = FixedWaypoint | TransitionWaypoint;
+
 const STARTING_POSITION: [number, number, number] = [0, 36, -60];
-const TAKEOFF_POSITION: [number, number, number] = [0, 0, 0];
-const ENDING_POSITION: [number, number, number] = [0, 0, -380];
+const TAKEOFF_POSITION:  [number, number, number] = [0, 0, 0];
+
+const WAYPOINTS: CameraWaypoint[] = [
+  {
+    type: "fixed",
+    sections: ["initial", "intro", "orion"],
+    position: STARTING_POSITION,
+  },
+  {
+    type: "transition",
+    section: "artemis",
+    start: "artemis",
+    end: "sls",
+    fromPosition: STARTING_POSITION,
+    toPosition: TAKEOFF_POSITION,
+  },
+  {
+    type: "fixed",
+    sections: ["sls", "takeoff", "excitement"],
+    position: TAKEOFF_POSITION,
+  },
+  {
+    type: "transition",
+    section: "stratosphere",
+    start: "stratosphere",
+    end: "maxq",
+    fromPosition: [0, 0, kmScale(0)],
+    toPosition:   [0, 0, kmScale(-12)],
+  },
+  {
+    type: "transition",
+    section: "maxq",
+    start: "maxq",
+    end: "cornish",
+    fromPosition: [0, 0, kmScale(-12)],
+    toPosition:   [0, 0, kmScale(-35)],
+  },
+  {
+    type: "transition",
+    section: "cornish",
+    start: "cornish",
+    end: "2mins",
+    fromPosition: [0, 0, kmScale(-35)],
+    toPosition:   [0, 0, kmScale(-85)],
+  },
+  {
+    type: "transition",
+    section: "2mins",
+    start: "2mins",
+    end: "thermosphere",
+    fromPosition: [0, 0, kmScale(-85)],
+    toPosition:   [0, 0, kmScale(-700)],
+  },
+];
+
+let lastPosition: [number, number, number] = STARTING_POSITION;
 
 export const getCameraPosition = (
   pageScrollBottom: number,
   currentSectionName: string,
 ): [number, number, number] => {
-  const yScale = scaleLinear([0, 1], [STARTING_POSITION[1], 0]).clamp(true);
 
-  function travelSection(
-    start: string,
-    end: string,
-    fromKm: number,
-    toKm: number,
-  ): [number, number, number] {
-    const progress = stage.getProgressBetweenSections({ start, end })(
-      pageScrollBottom,
-    );
-    const z = scaleLinear([0, 1], [kmScale(fromKm), kmScale(toKm)]).clamp(true)(
-      progress,
-    );
-    return [0, 0, z];
-  }
-
-  function zoomFromArtemisToSls() {
-    const scrollProgress = stage.getProgressBetweenSections({
-      start: "artemis",
-      end: "sls",
-    })(pageScrollBottom);
-
-    const zScale = scaleLinear([0, 1], [STARTING_POSITION[2], 0]).clamp(true);
-
-    const sectionPosition: [number, number, number] = [
-      0,
-      yScale(scrollProgress),
-      zScale(scrollProgress),
-    ];
-
-    return sectionPosition;
-  }
-
-  const position = Match.value(currentSectionName).pipe(
-    Match.withReturnType<[number, number, number]>(),
-    Match.when("initial", () => STARTING_POSITION),
-    Match.when("intro", () => STARTING_POSITION),
-    Match.when("orion", () => STARTING_POSITION),
-    Match.when("artemis", () => zoomFromArtemisToSls()),
-    Match.when("sls", () => TAKEOFF_POSITION),
-    Match.when("takeoff", () => TAKEOFF_POSITION),
-    Match.when("excitement", () => TAKEOFF_POSITION),
-    Match.when("stratosphere", () =>
-      travelSection("stratosphere", "maxq", 0, -12),
-    ),
-    Match.when("maxq", () => travelSection("maxq", "cornish", -12, -35)),
-    Match.when("cornish", () => travelSection("cornish", "2mins", -35, -85)),
-    Match.when("2mins", () =>
-      travelSection("2mins", "thermosphere", -85, -700),
-    ),
-    Match.orElse(() => ENDING_POSITION),
+  const waypoint = WAYPOINTS.find((w) =>
+    w.type === "fixed"
+      ? w.sections.includes(currentSectionName)
+      : w.section === currentSectionName,
   );
 
+  const position = Match.value(waypoint).pipe(
+    Match.withReturnType<[number, number, number]>(),
+    Match.when(
+      { type: "fixed" },
+      (w) => w.position,
+    ),
+    Match.when(
+      { type: "transition" },
+      (w) => {
+        const progress = stage.getProgressBetweenSections({
+          start: w.start,
+          end: w.end,
+        })(pageScrollBottom);
+
+        return w.fromPosition.map((from, i) =>
+          scaleLinear([0, 1], [from, w.toPosition[i]]).clamp(true)(progress),
+        ) as [number, number, number];
+      },
+    ),
+    Match.orElse(() => lastPosition),
+  );
+
+  lastPosition = position;
   return position;
 };
