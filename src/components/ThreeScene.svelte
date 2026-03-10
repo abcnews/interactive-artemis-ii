@@ -8,7 +8,6 @@
 
   import Sphere from "./Sphere.svelte";
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
-  // import Orion from "./Orion.svelte";
   import Orion from "./Orion/Orion_Draco_Optimized.svelte";
   import Starfield from "./Starfield.svelte";
   import HUDScene from "./HUDScene.svelte";
@@ -108,7 +107,7 @@
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div class="stage-root setup" transition:fade={{ duration: 2000 }}>
+  <div class="stage-root setup" transition:fade={{ duration: 1000 }}>
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
@@ -146,7 +145,7 @@
     </Canvas>
   </div>
 {:else}
-  <div class="stage-root launch" transition:fade={{ duration: 2000 }}>
+  <div class="stage-root launch" transition:fade={{ duration: 1000 }}>
     <Canvas
       createRenderer={(canvas) => {
         return new THREE.WebGLRenderer({
