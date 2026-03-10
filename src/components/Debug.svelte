@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { pipe } from "effect";
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
 
@@ -10,7 +11,7 @@
   <div>Downpage: {scroll.pageScrollBottom}</div>
   <div>Progress: {scroll.progressUntilNextSection}</div>
   <!-- <div>Active: {JSON.stringify(stage.transitionsActive)}</div> -->
-  <div>Camera: {Math.abs(cameraPosition[2] * 1000).toFixed(2)}</div>
+  <div>Camera: {pipe(cameraPosition[2], (n) => n * 1000, Math.round, Math.abs)}km</div>
 </div>
 
 <style lang="scss">

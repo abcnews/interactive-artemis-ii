@@ -21,6 +21,7 @@ class Stage {
 
     return Number(((current - start) / (end - start)).toFixed(3));
   });
+  
   transitionsActive = $derived.by(() => {
     const active: Record<string, number> = {};
 
@@ -38,6 +39,7 @@ class Stage {
     });
     return active;
   });
+
   getDownpage(nameOrDownpage: string) {
     if (typeof nameOrDownpage === "string") {
       const panelData = scroll.panelsData.find(

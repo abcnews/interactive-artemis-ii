@@ -8,7 +8,8 @@
 
   import Sphere from "./Sphere.svelte";
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
-  import Orion from "./Orion.svelte";
+  // import Orion from "./Orion.svelte";
+  import Orion from "./Orion/Orion_Draco_Optimized.svelte";
   import Starfield from "./Starfield.svelte";
   import HUDScene from "./HUDScene.svelte";
   import Moon from "./Moon/Moon.svelte";
@@ -64,6 +65,26 @@
     })(scroll.pageScrollBottom);
   });
 
+  let orionOpacity = $derived.by(() => {
+    const introPanel = scroll.panelsCurrent.find(
+      (panel) => panel.name === "intro",
+    );
+
+    if (!introPanel) {
+      return 0;
+    }
+
+    // console.log(introPanel.screenProgress);
+
+    if (introPanel.screenProgress < 0.7) {
+      return 0;
+    } else {
+      return 1;
+    }
+  });
+
+  $inspect(orionOpacity).with(console.log);
+
   $effect(() => {
     cameraPositionSpring.target = cameraPosition;
   });
@@ -100,7 +121,11 @@
           rotationIntensity={orionState.shouldFloat ? 2 : 0}
           rotationSpeed={[1, 0.5, 0.2]}
         >
-          <Orion position={[0, 36, -70]} orionRotation={undefined} />
+          <Orion
+            position={[0, 36, -70]}
+            orionRotation={undefined}
+            opacity={orionOpacity}
+          />
         </Float>
       {/if}
 
