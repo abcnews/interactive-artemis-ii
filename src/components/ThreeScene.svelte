@@ -150,7 +150,7 @@
       <Waypoint
         position={[0, 0, kmScale(-12)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(6)}
+        visibleRange={kmScale(10)}
       >
         {#snippet children({ opacity })}
           <Atmosphere radius={kmScale(12)} colour="#3216ff" {opacity} />
@@ -166,7 +166,7 @@
       <Waypoint
         position={[0, 0, kmScale(-50)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(30)}
+        visibleRange={kmScale(50)}
       >
         {#snippet children({ opacity })}
           <Atmosphere radius={kmScale(50)} colour="#3216ff" {opacity} />
@@ -174,10 +174,26 @@
       </Waypoint>
 
       <!-- Thermosphere -->
-      <!-- <Atmosphere radius={kmScale(87)} colour="#3216ff" /> -->
+      <Waypoint
+        position={[0, 0, kmScale(-87)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(50)}
+      >
+        {#snippet children({ opacity })}
+          <Atmosphere radius={kmScale(87)} colour="#3216ff" {opacity} />
+        {/snippet}
+      </Waypoint>
 
       <!-- Exosphere -->
-      <!-- <Atmosphere radius={kmScale(700)} colour="#3216ff" /> -->
+      <Waypoint
+        position={[0, 0, kmScale(-700)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(50)}
+      >
+        {#snippet children({ opacity })}
+          <Atmosphere radius={kmScale(700)} colour="#3216ff" {opacity} />
+        {/snippet}
+      </Waypoint>
     </Canvas>
   </div>
 {/if}
