@@ -15,6 +15,11 @@
         padding: 30px 45px;
       }
 
+      @include breakpoints.for-desktop-up {
+        max-width: 700;
+        font-size: 1.375rem;
+      }
+
       figure {
         text-align: center;
 

@@ -15,7 +15,6 @@
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./ISS/ISS_stationary.svelte";
-  import Text from "./Text.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -102,7 +101,6 @@
       { downpage: (downpage) => downpage < stage.getDownpage("excitement") },
       () => "setup",
     ),
-    // Match.when({ downpage: (downpage) => downpage < 10000 }, () => "launch"),
     Match.orElse(() => "launch"),
   );
 </script>
