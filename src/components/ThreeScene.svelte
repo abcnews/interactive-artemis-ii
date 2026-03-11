@@ -15,6 +15,7 @@
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./ISS/ISS_stationary.svelte";
+  import Text from "./Text.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";

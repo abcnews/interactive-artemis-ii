@@ -39,22 +39,6 @@ const INITIAL_WAYPOINTS: CameraWaypoint[] = [
     sections: ["sls", "takeoff"],
     position: TAKEOFF_POSITION,
   },
-  {
-    type: "transition",
-    section: "cornish",
-    start: "cornish",
-    end: "2mins",
-    fromPosition: [0, 0, kmScale(-35)],
-    toPosition: [0, 0, kmScale(-85)],
-  },
-  {
-    type: "transition",
-    section: "2mins",
-    start: "2mins",
-    end: "thermosphere",
-    fromPosition: [0, 0, kmScale(-85)],
-    toPosition: [0, 0, kmScale(-700)],
-  },
 ];
 
 class Waypoints {
