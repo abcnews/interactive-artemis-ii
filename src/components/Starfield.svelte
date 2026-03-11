@@ -3,7 +3,6 @@
   import * as THREE from "three";
   import Rand from "rand-seed";
 
-  // Seed-based random number generator
   const rand = new Rand("artemis-ii");
 
   let points: THREE.Points;
@@ -12,16 +11,17 @@
 
   useTask(() => {
     if (points) {
-      // points.position.copy(camera.current.position).multiplyScalar(0.999);
+      points.position.copy(camera.current.position).multiplyScalar(0.999);
     }
   });
 
-  // TODO: Make sure no stars are generated too close
   const generateStars = () => {
     const count = 10000;
     const positions = new Float32Array(count * 3);
-    for (let i = 0; i < count * 3; i++) {
-      positions[i] = (rand.next() - 0.5) * 500;
+    for (let i = 0; i < count; i++) {
+      positions[i * 3]     = (rand.next() - 0.5) * 1000; // X: full spread
+      positions[i * 3 + 1] = (rand.next() - 0.5) * 1000; // Y: full spread
+      positions[i * 3 + 2] = -rand.next() * 500;        // Z: 0 → -500 (forward only)
     }
     return positions;
   };

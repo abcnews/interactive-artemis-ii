@@ -6,7 +6,8 @@
   type Props = {
     position: [number, number, number];
     cameraPosition: [number, number, number];
-    visibleRange?: number; // scene units — how far away before it appears
+    visibleRange?: number;
+    fadeInRange?: number;
     children: Snippet<[{ opacity: number }]>;
   };
 
@@ -14,20 +15,23 @@
     position,
     cameraPosition,
     visibleRange = 20,
+    fadeInRange = visibleRange * 0.0001,
     children,
   }: Props = $props();
 
-  // Distance ahead of camera (positive = ahead, negative = behind/passed)
-  const distZ = $derived(cameraPosition[2] - position[2]);
-
   const opacity = $derived(() => {
-    // Units ahead of camera (positive = still to come)
     const ahead = cameraPosition[2] - position[2];
 
-    // Fade in on approach
-    if (ahead > 0) return Math.max(0, 1 - ahead / visibleRange);
+    if (ahead > visibleRange) return 0;
 
-    // Fade out slowly after passing — uses a wider range behind
+    // Fade in — reaches 1 at fadeInRange, not at 0
+    if (ahead > 0)
+      return Math.max(
+        0,
+        1 - (ahead - fadeInRange) / (visibleRange - fadeInRange),
+      );
+
+    // Fully visible when passed
     const behind = Math.abs(ahead);
     return Math.max(0, 1 - behind / (visibleRange * 3));
   });

@@ -60,7 +60,7 @@
   const RAW_WIDTH = 111.99;
   const REAL_SCALE = 0.000109 / RAW_WIDTH; // ≈ 9.73e-7
 
-  const VISIBILITY_MULTIPLIER = 500;
+  const VISIBILITY_MULTIPLIER = 300;
   const ISS_SCALE = REAL_SCALE * VISIBILITY_MULTIPLIER; // ≈ 0.000487
 
   let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0], {
@@ -170,6 +170,7 @@
 
       <Starfield />
 
+      <!-- The Moon -->
       <T.Group position={[0, 0, -384]} rotation={[0, 0, -Math.PI * 1]}>
         <T.Group rotation={[0, Math.PI * 0.5, 0]}>
           <Moon scale={MOON_SCALE} />
@@ -183,7 +184,12 @@
         visibleRange={kmScale(10)}
       >
         {#snippet children({ opacity })}
-          <Atmosphere radius={kmScale(12)} colour="#3216ff" {opacity} />
+          <Atmosphere
+            radius={kmScale(12)}
+            colour="#3216ff"
+            {opacity}
+            thickness={0.02}
+          />
         {/snippet}
       </Waypoint>
 
@@ -210,10 +216,15 @@
       <Waypoint
         position={[0, 0, kmScale(-50)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(10)}
+        visibleRange={kmScale(30)}
       >
         {#snippet children({ opacity })}
-          <Atmosphere radius={kmScale(50)} colour="#3216ff" {opacity} />
+          <Atmosphere
+            radius={kmScale(50)}
+            colour="#3216ff"
+            {opacity}
+            thickness={0.02}
+          />
         {/snippet}
       </Waypoint>
 
@@ -224,7 +235,12 @@
         visibleRange={kmScale(30)}
       >
         {#snippet children({ opacity })}
-          <Atmosphere radius={kmScale(87)} colour="#3216ff" {opacity} />
+          <Atmosphere
+            radius={kmScale(87)}
+            colour="#3216ff"
+            {opacity}
+            thickness={0.02}
+          />
         {/snippet}
       </Waypoint>
 
@@ -235,7 +251,12 @@
         visibleRange={kmScale(30)}
       >
         {#snippet children({ opacity })}
-          <Atmosphere radius={kmScale(100)} colour="#921644" {opacity} />
+          <Atmosphere
+            radius={kmScale(100)}
+            colour="#921644"
+            {opacity}
+            thickness={0.02}
+          />
         {/snippet}
       </Waypoint>
 
@@ -249,7 +270,7 @@
           <Text
             text="Yuri Gagaran 240km"
             position={[0, 0, kmScale(-240)]}
-            fontSize={kmScale(2)}
+            fontSize={kmScale(1)}
             fillOpacity={opacity}
           ></Text>
         {/snippet}
@@ -257,13 +278,13 @@
 
       <!-- ISS -->
       <Waypoint
-        position={[0, 0, kmScale(-340)]}
+        position={[0, 0, kmScale(-400)]}
         cameraPosition={cameraPositionSpring.current}
         visibleRange={kmScale(300)}
       >
         {#snippet children({ opacity })}
           <ISS
-            position={[0, kmScale(5), kmScale(-340)]}
+            position={[0, kmScale(5), kmScale(-400)]}
             scale={ISS_SCALE}
             {opacity}
           />
@@ -274,10 +295,62 @@
       <Waypoint
         position={[0, 0, kmScale(-700)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(50)}
+        visibleRange={kmScale(500)}
       >
         {#snippet children({ opacity })}
-          <Atmosphere radius={kmScale(700)} colour="#3216ff" {opacity} />
+          <Atmosphere
+            radius={kmScale(700)}
+            colour="#3216ff"
+            {opacity}
+            thickness={0.02}
+          />
+        {/snippet}
+      </Waypoint>
+
+      <!-- Gemini 11 -->
+      <Waypoint
+        position={[0, 0, kmScale(-1369)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(500)}
+      >
+        {#snippet children({ opacity })}
+          <Text
+            text="Gemini 11"
+            position={[0, 0, kmScale(-1369)]}
+            fontSize={kmScale(1)}
+            fillOpacity={opacity}
+          ></Text>
+        {/snippet}
+      </Waypoint>
+
+      <!-- Laika the dog -->
+      <Waypoint
+        position={[0, 0, kmScale(-1659)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(500)}
+      >
+        {#snippet children({ opacity })}
+          <Text
+            text="Laika"
+            position={[0, 0, kmScale(-1659)]}
+            fontSize={kmScale(1)}
+            fillOpacity={opacity}
+          ></Text>
+        {/snippet}
+      </Waypoint>
+      <!-- Outer Space -->
+      <Waypoint
+        position={[0, 0, kmScale(-10000)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(500)}
+      >
+        {#snippet children({ opacity })}
+          <Atmosphere
+            radius={kmScale(10000)}
+            colour="#3216ff"
+            {opacity}
+            thickness={0.02}
+          />
         {/snippet}
       </Waypoint>
     </Canvas>
