@@ -7,7 +7,7 @@
     fontSize?: number;
   };
 
-  let { text, fontSize = 0.1, ...props }: Props = $props();
+  let { text, fontSize = 0.0001, ...props }: Props = $props();
 </script>
 
-<Text {text} color="white" {fontSize}  {...props} />
+<Text {text} color="white" {fontSize} anchorX="50%" anchorY="0%" {...props} />

@@ -15,6 +15,8 @@
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./ISS/ISS_stationary.svelte";
+  import Cornish from "./Cornish/CornishBasic.svelte";
+  import Text from "./Text.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -164,11 +166,9 @@
       ></T.PerspectiveCamera>
 
       <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
-      <T.AmbientLight intensity={0.05} />
+      <T.AmbientLight intensity={0.15} />
 
       <Starfield />
-
-      <!-- <Sphere /> -->
 
       <T.Group position={[0, 0, -384]} rotation={[0, 0, -Math.PI * 1]}>
         <T.Group rotation={[0, Math.PI * 0.5, 0]}>
@@ -188,9 +188,23 @@
       </Waypoint>
 
       <!-- <T.Mesh position={[0, 0, kmScale(-12.83)]} scale={1}>
-        <T.BoxGeometry args={[kmScale(0.5), kmScale(0.1), kmScale(0.1)]} />
+        <T.BoxGeometry args={[kmScale(0.1), kmScale(0.01), kmScale(0.01)]} />
         <T.MeshNormalMaterial />
       </T.Mesh> -->
+
+      <Waypoint
+        position={[0, 0, kmScale(-35.5)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(25)}
+      >
+        {#snippet children({ opacity })}
+          <Cornish
+            scale={kmScale(0.1)}
+            position={[kmScale(0.1), kmScale(-0.3), kmScale(-35.5)]}
+            {opacity}
+          ></Cornish>
+        {/snippet}
+      </Waypoint>
 
       <!-- Mesosphere -->
       <Waypoint
@@ -214,6 +228,34 @@
         {/snippet}
       </Waypoint>
 
+      <!-- Karman line (SPACE) -->
+      <Waypoint
+        position={[0, 0, kmScale(-100)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(30)}
+      >
+        {#snippet children({ opacity })}
+          <Atmosphere radius={kmScale(100)} colour="#921644" {opacity} />
+        {/snippet}
+      </Waypoint>
+
+      <!-- Yuri Gagaran -->
+      <Waypoint
+        position={[0, 0, kmScale(-240)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(100)}
+      >
+        {#snippet children({ opacity })}
+          <Text
+            text="Yuri Gagaran 240km"
+            position={[0, 0, kmScale(-240)]}
+            fontSize={kmScale(2)}
+            fillOpacity={opacity}
+          ></Text>
+        {/snippet}
+      </Waypoint>
+
+      <!-- ISS -->
       <Waypoint
         position={[0, 0, kmScale(-340)]}
         cameraPosition={cameraPositionSpring.current}
