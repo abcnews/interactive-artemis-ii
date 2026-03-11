@@ -17,6 +17,7 @@
   import ISS from "./ISS/ISS_stationary.svelte";
   import Cornish from "./Cornish/CornishBasic.svelte";
   import Text from "./Text.svelte";
+  import PostProcessing from "./PostProcessing.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -353,6 +354,8 @@
           />
         {/snippet}
       </Waypoint>
+
+      <PostProcessing />
     </Canvas>
   </div>
 {/if}

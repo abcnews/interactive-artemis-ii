@@ -86,5 +86,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform cornish-pasty-v1.8.glb
     {@render error?.({ error: err })}
   {/await}
 
-  {@render children?.({ ref })}
+  {#if ref}
+    {@render children?.({ ref })}
+  {/if}
 </T.Group>
