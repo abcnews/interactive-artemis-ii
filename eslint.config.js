@@ -26,6 +26,7 @@ export default defineConfig(
       "svelte/no-inspect": "off",
       "svelte/no-unused-props": "off",
       "@typescript-eslint/no-explicit-any": "off",
+      "svelte/require-each-key": "off",
     },
   },
   {

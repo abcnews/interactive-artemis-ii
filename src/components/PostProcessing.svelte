@@ -16,7 +16,7 @@
   composer.addPass(renderPass);
 
   const bloomEffect = new BloomEffect({
-    intensity: 2.0,
+    intensity: 0.1,
     luminanceThreshold: 0.1,
     luminanceSmoothing: 0.3,
     mipmapBlur: true,

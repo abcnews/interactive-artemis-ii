@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Canvas, T, useThrelte } from "@threlte/core";
-  import { HUD, Grid, Stars, Float } from "@threlte/extras";
+  import { HUD, Grid, Stars, Float, SVG } from "@threlte/extras";
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
   import { Match } from "effect";
@@ -21,6 +21,8 @@
   import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
   import Gemini from "./Gemini.svelte";
   import CameraController from "./CameraController.svelte";
+  import DistanceMarkers from "./DistanceMarkers.svelte";
+  import Gagarin from "./Gagarin.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -122,7 +124,7 @@
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
-      <CameraController />
+      <!-- <CameraController /> -->
 
       <T.DirectionalLight position={[10, 10, 10]} />
       <T.AmbientLight intensity={0.1} />
@@ -162,7 +164,7 @@
         });
       }}
     >
-    <T.Color attach="background" args={["#0f0f0f"]} />
+      <T.Color attach="background" args={["#0f0f0f"]} />
       <T.PerspectiveCamera
         makeDefault
         position={cameraPositionSpring.current}
@@ -176,12 +178,7 @@
       <T.AmbientLight intensity={0.15} />
       <Starfield />
 
-      <!-- The Moon -->
-      <T.Group position={[0, 0, -384]} rotation={[0, 0, -Math.PI * 1]}>
-        <T.Group rotation={[0, Math.PI * 0.5, 0]}>
-          <Moon scale={MOON_SCALE} />
-        </T.Group>
-      </T.Group>
+      <DistanceMarkers {cameraPosition} />
 
       <!-- Stratosphere -->
       <Waypoint
@@ -194,7 +191,8 @@
             radius={kmScale(12)}
             colour="#3216ff"
             {opacity}
-            thickness={0.02}
+            thickness={0.05}
+            yOffset={-0.5}
           />
         {/snippet}
       </Waypoint>
@@ -223,7 +221,7 @@
       <Waypoint
         position={[0, 0, kmScale(-50)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(30)}
+        visibleRange={kmScale(40)}
       >
         {#snippet children({ opacity })}
           <Atmosphere
@@ -268,10 +266,10 @@
       </Waypoint>
 
       <!-- Yuri Gagaran -->
-      <Waypoint
+      <!-- <Waypoint
         position={[0, 0, kmScale(-240)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(100)}
+        visibleRange={kmScale(60)}
       >
         {#snippet children({ opacity })}
           <Text
@@ -280,6 +278,15 @@
             fontSize={kmScale(1)}
             fillOpacity={opacity}
           ></Text>
+        {/snippet}
+      </Waypoint> -->
+      <Waypoint
+        position={[0, 0, kmScale(-240)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(50)}
+      >
+        {#snippet children({ opacity })}
+          <Gagarin position={[0, 0, kmScale(-240)]} {opacity} />
         {/snippet}
       </Waypoint>
 
@@ -302,14 +309,14 @@
       <Waypoint
         position={[0, 0, kmScale(-700)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(50)}
+        visibleRange={kmScale(500)}
       >
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(700)}
             colour="#3216ff"
             {opacity}
-            thickness={0.02}
+            thickness={0.2}
           />
         {/snippet}
       </Waypoint>
@@ -344,6 +351,7 @@
           ></Text>
         {/snippet}
       </Waypoint>
+
       <!-- Outer Space -->
       <Waypoint
         position={[0, 0, kmScale(-10000)]}
@@ -355,12 +363,20 @@
             radius={kmScale(10000)}
             colour="#3216ff"
             {opacity}
-            thickness={0.02}
+            thickness={0.2}
           />
         {/snippet}
       </Waypoint>
 
-      <ThreltePostProcessing />
+      <!-- The Moon -->
+      <T.Group position={[0, 0, -406]} rotation={[0, 0, -Math.PI * 1]}>
+        <T.Group rotation={[0, Math.PI * 0.5, 0]}>
+          <Moon scale={MOON_SCALE} />
+        </T.Group>
+      </T.Group>
+
+      <PostProcessing />
+      <!-- <ThreltePostProcessing /> -->
     </Canvas>
   </div>
 {/if}
