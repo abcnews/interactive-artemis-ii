@@ -11,7 +11,7 @@
       width: calc(100% - 48px);
 
       @include breakpoints.for-tablet-up {
-        max-width: 600px;
+        max-width: 621.33px;
         padding: 30px 45px;
       }
 

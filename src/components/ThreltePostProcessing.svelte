@@ -1,0 +1,13 @@
+<script lang="ts">
+  import { EffectComposer } from "threlte-postprocessing";
+  import { BloomEffect } from "threlte-postprocessing/effects";
+</script>
+
+<EffectComposer>
+  <BloomEffect
+    intensity={0.5}
+    luminanceThreshold={0.1}
+    luminanceSmoothing={0.3}
+    mipmapBlur={true}
+  />
+</EffectComposer>

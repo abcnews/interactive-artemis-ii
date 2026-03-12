@@ -50,6 +50,7 @@
     "svelte-inview": "^4.0.4",
     "svelte-portal": "^2.2.1",
     "three": "^0.182.0",
+    "threlte-postprocessing": "^0.0.10",
     "valibot": "^1.2.0",
     "vite-tsconfig-paths": "^6.1.1"
   }

@@ -15,32 +15,35 @@
     position,
     cameraPosition,
     visibleRange = 20,
-    fadeInRange = visibleRange * 0.0001,
+    fadeInRange = visibleRange * 0.3,  // fade over ??% of visible range
     children,
   }: Props = $props();
 
-  const opacity = $derived(() => {
+  const opacity = $derived.by(() => {
     const ahead = cameraPosition[2] - position[2];
 
     if (ahead > visibleRange) return 0;
 
-    // Fade in — reaches 1 at fadeInRange, not at 0
     if (ahead > 0)
       return Math.max(
         0,
         1 - (ahead - fadeInRange) / (visibleRange - fadeInRange),
       );
 
-    // Fully visible when passed
+    // Fully visible when passed, fade out behind
     const behind = Math.abs(ahead);
     return Math.max(0, 1 - behind / (visibleRange * 3));
   });
 
-  const isVisible = $derived(opacity() > 0.01);
+  // Mount slightly before visible so material is ready when fade starts
+  const shouldMount = $derived.by(() => {
+    const ahead = cameraPosition[2] - position[2];
+    return ahead < visibleRange * 1.1;
+  });
 </script>
 
-{#if isVisible}
-  <T.Group>
-    {@render children({ opacity: opacity() })}
+{#if shouldMount}
+  <T.Group visible={opacity > 0}>
+    {@render children({ opacity })}
   </T.Group>
 {/if}

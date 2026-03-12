@@ -18,6 +18,7 @@
   import Cornish from "./Cornish/CornishBasic.svelte";
   import Text from "./Text.svelte";
   import PostProcessing from "./PostProcessing.svelte";
+  import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -199,10 +200,11 @@
         <T.MeshNormalMaterial />
       </T.Mesh> -->
 
+      <!-- Cornish pasty -->
       <Waypoint
         position={[0, 0, kmScale(-35.5)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(25)}
+        visibleRange={kmScale(22)}
       >
         {#snippet children({ opacity })}
           <Cornish
@@ -355,7 +357,8 @@
         {/snippet}
       </Waypoint>
 
-      <PostProcessing />
+      <!-- <PostProcessing /> -->
+       <ThreltePostProcessing />
     </Canvas>
   </div>
 {/if}

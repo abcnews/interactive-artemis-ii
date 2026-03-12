@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as THREE from "three";
   import { GLTF, useDraco } from "@threlte/extras";
-  import gltfUrl from "./ISS_stationary-transformed.glb?url";
+  import gltfUrl from "~/src/assets/Gemini.glb?url";
   import { T } from "@threlte/core";
 
   let { opacity = 1, ...props } = $props();
@@ -32,7 +32,7 @@
       ref.traverse((child) => {
         if (!(child instanceof THREE.Mesh)) return;
 
-        const edges = new THREE.EdgesGeometry(child.geometry, 30);
+        const edges = new THREE.EdgesGeometry(child.geometry, 20);
         const lineMat = new THREE.LineBasicMaterial({
           color: LINE_COLOR,
           transparent: true,
@@ -41,6 +41,7 @@
 
         lineMaterials.push(lineMat);
 
+        // THREE.LineSegments has no updateMatrixWorld recursion bug
         const lineSegs = new THREE.LineSegments(edges, lineMat);
         child.add(lineSegs);
         child.material = darkMaterial;
