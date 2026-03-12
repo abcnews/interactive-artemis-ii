@@ -32,7 +32,7 @@
       ref.traverse((child) => {
         if (!(child instanceof THREE.Mesh)) return;
 
-        const edges = new THREE.EdgesGeometry(child.geometry, 20);
+        const edges = new THREE.EdgesGeometry(child.geometry, 5);
         const lineMat = new THREE.LineBasicMaterial({
           color: LINE_COLOR,
           transparent: true,

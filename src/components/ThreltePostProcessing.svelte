@@ -5,8 +5,8 @@
 
 <EffectComposer>
   <BloomEffect
-    intensity={0.5}
-    luminanceThreshold={0.1}
+    intensity={0.3}
+    luminanceThreshold={0.2}
     luminanceSmoothing={0.3}
     mipmapBlur={true}
   />

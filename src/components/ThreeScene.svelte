@@ -19,6 +19,8 @@
   import Text from "./Text.svelte";
   import PostProcessing from "./PostProcessing.svelte";
   import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
+  import Gemini from "./Gemini.svelte";
+  import CameraController from "./CameraController.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -62,7 +64,7 @@
   const RAW_WIDTH = 111.99;
   const REAL_SCALE = 0.000109 / RAW_WIDTH; // ≈ 9.73e-7
 
-  const VISIBILITY_MULTIPLIER = 300;
+  const VISIBILITY_MULTIPLIER = 100;
   const ISS_SCALE = REAL_SCALE * VISIBILITY_MULTIPLIER; // ≈ 0.000487
 
   let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0], {
@@ -120,6 +122,7 @@
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
+      <CameraController />
 
       <T.DirectionalLight position={[10, 10, 10]} />
       <T.AmbientLight intensity={0.1} />
@@ -155,9 +158,11 @@
           canvas,
           logarithmicDepthBuffer: true,
           antialias: true,
+          alpha: true,
         });
       }}
     >
+    <T.Color attach="background" args={["#0f0f0f"]} />
       <T.PerspectiveCamera
         makeDefault
         position={cameraPositionSpring.current}
@@ -169,7 +174,6 @@
 
       <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
       <T.AmbientLight intensity={0.15} />
-
       <Starfield />
 
       <!-- The Moon -->
@@ -283,11 +287,11 @@
       <Waypoint
         position={[0, 0, kmScale(-400)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(300)}
+        visibleRange={kmScale(200)}
       >
         {#snippet children({ opacity })}
           <ISS
-            position={[0, kmScale(5), kmScale(-400)]}
+            position={[kmScale(0.01), kmScale(3), kmScale(-400)]}
             scale={ISS_SCALE}
             {opacity}
           />
@@ -298,7 +302,7 @@
       <Waypoint
         position={[0, 0, kmScale(-700)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(500)}
+        visibleRange={kmScale(50)}
       >
         {#snippet children({ opacity })}
           <Atmosphere
@@ -314,15 +318,14 @@
       <Waypoint
         position={[0, 0, kmScale(-1369)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(500)}
+        visibleRange={kmScale(200)}
       >
         {#snippet children({ opacity })}
-          <Text
-            text="Gemini 11"
-            position={[0, 0, kmScale(-1369)]}
-            fontSize={kmScale(1)}
-            fillOpacity={opacity}
-          ></Text>
+          <Gemini
+            position={[kmScale(-0.1), kmScale(-0.8), kmScale(-1369)]}
+            scale={kmScale(0.1)}
+            {opacity}
+          ></Gemini>
         {/snippet}
       </Waypoint>
 
@@ -357,8 +360,7 @@
         {/snippet}
       </Waypoint>
 
-      <!-- <PostProcessing /> -->
-       <ThreltePostProcessing />
+      <ThreltePostProcessing />
     </Canvas>
   </div>
 {/if}
@@ -371,8 +373,4 @@
     top: 0;
     left: 0;
   }
-
-  // .launch {
-  //   background-color: #0052a2;
-  // }
 </style>
