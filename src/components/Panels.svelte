@@ -22,6 +22,7 @@
 
       figure {
         text-align: center;
+        margin-right: 0 !important;
 
         [data-component="AspectRatioContainer"] {
           max-width: 400px;
@@ -36,7 +37,7 @@
         position: relative;
 
         @include breakpoints.for-tablet-up {
-          padding: 48px;
+          padding: 38px;
         }
       }
     }

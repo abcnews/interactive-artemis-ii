@@ -4,13 +4,14 @@
   import { kmScale } from "~/src/lib/utils";
 
   const INTERVAL = 10000;
-  const MAX_KM = 384000;
-  const VISIBLE_RANGE = kmScale(20000);
+  const MIN_KM = 40000;
+  const MAX_KM = 350000;
+  const VISIBLE_RANGE = kmScale(15000);
   const FADE_RANGE = VISIBLE_RANGE * 0.3;
 
   const markers = Array.from(
-    { length: Math.floor(MAX_KM / INTERVAL) },
-    (_, i) => (i + 1) * INTERVAL,
+    { length: Math.floor((MAX_KM - MIN_KM) / INTERVAL) + 1 },
+    (_, i) => MIN_KM + i * INTERVAL,
   );
 
   let { cameraPosition } = $props();

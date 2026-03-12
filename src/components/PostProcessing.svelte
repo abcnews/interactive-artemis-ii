@@ -1,5 +1,3 @@
-<!-- I think we're using threlte-postprocessing now -->
-
 <script lang="ts">
   import { useTask, useThrelte } from "@threlte/core";
   import {

@@ -266,27 +266,13 @@
       </Waypoint>
 
       <!-- Yuri Gagaran -->
-      <!-- <Waypoint
-        position={[0, 0, kmScale(-240)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(60)}
-      >
-        {#snippet children({ opacity })}
-          <Text
-            text="Yuri Gagaran 240km"
-            position={[0, 0, kmScale(-240)]}
-            fontSize={kmScale(1)}
-            fillOpacity={opacity}
-          ></Text>
-        {/snippet}
-      </Waypoint> -->
       <Waypoint
         position={[0, 0, kmScale(-240)]}
         cameraPosition={cameraPositionSpring.current}
         visibleRange={kmScale(50)}
       >
         {#snippet children({ opacity })}
-          <Gagarin position={[0, 0, kmScale(-240)]} {opacity} />
+          <Gagarin position={[kmScale(-0.1), kmScale(-0.2), kmScale(-240)]} {opacity} />
         {/snippet}
       </Waypoint>
 
