@@ -7,7 +7,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform 3D-Moon-NASA-textures-v1.1.
   import * as THREE from "three";
 
   import type { Snippet } from "svelte";
-  import { T, type Props } from "@threlte/core";
+  import { T, type Props, useTask } from "@threlte/core";
   import { useGltf, useDraco } from "@threlte/extras";
 
   import gltfPath from "./3D-Moon-NASA-textures-v1.1_compressed.glb?url";

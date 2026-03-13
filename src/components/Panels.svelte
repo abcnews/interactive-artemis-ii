@@ -9,6 +9,8 @@
       backdrop-filter: blur(7px);
       box-shadow: 0 0px 30px hsla(0, 0%, 100%, 0.2);
       width: calc(100% - 48px);
+      position: relative;
+      z-index: 1;
 
       @include breakpoints.for-tablet-up {
         max-width: 621.33px;

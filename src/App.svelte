@@ -13,6 +13,7 @@
   import Debug from "./components/Debug.svelte";
   import ThreeScene, { type ModelState } from "./components/ThreeScene.svelte";
   import Panels from "./components/Panels.svelte";
+  import HeadsUp from "./components/HUD.svelte";
 
   // Standard imports
   import { ElementSize } from "runed";
@@ -21,6 +22,7 @@
   import { Throttled } from "runed";
   import { Match } from "effect";
   import { scaleLinear } from "d3-scale";
+  import { pipe } from "effect";
 
   // Type imports
   import { type Readable } from "svelte/store";
@@ -41,6 +43,7 @@
 
   // Other imports
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
 
   // Constants
   const SCROLL_THROTTLE = 25;
@@ -124,14 +127,16 @@
     return getSceneState(name, progress);
   });
 
-  let elementsVisible = $derived.by(() => {
-    console.log(scroll.panelsCurrent);
-  });
-
   function panelVisibility(panelName: string): ModelState {
     const panel = scroll.panelsCurrent.find((p) => p.name === panelName);
     if (!panel) return {};
     return { isVisible: scroll.pageScrollBottom > panel.downPage };
+  }
+
+  function hasPassedPanel(panelName: string): boolean {
+    const panel = scroll.panelsCurrent.find((p) => p.name === panelName);
+    if (!panel) return false;
+    return scroll.pageScrollBottom > panel.downPage;
   }
 
   let starfieldState = $derived(panelVisibility("excitement"));
@@ -143,6 +148,17 @@
     const sectionName = scroll.currentSection?.name ?? "initial";
 
     return getCameraPosition(pageScrollBottom, sectionName);
+  });
+
+  let shouldShowHUD = $derived.by(() => {
+    if (!hasPassedPanel("excitement")) {
+      return false;
+    }
+
+    if (pipe(cameraPosition[2], (n) => n * 1000, Math.round, Math.abs) > 9) {
+      return true;
+    }
+    return false;
   });
 </script>
 
@@ -158,6 +174,11 @@
   </Portal>
 
   <Portal target="[data-key='body']">
+    {#if shouldShowHUD}
+      <div transition:fade={{ duration: 1000 }}>
+        <HeadsUp {cameraPosition} />
+      </div>
+    {/if}
     <BackgroundStage>
       <ThreeScene
         itemsVisible={threeCanvasState.itemsVisible}

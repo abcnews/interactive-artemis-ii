@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Canvas, T, useThrelte } from "@threlte/core";
+  import { Canvas, T, useThrelte, useTask } from "@threlte/core";
   import { HUD, Grid, Stars, Float, SVG } from "@threlte/extras";
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
@@ -23,6 +23,8 @@
   import CameraController from "./CameraController.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
   import Gagarin from "./Gagarin.svelte";
+  import GPS from "./GPS.svelte";
+  import HeadsUp from "./HUD.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -31,6 +33,7 @@
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
   import { onMount } from "svelte";
+  import Sputnik2 from "./Sputnik2.svelte";
 
   // Constants
   const MOON_SCALE = 3.474 / 2;
@@ -111,6 +114,11 @@
     ),
     Match.orElse(() => "launch"),
   );
+
+  const MOON_Z = -406;
+  const ORBIT_RADIUS = 8; // distance from moon centre
+  const ORBIT_START_Z = MOON_Z + 20; // when to start orbiting
+  const ORBIT_SPEED = 0.2; // radians per second
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
@@ -124,7 +132,6 @@
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
-      <!-- <CameraController /> -->
 
       <T.DirectionalLight position={[10, 10, 10]} />
       <T.AmbientLight intensity={0.1} />
@@ -174,11 +181,23 @@
         far={500}
       ></T.PerspectiveCamera>
 
+      <!-- <CameraController
+        moonArrived={cameraPositionSpring.current[2] <= ORBIT_START_Z}
+      /> -->
+
       <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
-      <T.AmbientLight intensity={0.15} />
+      <T.AmbientLight intensity={0.1} />
+
       <Starfield />
 
       <DistanceMarkers {cameraPosition} />
+
+      <!-- <Orion
+        position={[0, 0, cameraPositionSpring.current[2] - kmScale(1)]}
+        rotation={[-Math.PI * 1, 0, 0]}
+        scale={0.0001}
+        opacity={orionOpacity}
+      /> -->
 
       <!-- Stratosphere -->
       <Waypoint
@@ -272,7 +291,10 @@
         visibleRange={kmScale(50)}
       >
         {#snippet children({ opacity })}
-          <Gagarin position={[kmScale(-0.1), kmScale(-0.2), kmScale(-240)]} {opacity} />
+          <Gagarin
+            position={[kmScale(-0.1), kmScale(-0.2), kmScale(-240)]}
+            {opacity}
+          />
         {/snippet}
       </Waypoint>
 
@@ -315,7 +337,8 @@
       >
         {#snippet children({ opacity })}
           <Gemini
-            position={[kmScale(-0.1), kmScale(-0.8), kmScale(-1369)]}
+            position={[kmScale(-0.5), kmScale(-0.8), kmScale(-1369)]}
+            rotation={[Math.PI * 0.1, 0, -Math.PI * 0.1]}
             scale={kmScale(0.1)}
             {opacity}
           ></Gemini>
@@ -326,15 +349,15 @@
       <Waypoint
         position={[0, 0, kmScale(-1659)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(500)}
+        visibleRange={kmScale(200)}
       >
         {#snippet children({ opacity })}
-          <Text
-            text="Laika"
-            position={[0, 0, kmScale(-1659)]}
-            fontSize={kmScale(1)}
-            fillOpacity={opacity}
-          ></Text>
+          <Sputnik2
+            position={[kmScale(0.4), kmScale(-0.8), kmScale(-1659)]}
+            rotation={[Math.PI * 0.1, 0, Math.PI * 0.02]}
+            scale={kmScale(0.3)}
+            {opacity}
+          ></Sputnik2>
         {/snippet}
       </Waypoint>
 
@@ -354,10 +377,29 @@
         {/snippet}
       </Waypoint>
 
+      <!-- GPS -->
+      <Waypoint
+        position={[0, 0, kmScale(-20180)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(200)}
+      >
+        {#snippet children({ opacity })}
+          <GPS
+            position={[kmScale(0.4), kmScale(-0.8), kmScale(-20180)]}
+            rotation={[-(Math.PI * 0.1), Math.PI * 0.1, Math.PI * 0.4]}
+            scale={kmScale(0.01)}
+            {opacity}
+          ></GPS>
+        {/snippet}
+      </Waypoint>
+
       <!-- The Moon -->
       <T.Group position={[0, 0, -406]} rotation={[0, 0, -Math.PI * 1]}>
         <T.Group rotation={[0, Math.PI * 0.5, 0]}>
-          <Moon scale={MOON_SCALE} />
+          <Moon
+            scale={MOON_SCALE}
+            cameraPosition={cameraPositionSpring.current}
+          />
         </T.Group>
       </T.Group>
 
