@@ -15,15 +15,21 @@ the last position, and this could be in the middle of a Spring
 so it the camera position will sometimes seem inconsistent when
 scrolling fast up and down between sections.
 
-Possible easy half-fix by simply adding new transitions so there's
-no non-matches and have the from and to kms the same.
+Possible easy half-fix has been implemented mostly by simply adding 
+new transitions so there's no non-matches and have the from and to 
+kms the same.
 
 */
+
+export type CameraPositionResult = {
+  position: [number, number, number];
+  progress: number | null; // null when fixed or no match
+};
 
 export const getCameraPosition = (
   pageScrollBottom: number,
   currentSectionName: string,
-): [number, number, number] => {
+): CameraPositionResult => {
   /*
   This is just a dev mode test to warn about overlapping transitions
   */
@@ -55,22 +61,27 @@ export const getCameraPosition = (
     return isAfterStart && isBeforeEnd;
   });
 
-  const position = Match.value(waypoint).pipe(
-    Match.withReturnType<[number, number, number]>(),
-    Match.when({ type: "fixed" }, (w) => w.position),
+  const result = Match.value(waypoint).pipe(
+    Match.withReturnType<CameraPositionResult>(),
+    Match.when({ type: "fixed" }, (w) => ({
+      position: w.position,
+      progress: null,
+    })),
     Match.when({ type: "transition" }, (w) => {
       const progress = stage.getProgressBetweenSections({
         start: w.start,
         end: w.end,
       })(pageScrollBottom);
 
-      return w.fromPosition.map((from, i) =>
+      const position = w.fromPosition.map((from, i) =>
         scaleLinear([0, 1], [from, w.toPosition[i]]).clamp(true)(progress),
       ) as [number, number, number];
+
+      return { position, progress };
     }),
-    Match.orElse(() => lastPosition),
+    Match.orElse(() => ({ position: lastPosition, progress: null })),
   );
 
-  lastPosition = position;
-  return position;
+  lastPosition = result.position;
+  return result;
 };

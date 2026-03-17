@@ -5,7 +5,11 @@
   import { Spring } from "svelte/motion";
   import { Match } from "effect";
   import { fade } from "svelte/transition";
+  import { prefersReducedMotion } from "svelte/motion";
 
+  import { type CameraPositionResult } from "../lib/getCameraPosition";
+
+  // Components
   import Sphere from "./Sphere.svelte";
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
   import Orion from "./Orion/Orion_Draco_Optimized.svelte";
@@ -47,7 +51,7 @@
     itemsVisible: string[];
     orionRotation?: [number, number, number];
     cameraZ?: number;
-    cameraPosition: [number, number, number];
+    cameraPosition: CameraPositionResult;
     starfieldState: ModelState;
     orionState: ModelState;
     artemisState: ModelState;
@@ -74,6 +78,14 @@
 
   let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0], {
     precision: 0.00001,
+  });
+
+  let cameraPositionPosition = $derived.by(() => {
+    return cameraPosition.position;
+  });
+
+  let cameraPositionProgress = $derived.by(() => {
+    return cameraPosition.progress;
   });
 
   let artemisOpacity = $derived.by(() => {
@@ -103,7 +115,20 @@
   });
 
   $effect(() => {
-    cameraPositionSpring.target = cameraPosition;
+    const position = cameraPositionPosition;
+    const progress = cameraPositionProgress;
+
+    if (!prefersReducedMotion.current) {
+      cameraPositionSpring.set(position);
+      return;
+    }
+
+    // Snap to start or end of transition, ignore the middle
+    if (progress === null || progress > 0.9) {
+      cameraPositionSpring.set(position, { instant: true });
+    } else if (progress < 0.1) {
+      cameraPositionSpring.set(position, { instant: true });
+    }
   });
 
   const whichScene = Match.type<{ downpage: number }>().pipe(

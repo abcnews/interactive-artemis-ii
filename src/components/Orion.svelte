@@ -1,13 +1,7 @@
 <script lang="ts">
-  import { T, useThrelte, useTask } from "@threlte/core";
+  import { T, useTask } from "@threlte/core";
   import { useGltf, useDraco, Float, useViewport } from "@threlte/extras";
   import { onMount, onDestroy } from "svelte";
-  import { Spring } from "svelte/motion";
-  import { Tween } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
-  import * as THREE from "three";
-
-  const { invalidate } = useThrelte();
 
   import { ROTATION_SPEED } from "~/src/constants";
 
@@ -20,13 +14,7 @@
     orionRotation?: [number, number, number];
   };
 
-  const {
-    position = [0, 0, 0],
-    path = OrionGL,
-    orionRotation = [0, 0, 0],
-  }: Props = $props();
-
-  const progress = new Spring<[number, number, number]>([0, 0, 0]);
+  const { position = [0, 0, 0], path = OrionGL }: Props = $props();
 
   const dracoLoader = useDraco();
   const viewport = useViewport();
@@ -38,10 +26,6 @@
 
   let rotationY = $state(0);
   let mounted = $state(false);
-
-  $effect(() => {
-    progress.target = orionRotation;
-  });
 
   const { stop } = useTask(
     (delta) => {

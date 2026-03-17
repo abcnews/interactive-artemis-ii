@@ -1,6 +1,5 @@
 <script lang="ts">
   import { useTask, useThrelte } from "@threlte/core";
-  import type { Spring } from "svelte/motion";
   import * as THREE from "three";
 
   type Props = {

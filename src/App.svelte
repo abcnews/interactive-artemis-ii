@@ -21,7 +21,6 @@
   import { SvelteURLSearchParams } from "svelte/reactivity";
   import { Throttled } from "runed";
   import { Match } from "effect";
-  import { scaleLinear } from "d3-scale";
   import { pipe } from "effect";
 
   // Type imports
@@ -30,7 +29,6 @@
   // Stores
   import { scroll } from "./stores/scroll.svelte";
   import { screen } from "./stores/screen.svelte";
-  import { stage } from "./stores/stage.svelte";
 
   // Utilities
   import {
@@ -155,7 +153,7 @@
       return false;
     }
 
-    if (pipe(cameraPosition[2], (n) => n * 1000, Math.round, Math.abs) > 9) {
+    if (pipe(cameraPosition.position[2], (n) => n * 1000, Math.round, Math.abs) > 9) {
       return true;
     }
     return false;
