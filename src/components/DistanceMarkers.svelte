@@ -14,9 +14,11 @@
     (_, i) => MIN_KM + i * INTERVAL,
   );
 
-  let { cameraPosition } = $props();
+  import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
 
-  let camZ = $derived(cameraPosition[2]);
+  let { cameraPosition }: { cameraPosition: CameraPositionResult } = $props();
+
+  let camZ = $derived(cameraPosition.position[2]);
 </script>
 
 {#each markers as km (km)}

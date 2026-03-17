@@ -30,6 +30,10 @@
   color: white;
 }
 
+body {
+  overflow-x: clip !important;
+}
+
 /*
   Odyssey/PL overrides
  */

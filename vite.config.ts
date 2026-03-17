@@ -25,5 +25,8 @@ export default defineConfig(({ command }) => {
       },
       chunkSizeWarningLimit: 1000,
     },
+    resolve: {
+      dedupe: ["three"],
+    },
   };
 });

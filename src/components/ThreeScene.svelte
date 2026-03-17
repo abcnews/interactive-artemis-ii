@@ -48,21 +48,13 @@
   };
 
   type ComponentProps = {
-    itemsVisible: string[];
-    orionRotation?: [number, number, number];
-    cameraZ?: number;
     cameraPosition: CameraPositionResult;
-    starfieldState: ModelState;
     orionState: ModelState;
     artemisState: ModelState;
   };
 
   let {
-    itemsVisible = [],
-    orionRotation,
-    cameraZ = 200,
     cameraPosition,
-    starfieldState = { isVisible: false },
     orionState = { isVisible: false },
     artemisState = { isVisible: false },
   }: ComponentProps = $props();
@@ -82,7 +74,7 @@
 
   const throttledPosition = new Throttled(
     () => cameraPosition.position, // reactive source
-    300,
+    1000,
   );
 
   let artemisOpacity = $derived.by(() => {
@@ -112,12 +104,7 @@
   });
 
   $effect(() => {
-    if (!prefersReducedMotion.current) {
-      cameraPositionSpring.set(cameraPosition.position);
-      return;
-    }
-
-    cameraPositionSpring.set(throttledPosition.current, { instant: true });
+    cameraPositionSpring.set(cameraPosition.position);
   });
 
   const whichScene = Match.type<{ downpage: number }>().pipe(
@@ -128,11 +115,6 @@
     ),
     Match.orElse(() => "launch"),
   );
-
-  const MOON_Z = -406;
-  const ORBIT_RADIUS = 8; // distance from moon centre
-  const ORBIT_START_Z = MOON_Z + 20; // when to start orbiting
-  const ORBIT_SPEED = 0.2; // radians per second
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}

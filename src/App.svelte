@@ -29,6 +29,9 @@
   // Stores
   import { scroll } from "./stores/scroll.svelte";
   import { screen } from "./stores/screen.svelte";
+  import { accessibility } from "./stores/accessibility.svelte";
+
+  $inspect(accessibility.prefersReducedMotion);
 
   // Utilities
   import {
@@ -36,7 +39,6 @@
     unloadDarkModeObserver,
     setMode,
   } from "./lib/darkModeSwitcher";
-  import { kmScale } from "./lib/utils";
   import { getCameraPosition } from "./lib/getCameraPosition";
 
   // Other imports
@@ -153,7 +155,10 @@
       return false;
     }
 
-    if (pipe(cameraPosition.position[2], (n) => n * 1000, Math.round, Math.abs) > 9) {
+    if (
+      pipe(cameraPosition.position[2], (n) => n * 1000, Math.round, Math.abs) >
+      9
+    ) {
       return true;
     }
     return false;
@@ -178,14 +183,7 @@
       </div>
     {/if}
     <BackgroundStage>
-      <ThreeScene
-        itemsVisible={threeCanvasState.itemsVisible}
-        orionRotation={threeCanvasState.orionRotation}
-        {cameraPosition}
-        {starfieldState}
-        {orionState}
-        {artemisState}
-      />
+      <ThreeScene {cameraPosition} {orionState} {artemisState} />
     </BackgroundStage>
   </Portal>
 
