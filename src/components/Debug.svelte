@@ -1,9 +1,9 @@
 <script lang="ts">
   import { pipe } from "effect";
   import { scroll } from "~/src/stores/scroll.svelte";
-  import { stage } from "~/src/stores/stage.svelte";
+  import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
 
-  const { cameraPosition } = $props();
+  const { cameraPosition }: { cameraPosition: CameraPositionResult } = $props();
 </script>
 
 <div class="debug-root">
@@ -11,7 +11,14 @@
   <div>Downpage: {scroll.pageScrollBottom}</div>
   <div>Progress: {scroll.progressUntilNextSection}</div>
   <!-- <div>Active: {JSON.stringify(stage.transitionsActive)}</div> -->
-  <div>Camera: {pipe(cameraPosition[2], (n) => n * 1000, Math.round, Math.abs)}km</div>
+  <div>
+    Camera: {pipe(
+      cameraPosition.position[2],
+      (n) => n * 1000,
+      Math.round,
+      Math.abs,
+    )}km
+  </div>
 </div>
 
 <style lang="scss">

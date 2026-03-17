@@ -6,8 +6,8 @@
   import { Match } from "effect";
   import { fade } from "svelte/transition";
   import { prefersReducedMotion } from "svelte/motion";
-
   import { type CameraPositionResult } from "../lib/getCameraPosition";
+  import { Throttled } from "runed";
 
   // Components
   import Sphere from "./Sphere.svelte";
@@ -80,13 +80,10 @@
     precision: 0.00001,
   });
 
-  let cameraPositionPosition = $derived.by(() => {
-    return cameraPosition.position;
-  });
-
-  let cameraPositionProgress = $derived.by(() => {
-    return cameraPosition.progress;
-  });
+  const throttledPosition = new Throttled(
+    () => cameraPosition.position, // reactive source
+    300,
+  );
 
   let artemisOpacity = $derived.by(() => {
     return stage.getProgressBetweenSections({
@@ -115,20 +112,12 @@
   });
 
   $effect(() => {
-    const position = cameraPositionPosition;
-    const progress = cameraPositionProgress;
-
     if (!prefersReducedMotion.current) {
-      cameraPositionSpring.set(position);
+      cameraPositionSpring.set(cameraPosition.position);
       return;
     }
 
-    // Snap to start or end of transition, ignore the middle
-    if (progress === null || progress > 0.9) {
-      cameraPositionSpring.set(position, { instant: true });
-    } else if (progress < 0.1) {
-      cameraPositionSpring.set(position, { instant: true });
-    }
+    cameraPositionSpring.set(throttledPosition.current, { instant: true });
   });
 
   const whichScene = Match.type<{ downpage: number }>().pipe(

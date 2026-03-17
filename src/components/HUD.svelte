@@ -1,13 +1,19 @@
 <script lang="ts">
   import { pipe } from "effect";
-  const { cameraPosition } = $props();
+  import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
+
+  type Props = {
+    cameraPosition: CameraPositionResult;
+  };
+
+  const { cameraPosition }: Props = $props();
 </script>
 
 <div class="hud-root">
   <div class="hud-value">
     <span class="number">
       {pipe(
-        cameraPosition[2],
+        cameraPosition.position[2],
         (n) => n * 1000,
         Math.round,
         Math.abs,
