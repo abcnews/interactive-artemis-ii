@@ -377,13 +377,13 @@
       <Waypoint
         position={[0, 0, kmScale(-20180)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(200)}
+        visibleRange={kmScale(5000)}
       >
         {#snippet children({ opacity })}
           <GPS
             position={[kmScale(0.4), kmScale(-0.8), kmScale(-20180)]}
             rotation={[-(Math.PI * 0.1), Math.PI * 0.1, Math.PI * 0.4]}
-            scale={kmScale(0.01)}
+            scale={kmScale(0.02)}
             {opacity}
           ></GPS>
         {/snippet}

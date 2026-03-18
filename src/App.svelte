@@ -31,8 +31,6 @@
   import { screen } from "./stores/screen.svelte";
   import { accessibility } from "./stores/accessibility.svelte";
 
-  $inspect(accessibility.prefersReducedMotion);
-
   // Utilities
   import {
     loadDarkModeObserver,
@@ -150,15 +148,16 @@
     return getCameraPosition(pageScrollBottom, sectionName);
   });
 
+  let kmsFromEarth = $derived.by(() => {
+    return cameraPosition.position[2] * 1000;
+  });
+
   let shouldShowHUD = $derived.by(() => {
     if (!hasPassedPanel("excitement")) {
       return false;
     }
 
-    if (
-      pipe(cameraPosition.position[2], (n) => n * 1000, Math.round, Math.abs) >
-      9
-    ) {
+    if (pipe(kmsFromEarth, Math.round, Math.abs) > 9) {
       return true;
     }
     return false;
