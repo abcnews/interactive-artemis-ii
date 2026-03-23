@@ -16,16 +16,22 @@
 
   import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
 
-  let { cameraPosition }: { cameraPosition: CameraPositionResult } = $props();
+  type Props = {
+    cameraPosition?: CameraPositionResult;
+    alwaysVisible?: boolean;
+  };
 
-  let camZ = $derived(cameraPosition.position[2]);
+  let { cameraPosition, alwaysVisible = false }: Props = $props();
+
+  let camZ = $derived(cameraPosition?.position[2] || 0);
 </script>
 
 {#each markers as km (km)}
   {@const posZ = kmScale(-km)}
   {@const ahead = camZ - posZ}
-  {@const opacity =
-    ahead > VISIBLE_RANGE
+  {@const opacity = alwaysVisible
+    ? 1
+    : ahead > VISIBLE_RANGE
       ? 0
       : ahead > 0
         ? Math.max(0, 1 - (ahead - FADE_RANGE) / (VISIBLE_RANGE - FADE_RANGE))

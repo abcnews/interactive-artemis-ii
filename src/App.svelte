@@ -184,7 +184,7 @@
     {/if}
     <BackgroundStage>
       {#if accessibility.prefersReducedMotion}
-        <ThreeSceneReducedMotion {cameraPosition} {orionState} {artemisState} />
+        <ThreeSceneReducedMotion {orionState} {artemisState} />
       {:else}
         <ThreeScene {cameraPosition} {orionState} {artemisState} />
       {/if}

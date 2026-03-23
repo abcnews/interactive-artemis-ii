@@ -41,6 +41,7 @@
   // Constants
   const MOON_SCALE = 3.474 / 2;
   const ATMOSPHERE_THICKNESS = 0.05;
+  const SCENE_FADE_DURATION = 500;
 
   export type ModelState = {
     isVisible?: boolean;
@@ -48,13 +49,11 @@
   };
 
   type ComponentProps = {
-    cameraPosition: CameraPositionResult;
     orionState: ModelState;
     artemisState: ModelState;
   };
 
   let {
-    cameraPosition,
     orionState = { isVisible: false },
     artemisState = { isVisible: false },
   }: ComponentProps = $props();
@@ -72,10 +71,10 @@
     precision: 0.00001,
   });
 
-  const throttledPosition = new Throttled(
-    () => cameraPosition.position, // reactive source
-    1000,
-  );
+  // const throttledPosition = new Throttled(
+  //   () => cameraPosition.position, // reactive source
+  //   1000,
+  // );
 
   let artemisOpacity = $derived.by(() => {
     return stage.getProgressBetweenSections({
@@ -103,33 +102,33 @@
     }
   });
 
-  $effect(() => {
-    if (accessibility.prefersReducedMotion) {
-      cameraPositionSpring.set(cameraPosition.position, {
-        instant: true,
-      });
-      return;
-    } else {
-      cameraPositionSpring.set(cameraPosition.position);
-    }
-  });
-
   const whichScene = Match.type<{ downpage: number }>().pipe(
     Match.withReturnType<string>(),
     Match.when(
-      { downpage: (downpage) => downpage < stage.getDownpage("excitement") },
-      () => "setup",
+      { downpage: (downpage) => downpage < stage.getDownpage("artemis") },
+      () => "orion",
+    ),
+    Match.when(
+      {
+        downpage: (downpage) =>
+          downpage > stage.getDownpage("artemis") &&
+          downpage < stage.getDownpage("excitement"),
+      },
+      () => "artemis",
     ),
     Match.orElse(() => "launch"),
   );
 </script>
 
-{#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div class="stage-root setup" transition:fade={{ duration: 1000 }}>
+{#if whichScene({ downpage: scroll.pageScrollBottom }) === "orion"}
+  <div
+    class="stage-root orion"
+    transition:fade={{ duration: SCENE_FADE_DURATION }}
+  >
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
-        position={cameraPositionSpring.current}
+        position={[0, 0, 0]}
         oncreate={(ref) => {}}
         fov={78}
         near={0.01}
@@ -139,19 +138,44 @@
       <T.DirectionalLight position={[10, 10, 10]} />
       <T.AmbientLight intensity={0.1} />
 
-      {#if orionState.isVisible}
-        <Float
-          floatIntensity={orionState.shouldFloat ? 5 : 0}
-          rotationIntensity={orionState.shouldFloat ? 2 : 0}
-          rotationSpeed={[1, 0.5, 0.2]}
-        >
-          <Orion
-            position={[0, 36, -70]}
-            orionRotation={undefined}
-            opacity={orionOpacity}
-          />
-        </Float>
-      {/if}
+      <Orion
+        position={[0, 0, -10]}
+        orionRotation={undefined}
+        opacity={orionOpacity}
+      />
+
+      <!-- {#if artemisState.isVisible}
+        <Artemis
+          position={[0, -10, -70]}
+          scale={0.5}
+          opacity={artemisOpacity}
+        />
+      {/if} -->
+    </Canvas>
+  </div>
+{:else if whichScene({ downpage: scroll.pageScrollBottom }) === "artemis"}
+  <div
+    class="stage-root orion"
+    transition:fade={{ duration: SCENE_FADE_DURATION }}
+  >
+    <Canvas>
+      <T.PerspectiveCamera
+        makeDefault
+        position={[0, 0, 0]}
+        oncreate={(ref) => {}}
+        fov={78}
+        near={0.01}
+        far={1000}
+      ></T.PerspectiveCamera>
+
+      <T.DirectionalLight position={[10, 10, 10]} />
+      <T.AmbientLight intensity={0.1} />
+
+      <Orion
+        position={[0, 36, -70]}
+        orionRotation={undefined}
+        opacity={orionOpacity}
+      />
 
       {#if artemisState.isVisible}
         <Artemis
@@ -168,7 +192,7 @@
       createRenderer={(canvas) => {
         return new THREE.WebGLRenderer({
           canvas,
-          logarithmicDepthBuffer: true,
+          // logarithmicDepthBuffer: true,
           antialias: true,
           alpha: true,
         });
@@ -189,7 +213,7 @@
 
       <Starfield />
 
-      <DistanceMarkers {cameraPosition} />
+      <DistanceMarkers alwaysVisible={true} />
 
       <!-- Stratosphere -->
       <Waypoint

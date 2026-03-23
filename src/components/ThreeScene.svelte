@@ -104,14 +104,7 @@
   });
 
   $effect(() => {
-    if (accessibility.prefersReducedMotion) {
-      cameraPositionSpring.set(cameraPosition.position, {
-        instant: true,
-      });
-      return;
-    } else {
-      cameraPositionSpring.set(cameraPosition.position);
-    }
+    cameraPositionSpring.set(cameraPosition.position);
   });
 
   const whichScene = Match.type<{ downpage: number }>().pipe(
