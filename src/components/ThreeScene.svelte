@@ -24,7 +24,6 @@
   import PostProcessing from "./PostProcessing.svelte";
   import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
   import Gemini from "./Gemini.svelte";
-  import CameraController from "./CameraController.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
   import Gagarin from "./Gagarin.svelte";
   import GPS from "./GPS.svelte";
@@ -171,7 +170,9 @@
       <T.PerspectiveCamera
         makeDefault
         position={cameraPositionSpring.current}
-        oncreate={(ref) => {}}
+        oncreate={(ref) => {
+          ref.lookAt(0, -80, -406);
+        }}
         fov={75}
         near={kmScale(0.01)}
         far={500}

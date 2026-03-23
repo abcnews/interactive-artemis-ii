@@ -24,7 +24,6 @@
   import PostProcessing from "./PostProcessing.svelte";
   import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
   import Gemini from "./Gemini.svelte";
-  import CameraController from "./CameraController.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
   import Gagarin from "./Gagarin.svelte";
   import GPS from "./GPS.svelte";
@@ -92,23 +91,6 @@
       return 1;
     }
   });
-
-  // const whichScene = Match.type<{ downpage: number }>().pipe(
-  //   Match.withReturnType<string>(),
-  //   Match.when(
-  //     { downpage: (downpage) => downpage < stage.getDownpage("artemis") },
-  //     () => "orion",
-  //   ),
-  //   Match.when(
-  //     {
-  //       downpage: (downpage) =>
-  //         downpage > stage.getDownpage("artemis") &&
-  //         downpage < stage.getDownpage("excitement"),
-  //     },
-  //     () => "artemis",
-  //   ),
-  //   Match.orElse(() => "launch"),
-  // );
 
   const isBefore = (section: string) =>
     scroll.pageScrollBottom < stage.getDownpage(section);

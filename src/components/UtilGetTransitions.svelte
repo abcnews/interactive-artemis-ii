@@ -8,8 +8,12 @@
   import { parse as parseAlternatingCaseToObject } from "@abcnews/alternating-case-to-object";
   import * as v from "valibot";
   import { kmScale } from "~/src/lib/utils";
-  import { screen } from "../stores/screen.svelte";
-  import { waypointStore, type TransitionWaypoint } from "../stores/waypoints.svelte";
+  import {
+    waypointStore,
+    type TransitionWaypoint,
+  } from "../stores/waypoints.svelte";
+
+  const Y_POS = 0;
 
   const ParsedSchema = v.object({
     start: v.string(),
@@ -21,7 +25,7 @@
   function mountToWaypoint(mount: Mount): TransitionWaypoint | null {
     const result = v.safeParse(
       ParsedSchema,
-      parseAlternatingCaseToObject(getMountValue(mount))
+      parseAlternatingCaseToObject(getMountValue(mount)),
     );
 
     if (!result.success) {
@@ -34,8 +38,8 @@
       type: "transition",
       start,
       end,
-      fromPosition: [0, 0, kmScale(-from)],
-      toPosition:   [0, 0, kmScale(-to)],
+      fromPosition: [0, Y_POS, kmScale(-from)],
+      toPosition: [0, Y_POS, kmScale(-to)],
     };
   }
 

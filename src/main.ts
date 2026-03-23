@@ -26,8 +26,8 @@ const props: ComponentProps<typeof App> = {
 async function waitForOdysseyWithTimeout() {
   return Timeout.wrap(
     whenOdysseyLoaded,
-    5000,
-    "Timed out waiting for Odyssey to load",
+    7000,
+    "Timed out waiting for Odyssey to load. Please try again.",
   );
 }
 
@@ -60,7 +60,6 @@ const init = async () => {
 const instance = init();
 export default instance;
 
-
 /*
   Development code
 
@@ -69,9 +68,9 @@ export default instance;
 
 // Threlte's useViewport throws an error on teardown during hot reload.
 if (import.meta.env.DEV) {
-  window.addEventListener('unhandledrejection', (event) => {
-    if (event.reason?.message?.includes('getWorldPosition')) {
-      event.preventDefault() // suppresses the console error
+  window.addEventListener("unhandledrejection", (event) => {
+    if (event.reason?.message?.includes("getWorldPosition")) {
+      event.preventDefault(); // suppresses the console error
     }
-  })
+  });
 }

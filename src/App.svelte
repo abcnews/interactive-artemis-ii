@@ -15,6 +15,7 @@
   import ThreeSceneReducedMotion from "./components/ThreeSceneReducedMotion.svelte";
   import Panels from "./components/Panels.svelte";
   import OnScreenDisplay from "./components/OnScreenDisplay.svelte";
+  import HoveringOverlays from "./components/HoveringOverlays.svelte";
 
   // Standard imports
   import { ElementSize } from "runed";
@@ -158,7 +159,7 @@
 
   const pageHeight = document.body.scrollHeight;
 
-  let shouldShowStats = $derived.by(() => {
+  let shouldShowOnScreenDisplay = $derived.by(() => {
     if (!hasPassedPanel("excitement")) {
       return false;
     }
@@ -186,7 +187,7 @@
   </Portal>
 
   <Portal target="[data-key='body']">
-    {#if shouldShowStats}
+    {#if shouldShowOnScreenDisplay}
       <div transition:fade={{ duration: 500 }}>
         <OnScreenDisplay {cameraPosition} />
       </div>
@@ -198,6 +199,8 @@
         <ThreeScene {cameraPosition} {orionState} {artemisState} />
       {/if}
     </BackgroundStage>
+
+    <HoveringOverlays />
   </Portal>
 
   <Panels />
