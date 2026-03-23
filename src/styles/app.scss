@@ -34,6 +34,10 @@ body {
   overflow-x: clip !important;
 }
 
+#reduced-motion-plugin-mount {
+  margin-block: 4rem !important;
+}
+
 /*
   Odyssey/PL overrides
  */
@@ -63,4 +67,8 @@ body {
 .inline-pill {
   border-radius: 100px !important;
   padding: 2px 10px !important;
+}
+
+[data-mount="true"] {
+  margin-block: 0 !important;
 }

@@ -6,12 +6,25 @@
     fadeOutProgress: number;
   };
 
-  let { fadeOutProgress }: Props = $props()
+  let { fadeOutProgress }: Props = $props();
 
+  let header: HTMLElement | null;
   let headline: HTMLElement | null;
 
   onMount(() => {
+    // Get the elements
+    header = document.querySelector<HTMLElement>(".Header");
     headline = document.querySelector<HTMLElement>(".Header-content h1");
+
+    const tabsHeight = 48;
+    const navHeight = window.innerWidth < 992 ? 50 : 72;
+    const screenHeight = window.innerHeight;
+
+    // Set properties
+    header?.style.setProperty(
+      "--header-height",
+      `${screenHeight - tabsHeight - navHeight}px`,
+    );
   });
 </script>
 
@@ -28,14 +41,14 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100dvh;
+      height: var(--header-height, 900px);
+      margin: 0 !important;
 
       .Header-content {
         margin-inline: 16px;
 
         h1 {
-          font-family:
-            ABCSansNova-CondensedBold, "abcsans condensed" !important;
+          font-family: ABCSansNova-CondensedBold, "abcsans condensed" !important;
           font-weight: 700;
           text-transform: uppercase;
           font-stretch: condensed;
@@ -108,7 +121,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100dvh;
+      height: var(--header-height, 900px);
       background-color: transparent;
       z-index: -1;
       opacity: var(--fade-out-progress);
