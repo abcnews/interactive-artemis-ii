@@ -153,8 +153,17 @@
     return cameraPosition.position[2] * 1000;
   });
 
+  const body = document.body;
+  const html = document.documentElement;
+
+  const pageHeight = document.body.scrollHeight;
+
   let shouldShowStats = $derived.by(() => {
     if (!hasPassedPanel("excitement")) {
+      return false;
+    }
+
+    if (scroll.pageScrollBottom > pageHeight - 5000) {
       return false;
     }
 
@@ -178,7 +187,7 @@
 
   <Portal target="[data-key='body']">
     {#if shouldShowStats}
-      <div transition:fade={{ duration: 1000 }}>
+      <div transition:fade={{ duration: 500 }}>
         <OnScreenDisplay {cameraPosition} />
       </div>
     {/if}

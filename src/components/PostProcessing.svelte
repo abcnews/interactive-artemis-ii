@@ -40,7 +40,9 @@
 
   // Keep size in sync
   $effect(() => {
-    composer.setSize($size.width, $size.height);
+    const { width, height } = $size;
+    if (width === 0 || height === 0) return;
+    composer.setSize(width, height);
   });
 
   // Hand off rendering to the composer
@@ -62,6 +64,8 @@
 
   useTask(
     (delta) => {
+      const { width, height } = $size;
+      if (width === 0 || height === 0) return; // skip if no dimensions yet
       composer.render(delta);
     },
     { stage: renderStage, autoInvalidate: false },

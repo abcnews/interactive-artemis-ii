@@ -67,15 +67,6 @@
   const VISIBILITY_MULTIPLIER = 100;
   const ISS_SCALE = REAL_SCALE * VISIBILITY_MULTIPLIER; // ≈ 0.000487
 
-  let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0], {
-    precision: 0.00001,
-  });
-
-  // const throttledPosition = new Throttled(
-  //   () => cameraPosition.position, // reactive source
-  //   1000,
-  // );
-
   let artemisOpacity = $derived.by(() => {
     return stage.getProgressBetweenSections({
       start: "artemis",
@@ -102,25 +93,38 @@
     }
   });
 
-  const whichScene = Match.type<{ downpage: number }>().pipe(
-    Match.withReturnType<string>(),
-    Match.when(
-      { downpage: (downpage) => downpage < stage.getDownpage("artemis") },
-      () => "orion",
-    ),
-    Match.when(
-      {
-        downpage: (downpage) =>
-          downpage > stage.getDownpage("artemis") &&
-          downpage < stage.getDownpage("excitement"),
-      },
-      () => "artemis",
-    ),
-    Match.orElse(() => "launch"),
-  );
+  // const whichScene = Match.type<{ downpage: number }>().pipe(
+  //   Match.withReturnType<string>(),
+  //   Match.when(
+  //     { downpage: (downpage) => downpage < stage.getDownpage("artemis") },
+  //     () => "orion",
+  //   ),
+  //   Match.when(
+  //     {
+  //       downpage: (downpage) =>
+  //         downpage > stage.getDownpage("artemis") &&
+  //         downpage < stage.getDownpage("excitement"),
+  //     },
+  //     () => "artemis",
+  //   ),
+  //   Match.orElse(() => "launch"),
+  // );
+
+  const isBefore = (section: string) =>
+    scroll.pageScrollBottom < stage.getDownpage(section);
+
+  const isBetween = (start: string, end: string) =>
+    scroll.pageScrollBottom >= stage.getDownpage(start) &&
+    scroll.pageScrollBottom < stage.getDownpage(end);
+
+  const currentScene = $derived.by(() => {
+    if (isBefore("artemis")) return "orion";
+    if (isBetween("artemis", "excitement")) return "artemis";
+    return "launch";
+  });
 </script>
 
-{#if whichScene({ downpage: scroll.pageScrollBottom }) === "orion"}
+{#if currentScene === "orion"}
   <div
     class="stage-root orion"
     transition:fade={{ duration: SCENE_FADE_DURATION }}
@@ -143,17 +147,9 @@
         orionRotation={undefined}
         opacity={orionOpacity}
       />
-
-      <!-- {#if artemisState.isVisible}
-        <Artemis
-          position={[0, -10, -70]}
-          scale={0.5}
-          opacity={artemisOpacity}
-        />
-      {/if} -->
     </Canvas>
   </div>
-{:else if whichScene({ downpage: scroll.pageScrollBottom }) === "artemis"}
+{:else if currentScene === "artemis"}
   <div
     class="stage-root orion"
     transition:fade={{ duration: SCENE_FADE_DURATION }}
@@ -187,7 +183,10 @@
     </Canvas>
   </div>
 {:else}
-  <div class="stage-root launch" transition:fade={{ duration: 1000 }}>
+  <div
+    class="stage-root launch"
+    transition:fade={{ duration: SCENE_FADE_DURATION }}
+  >
     <Canvas
       createRenderer={(canvas) => {
         return new THREE.WebGLRenderer({
@@ -201,7 +200,7 @@
       <T.Color attach="background" args={["#0f0f0f"]} />
       <T.PerspectiveCamera
         makeDefault
-        position={cameraPositionSpring.current}
+        position={[0, 0, 0]}
         oncreate={(ref) => {}}
         fov={75}
         near={kmScale(0.01)}
@@ -212,207 +211,6 @@
       <T.AmbientLight intensity={0.1} />
 
       <Starfield />
-
-      <DistanceMarkers alwaysVisible={true} />
-
-      <!-- Stratosphere -->
-      <Waypoint
-        position={[0, 0, kmScale(-12)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(10)}
-      >
-        {#snippet children({ opacity })}
-          <Atmosphere
-            radius={kmScale(12)}
-            colour="#3216ff"
-            {opacity}
-            thickness={0.05}
-            yOffset={-0.5}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- Cornish pasty -->
-      <Waypoint
-        position={[0, 0, kmScale(-35.5)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(22)}
-      >
-        {#snippet children({ opacity })}
-          <Cornish
-            scale={kmScale(0.1)}
-            position={[kmScale(0.1), kmScale(-0.3), kmScale(-35.5)]}
-            {opacity}
-          ></Cornish>
-        {/snippet}
-      </Waypoint>
-
-      <!-- Mesosphere -->
-      <Waypoint
-        position={[0, 0, kmScale(-50)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(40)}
-      >
-        {#snippet children({ opacity })}
-          <Atmosphere
-            radius={kmScale(50)}
-            colour="#3216ff"
-            {opacity}
-            thickness={ATMOSPHERE_THICKNESS}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- Thermosphere -->
-      <Waypoint
-        position={[0, 0, kmScale(-87)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(30)}
-      >
-        {#snippet children({ opacity })}
-          <Atmosphere
-            radius={kmScale(87)}
-            colour="#3216ff"
-            {opacity}
-            thickness={ATMOSPHERE_THICKNESS}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- Karman line (SPACE) -->
-      <Waypoint
-        position={[0, 0, kmScale(-100)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(30)}
-      >
-        {#snippet children({ opacity })}
-          <Atmosphere
-            radius={kmScale(100)}
-            colour="#3216ff"
-            {opacity}
-            thickness={ATMOSPHERE_THICKNESS}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- Yuri Gagaran -->
-      <Waypoint
-        position={[0, 0, kmScale(-240)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(50)}
-      >
-        {#snippet children({ opacity })}
-          <Gagarin
-            position={[kmScale(-0.1), kmScale(-0.2), kmScale(-240)]}
-            {opacity}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- ISS -->
-      <Waypoint
-        position={[0, 0, kmScale(-400)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(200)}
-      >
-        {#snippet children({ opacity })}
-          <ISS
-            position={[kmScale(0.01), kmScale(3), kmScale(-400)]}
-            scale={ISS_SCALE}
-            {opacity}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- Exosphere -->
-      <Waypoint
-        position={[0, 0, kmScale(-700)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(500)}
-      >
-        {#snippet children({ opacity })}
-          <Atmosphere
-            radius={kmScale(700)}
-            colour="#3216ff"
-            {opacity}
-            thickness={ATMOSPHERE_THICKNESS}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- Gemini 11 -->
-      <Waypoint
-        position={[0, 0, kmScale(-1369)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(200)}
-      >
-        {#snippet children({ opacity })}
-          <Gemini
-            position={[kmScale(-0.5), kmScale(-0.8), kmScale(-1369)]}
-            rotation={[Math.PI * 0.1, 0, -Math.PI * 0.1]}
-            scale={kmScale(0.1)}
-            {opacity}
-          ></Gemini>
-        {/snippet}
-      </Waypoint>
-
-      <!-- Laika the dog -->
-      <Waypoint
-        position={[0, 0, kmScale(-1659)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(200)}
-      >
-        {#snippet children({ opacity })}
-          <Sputnik2
-            position={[kmScale(0.4), kmScale(-0.8), kmScale(-1659)]}
-            rotation={[Math.PI * 0.1, 0, Math.PI * 0.02]}
-            scale={kmScale(0.3)}
-            {opacity}
-          ></Sputnik2>
-        {/snippet}
-      </Waypoint>
-
-      <!-- Outer Space -->
-      <Waypoint
-        position={[0, 0, kmScale(-10000)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(500)}
-      >
-        {#snippet children({ opacity })}
-          <Atmosphere
-            radius={kmScale(10000)}
-            colour="#3216ff"
-            {opacity}
-            thickness={0.2}
-          />
-        {/snippet}
-      </Waypoint>
-
-      <!-- GPS -->
-      <Waypoint
-        position={[0, 0, kmScale(-20180)]}
-        cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(5000)}
-      >
-        {#snippet children({ opacity })}
-          <GPS
-            position={[kmScale(0.4), kmScale(-0.8), kmScale(-20180)]}
-            rotation={[-(Math.PI * 0.1), Math.PI * 0.1, Math.PI * 0.4]}
-            scale={kmScale(0.02)}
-            {opacity}
-          ></GPS>
-        {/snippet}
-      </Waypoint>
-
-      <!-- The Moon -->
-      <T.Group position={[0, 0, -406]} rotation={[0, 0, -Math.PI * 1]}>
-        <T.Group rotation={[0, Math.PI * 0.5, 0]}>
-          <Moon
-            scale={MOON_SCALE}
-            cameraPosition={cameraPositionSpring.current}
-          />
-        </T.Group>
-      </T.Group>
 
       <PostProcessing />
     </Canvas>

@@ -15,6 +15,49 @@
     }
   });
 
+  const generateStars = () => {
+    const count = 10000;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = (rand.next() - 0.5) * 1000; // X: full spread
+      positions[i * 3 + 1] = (rand.next() - 0.5) * 1000; // Y: full spread
+      positions[i * 3 + 2] = -rand.next() * 500; // Z: 0 → -500 (forward only)
+    }
+    return positions;
+  };
+
+  const starPositions = generateStars();
+</script>
+
+<T.Points bind:ref={points}>
+  <T.BufferGeometry
+    oncreate={(geometry) => {
+      geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(starPositions, 3),
+      );
+    }}
+  />
+  <T.PointsMaterial size={0.1} color="#ffffff" />
+</T.Points>
+
+<!-- <script lang="ts">
+  import { T, useTask, useThrelte } from "@threlte/core";
+  import * as THREE from "three";
+  import Rand from "rand-seed";
+
+  const rand = new Rand("artemis-ii");
+
+  let points: THREE.Points;
+
+  const { camera } = useThrelte();
+
+  useTask(() => {
+    if (points) {
+      points.position.copy(camera.current.position).multiplyScalar(0.999);
+    }
+  });
+
   const SHOUD_USE_SURROUNDING_SPHERE = false;
 
   const generateStars = () => {
@@ -56,4 +99,4 @@
     }}
   />
   <T.PointsMaterial size={0.1} color="#ffffff" />
-</T.Points>
+</T.Points> -->
