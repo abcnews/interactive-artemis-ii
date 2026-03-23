@@ -12,8 +12,9 @@
   import UtilGetTransitions from "./components/UtilGetTransitions.svelte";
   import Debug from "./components/Debug.svelte";
   import ThreeScene, { type ModelState } from "./components/ThreeScene.svelte";
+  import ThreeSceneReducedMotion from "./components/ThreeSceneReducedMotion.svelte";
   import Panels from "./components/Panels.svelte";
-  import HeadsUp from "./components/HUD.svelte";
+  import OnScreenDisplay from "./components/OnScreenDisplay.svelte";
 
   // Standard imports
   import { ElementSize } from "runed";
@@ -152,7 +153,7 @@
     return cameraPosition.position[2] * 1000;
   });
 
-  let shouldShowHUD = $derived.by(() => {
+  let shouldShowStats = $derived.by(() => {
     if (!hasPassedPanel("excitement")) {
       return false;
     }
@@ -176,13 +177,17 @@
   </Portal>
 
   <Portal target="[data-key='body']">
-    {#if shouldShowHUD}
+    {#if shouldShowStats}
       <div transition:fade={{ duration: 1000 }}>
-        <HeadsUp {cameraPosition} />
+        <OnScreenDisplay {cameraPosition} />
       </div>
     {/if}
     <BackgroundStage>
-      <ThreeScene {cameraPosition} {orionState} {artemisState} />
+      {#if accessibility.prefersReducedMotion}
+        <ThreeSceneReducedMotion {cameraPosition} {orionState} {artemisState} />
+      {:else}
+        <ThreeScene {cameraPosition} {orionState} {artemisState} />
+      {/if}
     </BackgroundStage>
   </Portal>
 

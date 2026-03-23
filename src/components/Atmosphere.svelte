@@ -46,7 +46,7 @@
   </T.Mesh>
 
   <!-- Glow layer 2 — widest, most transparent -->
-  <T.Mesh>
+  <!-- <T.Mesh>
     <T.TorusGeometry args={[radius, kmScale(thickness + 0.02), 8, 128]} />
     <T.MeshBasicMaterial
       color={colour}
@@ -55,5 +55,5 @@
       blending={THREE.AdditiveBlending}
       depthWrite={false}
     />
-  </T.Mesh>
+  </T.Mesh> -->
 </T.Group>
