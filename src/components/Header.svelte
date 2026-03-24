@@ -109,13 +109,6 @@
       }
     }
 
-    /* html:not(.is-dark-mode) {
-      .Header-content {
-        background-color: grey;
-        border-radius: 16px;
-      }
-    } */
-
     .background {
       position: absolute;
       top: 0;
@@ -125,7 +118,7 @@
       background-color: transparent;
       z-index: -1;
       opacity: var(--fade-out-progress);
-      // transition: opacity 1s ease-in-out;
+      transform: translateX(-48px)
     }
   }
 </style>
