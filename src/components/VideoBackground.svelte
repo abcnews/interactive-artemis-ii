@@ -28,7 +28,7 @@
       top: 50%;
       left: 0;
       width: 100%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) translateX(-3%);
     }
 
     @media (orientation: portrait) {

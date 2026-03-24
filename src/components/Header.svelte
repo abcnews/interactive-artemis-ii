@@ -118,7 +118,6 @@
       background-color: transparent;
       z-index: -1;
       opacity: var(--fade-out-progress);
-      transform: translateX(-48px)
     }
   }
 </style>

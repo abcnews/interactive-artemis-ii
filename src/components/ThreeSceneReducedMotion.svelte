@@ -40,7 +40,7 @@
   // Constants
   const MOON_SCALE = 3.474 / 2;
   const ATMOSPHERE_THICKNESS = 0.05;
-  const SCENE_FADE_DURATION = 500;
+  const SCENE_FADE_DURATION = 250;
 
   export type ModelState = {
     isVisible?: boolean;
@@ -134,7 +134,7 @@
 {:else if currentScene === "artemis"}
   <div
     class="stage-root orion"
-    transition:fade={{ duration: SCENE_FADE_DURATION }}
+    transition:fade={{ duration: SCENE_FADE_DURATION, delay: 50 }}
   >
     <Canvas>
       <T.PerspectiveCamera
@@ -167,7 +167,7 @@
 {:else}
   <div
     class="stage-root launch"
-    transition:fade={{ duration: SCENE_FADE_DURATION }}
+    transition:fade={{ duration: SCENE_FADE_DURATION, delay: 200 }}
   >
     <Canvas
       createRenderer={(canvas) => {
