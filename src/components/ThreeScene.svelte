@@ -40,6 +40,7 @@
   // Constants
   const MOON_SCALE = 3.474 / 2;
   const ATMOSPHERE_THICKNESS = 0.05;
+  const STAGE_FADE_DURATION = 1000;
 
   export type ModelState = {
     isVisible?: boolean;
@@ -117,7 +118,10 @@
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div class="stage-root setup" transition:fade={{ duration: 1000 }}>
+  <div
+    class="stage-root setup"
+    transition:fade={{ duration: STAGE_FADE_DURATION }}
+  >
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
@@ -155,7 +159,10 @@
     </Canvas>
   </div>
 {:else}
-  <div class="stage-root launch" transition:fade={{ duration: 1000 }}>
+  <div
+    class="stage-root launch"
+    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 500 }}
+  >
     <Canvas
       createRenderer={(canvas) => {
         return new THREE.WebGLRenderer({
@@ -181,7 +188,7 @@
       <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
       <T.AmbientLight intensity={0.1} />
 
-      <Starfield />
+      <!-- <Starfield /> -->
 
       <DistanceMarkers {cameraPosition} />
 

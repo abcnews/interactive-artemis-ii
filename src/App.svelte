@@ -157,6 +157,7 @@
   const body = document.body;
   const html = document.documentElement;
 
+  // This doesn't update FIXME
   const pageHeight = document.body.scrollHeight;
 
   let shouldShowOnScreenDisplay = $derived.by(() => {
@@ -164,9 +165,9 @@
       return false;
     }
 
-    if (scroll.pageScrollBottom > pageHeight - 5000) {
-      return false;
-    }
+    // if (scroll.pageScrollBottom > pageHeight - 5000) {
+    //   return false;
+    // }
 
     if (pipe(kmsFromEarth, Math.round, Math.abs) > 9) {
       return true;
