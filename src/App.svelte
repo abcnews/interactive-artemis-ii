@@ -161,18 +161,11 @@
   const pageHeight = document.body.scrollHeight;
 
   let shouldShowOnScreenDisplay = $derived.by(() => {
-    if (!hasPassedPanel("excitement")) {
+    if (!hasPassedPanel("zoomintro")) {
       return false;
-    }
-
-    // if (scroll.pageScrollBottom > pageHeight - 5000) {
-    //   return false;
-    // }
-
-    if (pipe(kmsFromEarth, Math.round, Math.abs) > 9) {
+    } else {
       return true;
     }
-    return false;
   });
 </script>
 
@@ -201,7 +194,7 @@
       {/if}
     </BackgroundStage>
 
-    <HoveringOverlays />
+    <!-- <HoveringOverlays /> -->
   </Portal>
 
   <Panels />

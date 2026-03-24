@@ -2,12 +2,7 @@
   import { pipe } from "effect";
   import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
   import { altitudeToTimeSec, formatTime } from "~/src/lib/timeDistance";
-
-  let missionTime = $derived.by(() => {
-    const altKm = Math.abs(cameraPosition.position[2] * 1000);
-    const tSec = altitudeToTimeSec(altKm);
-    return formatTime(tSec);
-  });
+  // import { fade } from "svelte/transition";
 
   type Props = {
     cameraPosition: CameraPositionResult;
@@ -15,31 +10,37 @@
 
   const { cameraPosition }: Props = $props();
 
-  const km = $derived.by(() => {
-    return pipe(
-      cameraPosition.position[2],
-      (n) => n * 1000,
-      Math.round,
-      Math.abs,
-    ).toLocaleString();
-  });
+  const altKm = $derived(Math.abs(cameraPosition.position[2] * 1000));
+  const tSec = $derived(altitudeToTimeSec(altKm));
+  const missionTime = $derived(formatTime(tSec));
+
+  const km = $derived(pipe(altKm, Math.round).toLocaleString());
+
+  // Time stops displaying after 25 hours (90,000 seconds)
+  const showTime = $derived(tSec < 90000);
+
+  // Distance only starts displaying after 71 seconds (MaxQ)
+  const showDistance = $derived(tSec > 71);
 </script>
 
 <div class="hud-root">
-  <div class="hud-value">
-    <span class="number">
-      {km}km
-    </span>
+  {#if showTime}
     <div class="number">
       {missionTime}
     </div>
-  </div>
+  {/if}
+
+  {#if showDistance}
+    <span class="number">
+      {km}km
+    </span>
+  {/if}
 </div>
 
 <style lang="scss">
   .hud-root {
     position: fixed;
-    top: 50px;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -52,24 +53,8 @@
     filter: drop-shadow(0 0 3px grey);
   }
 
-  .hud-value {
-    font-size: 36px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    gap: 6px;
-  }
-
   .number {
     font-variant-numeric: tabular-nums;
-  }
-
-  .unit {
-    font-size: 16px;
-    opacity: 0.9;
-    align-self: flex-end;
-    margin-bottom: 8px;
+    font-size: 1.5rem;
   }
 </style>

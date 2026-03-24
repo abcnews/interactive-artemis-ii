@@ -10,7 +10,6 @@
   import { Throttled } from "runed";
 
   // Components
-  import Sphere from "./Sphere.svelte";
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
   import Orion from "./Orion/Orion_Draco_Optimized.svelte";
   import Starfield from "./Starfield.svelte";
@@ -40,7 +39,7 @@
   // Constants
   const MOON_SCALE = 3.474 / 2;
   const ATMOSPHERE_THICKNESS = 0.05;
-  const STAGE_FADE_DURATION = 1000;
+  const STAGE_FADE_DURATION = 500;
 
   export type ModelState = {
     isVisible?: boolean;
@@ -65,7 +64,7 @@
   const RAW_WIDTH = 111.99;
   const REAL_SCALE = 0.000109 / RAW_WIDTH; // ≈ 9.73e-7
 
-  const VISIBILITY_MULTIPLIER = 100;
+  const VISIBILITY_MULTIPLIER = 10;
   const ISS_SCALE = REAL_SCALE * VISIBILITY_MULTIPLIER; // ≈ 0.000487
 
   let cameraPositionSpring = new Spring<[number, number, number]>([0, 0, 0], {
@@ -110,7 +109,7 @@
   const whichScene = Match.type<{ downpage: number }>().pipe(
     Match.withReturnType<string>(),
     Match.when(
-      { downpage: (downpage) => downpage < stage.getDownpage("excitement") },
+      { downpage: (downpage) => downpage < stage.getDownpage("zoomintro") },
       () => "setup",
     ),
     Match.orElse(() => "launch"),
@@ -161,7 +160,7 @@
 {:else}
   <div
     class="stage-root launch"
-    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 500 }}
+    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 200 }}
   >
     <Canvas
       createRenderer={(canvas) => {
@@ -188,7 +187,7 @@
       <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
       <T.AmbientLight intensity={0.1} />
 
-      <!-- <Starfield /> -->
+      <Starfield />
 
       <DistanceMarkers {cameraPosition} />
 
@@ -290,11 +289,11 @@
       <Waypoint
         position={[0, 0, kmScale(-400)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(200)}
+        visibleRange={kmScale(80)}
       >
         {#snippet children({ opacity })}
           <ISS
-            position={[kmScale(0.01), kmScale(3), kmScale(-400)]}
+            position={[kmScale(0.01), kmScale(0.2), kmScale(-400)]}
             scale={ISS_SCALE}
             {opacity}
           />
