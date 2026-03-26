@@ -11,7 +11,7 @@
 
   useTask(() => {
     if (points) {
-      points.position.copy(camera.current.position).multiplyScalar(0.999);
+      points.position.copy(camera.current.position).multiplyScalar(0.99);
     }
   });
 

@@ -86,7 +86,7 @@
 
   onMount(() => {
     // No dark mode for now
-    if (isABC) initAutoDarkMode();
+    // if (isABC) initAutoDarkMode();
 
     // Set up responsive body size store
     scroll.bodyElSize = new ElementSize(() => bodyEl);

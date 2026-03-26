@@ -2,7 +2,7 @@
   import { pipe } from "effect";
   import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
   import { altitudeToTimeSec, formatTime } from "~/src/lib/timeDistance";
-  // import { fade } from "svelte/transition";
+  import { fade } from "svelte/transition";
 
   type Props = {
     cameraPosition: CameraPositionResult;
@@ -20,18 +20,18 @@
   const showTime = $derived(tSec < 90000);
 
   // Distance only starts displaying after 71 seconds (MaxQ)
-  const showDistance = $derived(tSec > 71);
+  const showDistance = $derived(tSec > 0);
 </script>
 
 <div class="hud-root">
-  {#if showTime}
+  <!-- {#if showTime}
     <div class="number">
       {missionTime}
     </div>
-  {/if}
+  {/if} -->
 
   {#if showDistance}
-    <span class="number">
+    <span class="number" transition:fade={{ duration: 400 }}>
       {km}km
     </span>
   {/if}
