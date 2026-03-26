@@ -9,7 +9,7 @@
   import BackgroundStage from "./components/BackgroundStage.svelte";
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
   import UtilGetPanelData from "./components/UtilGetPanelData.svelte";
-  import UtilGetTransitions from "./components/UtilGetTransitions.svelte";
+  import UtilGetWaypoints from "./components/UtilGetWaypoints.svelte";
   import Debug from "./components/Debug.svelte";
   import ThreeScene, { type ModelState } from "./components/ThreeScene.svelte";
   import ThreeSceneReducedMotion from "./components/ThreeSceneReducedMotion.svelte";
@@ -201,7 +201,7 @@
 
   <UtilTransformSpacers />
   <UtilGetPanelData />
-  <UtilGetTransitions />
+  <UtilGetWaypoints />
 
   {#if isDebug}
     <Debug {cameraPosition} />

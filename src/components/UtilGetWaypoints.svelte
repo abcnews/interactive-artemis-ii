@@ -22,6 +22,11 @@
     to: v.number(),
   });
 
+  function getXPos({ from }: { from: number }) {
+    if (from < 380700) return 0;
+    else return -5;
+  }
+
   function mountToWaypoint(mount: Mount): TransitionWaypoint | null {
     const result = v.safeParse(
       ParsedSchema,
@@ -38,8 +43,8 @@
       type: "transition",
       start,
       end,
-      fromPosition: [0, Y_POS, kmScale(-from)],
-      toPosition: [0, Y_POS, kmScale(-to)],
+      fromPosition: [getXPos({ from }), Y_POS, kmScale(-from)],
+      toPosition: [getXPos({ from }), 0, kmScale(-to)],
     };
   }
 
