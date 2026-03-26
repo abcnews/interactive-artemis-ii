@@ -130,7 +130,10 @@
   function panelVisibility(panelName: string): ModelState {
     const panel = scroll.panelsCurrent.find((p) => p.name === panelName);
     if (!panel) return {};
-    return { isVisible: scroll.pageScrollBottom > panel.downPage };
+    return {
+      isVisible: scroll.pageScrollBottom > panel.downPage,
+      shouldFloat: false,
+    };
   }
 
   function hasPassedPanel(panelName: string): boolean {

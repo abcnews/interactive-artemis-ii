@@ -3,6 +3,7 @@
   import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
   import { altitudeToTimeSec, formatTime } from "~/src/lib/timeDistance";
   import { fade } from "svelte/transition";
+  import HudProgressMeter from "./Progress.svelte";
 
   type Props = {
     cameraPosition: CameraPositionResult;
@@ -11,30 +12,24 @@
   const { cameraPosition }: Props = $props();
 
   const altKm = $derived(Math.abs(cameraPosition.position[2] * 1000));
-  const tSec = $derived(altitudeToTimeSec(altKm));
-  const missionTime = $derived(formatTime(tSec));
+  // const tSec = $derived(altitudeToTimeSec(altKm));
+  // const missionTime = $derived(formatTime(tSec));
 
   const km = $derived(pipe(altKm, Math.round).toLocaleString());
 
   // Time stops displaying after 25 hours (90,000 seconds)
-  const showTime = $derived(tSec < 90000);
+  // const showTime = $derived(tSec < 90000);
 
-  // Distance only starts displaying after 71 seconds (MaxQ)
-  const showDistance = $derived(tSec > 0);
+  const showDistance = $derived(true);
 </script>
 
 <div class="hud-root">
-  <!-- {#if showTime}
-    <div class="number">
-      {missionTime}
-    </div>
-  {/if} -->
-
   {#if showDistance}
     <span class="number" transition:fade={{ duration: 400 }}>
       {km}km
     </span>
   {/if}
+  <HudProgressMeter currentKm={altKm} />
 </div>
 
 <style lang="scss">

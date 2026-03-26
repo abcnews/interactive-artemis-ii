@@ -136,8 +136,8 @@
 
       {#if orionState.isVisible}
         <Float
-          floatIntensity={orionState.shouldFloat ? 5 : 0}
-          rotationIntensity={orionState.shouldFloat ? 2 : 0}
+          floatIntensity={orionState.shouldFloat ? kmScale(10) : 0}
+          rotationIntensity={orionState.shouldFloat ? kmScale(100) : 0}
           rotationSpeed={[1, 0.5, 0.2]}
         >
           <Orion
