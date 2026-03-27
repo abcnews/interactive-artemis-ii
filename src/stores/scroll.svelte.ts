@@ -5,7 +5,6 @@ type ElementSize = {
 
 import { screen } from "./screen.svelte";
 import { Previous } from "runed";
-import { round } from "decimalish";
 
 type PanelData = {
   name: string;
@@ -14,6 +13,26 @@ type PanelData = {
 };
 
 type Section = PanelData;
+
+type PanelCurrent = PanelData & {
+  pixelsFromTop: number;
+  pixelsFromBottom: number;
+  inViewport: boolean;
+  progressUntilNext: number;
+  screenProgress: number;
+};
+
+// Inline rounding — avoids the `round()` + `Number()` overhead from decimalish
+function round3(n: number): number {
+  return Math.round(n * 1000) / 1000;
+}
+
+// Shared "initial" section object — avoids allocating a new one every tick
+const INITIAL_SECTION: Section = {
+  name: "initial",
+  downPage: 0,
+  height: 1,
+};
 
 class Scroll {
   /*
@@ -34,72 +53,89 @@ class Scroll {
   pageScrollBottom = $derived(this.pageScroll + screen.innerHeight);
   bodyElSize: ElementSize = $state({ width: 0, height: 0 });
   panelsData: PanelData[] = $state([]);
+
+  // Pre-allocated array — reused each tick to avoid creating new objects
+  #panelsCurrentCache: PanelCurrent[] = [];
+
   panelsCurrent = $derived.by(() => {
-    return this.panelsData.map((panel) => {
-      const { downPage } = panel;
-      const pixelsFromBottom = this.pageScrollBottom - downPage;
-      const pixelsFromTop =
-        screen.innerHeight - (this.pageScrollBottom - downPage);
-      const inViewport =
-        pixelsFromTop > 0 && pixelsFromTop < screen.innerHeight;
-      const progressUntilNext = Number(
-        round(1.0 - pixelsFromTop / panel.height, { places: 3 }),
-      );
-      const screenProgress = Number(
-        round(1.0 - pixelsFromTop / screen.innerHeight, { places: 3 }),
-      );
+    const panels = this.panelsData;
+    const scrollBottom = this.pageScrollBottom;
+    const viewHeight = screen.innerHeight;
+    const cache = this.#panelsCurrentCache;
 
-      return {
-        pixelsFromTop,
-        pixelsFromBottom,
-        inViewport,
-        progressUntilNext,
-        screenProgress,
-        ...panel,
-      };
-    });
-  });
-  currentSection: Section = $derived.by(() => {
-    if (this.panelsData.length === 0) {
-      return {
-        name: "initial",
-        downPage: screen.innerHeight,
-        height: 1,
-      };
-    }
-
-    const find = (index: number): Section => {
-      if (index < 0) {
-        return {
-          name: "initial",
-          downPage: screen.innerHeight,
-          height: this.panelsData[0].downPage - screen.innerHeight,
+    // Resize cache if panel count changed (rare — only on mount/resize)
+    if (cache.length !== panels.length) {
+      cache.length = panels.length;
+      for (let i = 0; i < panels.length; i++) {
+        cache[i] = {
+          name: "",
+          downPage: 0,
+          height: 0,
+          pixelsFromTop: 0,
+          pixelsFromBottom: 0,
+          inViewport: false,
+          progressUntilNext: 0,
+          screenProgress: 0,
         };
       }
+    }
 
-      const panel = this.panelsData[index];
+    // Update in place — no new objects allocated
+    for (let i = 0; i < panels.length; i++) {
+      const panel = panels[i];
+      const entry = cache[i];
+      const pixelsFromBottom = scrollBottom - panel.downPage;
+      const pixelsFromTop = viewHeight - pixelsFromBottom;
 
-      if (this.pageScrollBottom > panel.downPage) {
-        return panel;
+      entry.name = panel.name;
+      entry.downPage = panel.downPage;
+      entry.height = panel.height;
+      entry.pixelsFromTop = pixelsFromTop;
+      entry.pixelsFromBottom = pixelsFromBottom;
+      entry.inViewport = pixelsFromTop > 0 && pixelsFromTop < viewHeight;
+      entry.progressUntilNext = round3(1.0 - pixelsFromTop / panel.height);
+      entry.screenProgress = round3(1.0 - pixelsFromTop / viewHeight);
+    }
+
+    // Return a shallow copy so Svelte sees a new array reference
+    // (the objects inside are still reused — that's the actual saving)
+    return [...cache];
+  });
+
+  currentSection: Section = $derived.by(() => {
+    const panels = this.panelsData;
+
+    if (panels.length === 0) {
+      INITIAL_SECTION.downPage = screen.innerHeight;
+      INITIAL_SECTION.height = 1;
+      return INITIAL_SECTION;
+    }
+
+    const scrollBottom = this.pageScrollBottom;
+
+    // Iterative reverse search — replaces recursive find()
+    for (let i = panels.length - 1; i >= 0; i--) {
+      if (scrollBottom > panels[i].downPage) {
+        return panels[i];
       }
+    }
 
-      return find(index - 1);
-    };
-
-    return find(this.panelsData.length - 1);
+    // Before the first panel
+    INITIAL_SECTION.downPage = screen.innerHeight;
+    INITIAL_SECTION.height = panels[0].downPage - screen.innerHeight;
+    return INITIAL_SECTION;
   });
+
   previousSection = new Previous(() => this.currentSection);
+
   pixelsUntilNextSection = $derived.by(() => {
-    const { downPage } = this.currentSection;
-    return this.pageScrollBottom - downPage;
+    return this.pageScrollBottom - this.currentSection.downPage;
   });
+
   progressUntilNextSection = $derived.by(() => {
     const { height } = this.currentSection;
-    if (height === 0) {
-      return 0;
-    } else {
-      return Number(round(this.pixelsUntilNextSection / height, { places: 3 }));
-    }
+    if (height === 0) return 0;
+    return round3(this.pixelsUntilNextSection / height);
   });
 
   // Methods

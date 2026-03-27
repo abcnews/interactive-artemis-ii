@@ -7,7 +7,7 @@
   import Rand from "rand-seed";
 
   const rand = new Rand("artemis-ii-css");
-  const COUNT = 600;
+  const COUNT = 1000;
 
   const W = window.screen.width;
   const H = window.screen.height;
@@ -32,6 +32,5 @@
     border-radius: 50%;
     height: 1px;
     pointer-events: none;
-    z-index: 1;
   }
 </style>

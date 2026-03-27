@@ -176,7 +176,9 @@
         });
       }}
     >
-      <T.Color attach="background" args={["#0f0f0f"]} />
+      {#if gpu.qualityTier === "high"}
+        <T.Color attach="background" args={["#0f0f0f"]} />
+      {/if}
       <T.PerspectiveCamera
         makeDefault
         position={[0, 0, 0]}

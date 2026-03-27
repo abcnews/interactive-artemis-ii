@@ -6,7 +6,6 @@
     EffectPass,
     RenderPass,
   } from "postprocessing";
-  import { HalfFloatType } from "three";
   import { gpu } from "~/src/stores/gpu.svelte";
 
   const { scene, renderer, camera, size, autoRender, renderStage } =
@@ -14,7 +13,6 @@
 
   const composer = new EffectComposer(renderer, {
     multisampling: Math.min(gpu.multisampling, renderer.capabilities.maxSamples),
-    frameBufferType: HalfFloatType,
   });
 
   const renderPass = new RenderPass(scene);
@@ -22,7 +20,7 @@
 
   const bloomEffect = new BloomEffect({
     intensity: 0.4,
-    luminanceThreshold: 0.15,    // Raised slightly — fewer pixels trigger bloom
+    luminanceThreshold: 0.15,
     luminanceSmoothing: 0.5,
     mipmapBlur: true,
   });
