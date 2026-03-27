@@ -2,7 +2,7 @@
   import { Canvas, T, useThrelte, useTask } from "@threlte/core";
   import { HUD, Grid, Stars, Float, SVG } from "@threlte/extras";
   import * as THREE from "three";
-  import { Spring } from "svelte/motion";
+  import { Spring, Tween } from "svelte/motion";
   import { Match } from "effect";
   import { fade } from "svelte/transition";
   import { prefersReducedMotion } from "svelte/motion";
@@ -101,6 +101,28 @@
     if (isBetween("artemis", "zoomintro")) return "artemis";
     return "launch";
   });
+
+  import { quadInOut } from "svelte/easing";
+
+  // Opacity tweens for the 3D models in the launch scene
+  const cornishOpacity = new Tween(0, { duration: 800, easing: quadInOut });
+  const yuriOpacity = new Tween(0, { duration: 800, easing: quadInOut });
+  const issOpacity = new Tween(0, { duration: 800, easing: quadInOut });
+  const geminiOpacity = new Tween(0, { duration: 800, easing: quadInOut });
+  const laikaOpacity = new Tween(0, { duration: 800, easing: quadInOut });
+  const gpsOpacity = new Tween(0, { duration: 800, easing: quadInOut });
+  const moonOpacity = new Tween(0, { duration: 800, easing: quadInOut });
+
+  $effect(() => {
+    const s = scroll.currentSection.name;
+    cornishOpacity.target = s.includes("cornish") ? 1 : 0;
+    yuriOpacity.target = s.includes("yuri") ? 1 : 0;
+    issOpacity.target = s.includes("spacestation") ? 1 : 0;
+    geminiOpacity.target = s.includes("gemini") ? 1 : 0;
+    laikaOpacity.target = s.includes("laika") ? 1 : 0;
+    gpsOpacity.target = s.includes("gps") ? 1 : 0;
+    moonOpacity.target = ["apollo8", "averagemoon", "flyby1", "moonrange"].includes(s) ? 1 : 0;
+  });
 </script>
 
 {#if currentScene === "orion"}
@@ -179,6 +201,7 @@
       {#if gpu.qualityTier === "high"}
         <T.Color attach="background" args={["#0f0f0f"]} />
       {/if}
+
       <T.PerspectiveCamera
         makeDefault
         position={[0, 0, 0]}
@@ -193,6 +216,50 @@
 
       {#if gpu.qualityTier === "high"}
         <Starfield />
+      {/if}
+
+      {#if cornishOpacity.current > 0.01}
+        <T.Group position={[0, -0.5, -4]}>
+          <Cornish scale={0.015} opacity={cornishOpacity.current} />
+        </T.Group>
+      {/if}
+
+      {#if yuriOpacity.current > 0.01}
+        <T.Group position={[0, -2, -20]}>
+          <Gagarin position={[0,0,0]} opacity={yuriOpacity.current} />
+        </T.Group>
+      {/if}
+
+      {#if issOpacity.current > 0.01}
+        <T.Group position={[0, 0, -10]}>
+          <ISS scale={0.005} opacity={issOpacity.current} />
+        </T.Group>
+      {/if}
+
+      {#if geminiOpacity.current > 0.01}
+        <T.Group position={[0, -0.5, -15]} rotation={[0.4, -0.2, -0.2]}>
+          <Gemini scale={0.2} opacity={geminiOpacity.current} />
+        </T.Group>
+      {/if}
+
+      {#if laikaOpacity.current > 0.01}
+        <T.Group position={[0, -2, -25]} rotation={[0.2, 0.4, 0]}>
+          <Sputnik2 scale={0.8} opacity={laikaOpacity.current} />
+        </T.Group>
+      {/if}
+
+      {#if gpsOpacity.current > 0.01}
+        <T.Group position={[0, -1, -20]} rotation={[-0.4, 0.2, 0.8]}>
+          <GPS scale={0.04} opacity={gpsOpacity.current} />
+        </T.Group>
+      {/if}
+
+      {#if moonOpacity.current > 0.01}
+        <T.Group position={[0, -2, -40]} rotation={[0, 0, -Math.PI]}>
+          <T.Group rotation={[0, Math.PI * 0.5, 0]}>
+            <Moon scale={MOON_SCALE * 0.5} cameraPosition={{ position: [0,0,0], progress: 0 }} />
+          </T.Group>
+        </T.Group>
       {/if}
 
       {#if gpu.postProcessingEnabled}
