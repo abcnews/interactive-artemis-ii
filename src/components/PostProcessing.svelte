@@ -1,10 +1,13 @@
 <script lang="ts">
   import { useTask, useThrelte } from "@threlte/core";
   import {
+    BlendFunction,
     BloomEffect,
     EffectComposer,
     EffectPass,
     RenderPass,
+    ToneMappingEffect,
+    ToneMappingMode,
   } from "postprocessing";
   import { gpu } from "~/src/stores/gpu.svelte";
 
@@ -24,9 +27,14 @@
     luminanceSmoothing: 0.5,
     mipmapBlur: false,
     resolutionScale: 0.5,
+    blendFunction: BlendFunction.ADD,
   });
 
-  const effectPass = new EffectPass(undefined, bloomEffect);
+  const toneMappingEffect = new ToneMappingEffect({
+    mode: ToneMappingMode.ACES_FILMIC,
+  });
+
+  const effectPass = new EffectPass(undefined, bloomEffect, toneMappingEffect);
   composer.addPass(effectPass);
 
   // Keep camera in sync
