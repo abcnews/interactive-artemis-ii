@@ -1,6 +1,13 @@
 <script lang="ts">
-  import { T, useThrelte, useTask } from "@threlte/core";
-  import * as THREE from "three";
+  import { T, useTask } from "@threlte/core";
+  import {
+    InstancedMesh,
+    PlaneGeometry,
+    ShaderMaterial,
+    Object3D,
+    DoubleSide,
+    Matrix4,
+  } from "three";
   import { kmScale } from "~/src/lib/utils";
 
   const INTERVAL = 10000;
@@ -9,10 +16,12 @@
   const VISIBLE_RANGE = kmScale(15000);
   const FADE_RANGE = VISIBLE_RANGE * 0.3;
 
-  const markers = Array.from(
+  const markerKms = Array.from(
     { length: Math.floor((MAX_KM - MIN_KM) / INTERVAL) + 1 },
     (_, i) => MIN_KM + i * INTERVAL,
   );
+
+  const COUNT = markerKms.length;
 
   import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
 
@@ -23,29 +32,98 @@
 
   let { cameraPosition, alwaysVisible = false }: Props = $props();
 
-  let camZ = $derived(cameraPosition?.position[2] || 0);
+  // Shared geometry — created once
+  const geometry = new PlaneGeometry(1, 0.03);
+
+  // Custom shader that reads per-instance opacity from instance attribute
+  const material = new ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    side: DoubleSide,
+    toneMapped: false,
+    vertexShader: `
+      attribute float instanceOpacity;
+      varying float vOpacity;
+      void main() {
+        vOpacity = instanceOpacity;
+        gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      varying float vOpacity;
+      void main() {
+        if (vOpacity < 0.01) discard;
+        gl_FragColor = vec4(1.0, 1.0, 1.0, vOpacity);
+      }
+    `,
+  });
+
+  // Pre-compute static Z positions
+  const markerPositionsZ = markerKms.map((km) => kmScale(-km));
+
+  // Reusable dummy for matrix composition
+  const dummy = new Object3D();
+
+  // Opacity buffer — updated each frame
+  const opacities = new Float32Array(COUNT);
+
+  let meshRef: InstancedMesh | undefined = $state();
+
+  function computeOpacity(camZ: number, posZ: number): number {
+    if (alwaysVisible) return 1;
+    const ahead = camZ - posZ;
+    if (ahead > VISIBLE_RANGE) return 0;
+    if (ahead > 0)
+      return Math.max(
+        0,
+        1 - (ahead - FADE_RANGE) / (VISIBLE_RANGE - FADE_RANGE),
+      );
+    return Math.max(0, 1 - Math.abs(ahead) / (VISIBLE_RANGE * 3));
+  }
+
+  function setupInstances(mesh: InstancedMesh) {
+    // Set static transforms — these never change
+    for (let i = 0; i < COUNT; i++) {
+      dummy.position.set(0, 1, markerPositionsZ[i]);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(i, dummy.matrix);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+
+    // Attach the opacity instance attribute
+    const opacityAttr = new THREE.InstancedBufferAttribute(opacities, 1);
+    mesh.geometry.setAttribute("instanceOpacity", opacityAttr);
+  }
+
+  // We need THREE for InstancedBufferAttribute
+  import * as THREE from "three";
+
+  useTask(() => {
+    if (!meshRef) return;
+
+    const camZ = cameraPosition?.position[2] || 0;
+    let anyChanged = false;
+
+    for (let i = 0; i < COUNT; i++) {
+      const newOpacity = computeOpacity(camZ, markerPositionsZ[i]);
+      if (opacities[i] !== newOpacity) {
+        opacities[i] = newOpacity;
+        anyChanged = true;
+      }
+    }
+
+    if (anyChanged) {
+      const attr = meshRef.geometry.getAttribute("instanceOpacity");
+      if (attr) {
+        (attr as THREE.BufferAttribute).needsUpdate = true;
+      }
+    }
+  });
 </script>
 
-{#each markers as km (km)}
-  {@const posZ = kmScale(-km)}
-  {@const ahead = camZ - posZ}
-  {@const opacity = alwaysVisible
-    ? 1
-    : ahead > VISIBLE_RANGE
-      ? 0
-      : ahead > 0
-        ? Math.max(0, 1 - (ahead - FADE_RANGE) / (VISIBLE_RANGE - FADE_RANGE))
-        : Math.max(0, 1 - Math.abs(ahead) / (VISIBLE_RANGE * 3))}
-  {#if opacity > 0.01}
-    <T.Mesh position={[0, 1, posZ]}>
-      <T.PlaneGeometry args={[1, 0.03]} />
-      <T.MeshBasicMaterial
-        color="#ffffff"
-        transparent
-        {opacity}
-        side={THREE.DoubleSide}
-        toneMapped={false}
-      />
-    </T.Mesh>
-  {/if}
-{/each}
+<T.InstancedMesh
+  args={[geometry, material, COUNT]}
+  bind:ref={meshRef}
+  frustumCulled={false}
+  oncreate={(ref) => setupInstances(ref)}
+/>

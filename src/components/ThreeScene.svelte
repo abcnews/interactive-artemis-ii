@@ -36,6 +36,7 @@
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
   import { accessibility } from "~/src/stores/accessibility.svelte";
+  import { gpu } from "~/src/stores/gpu.svelte";
 
   // Constants
   const MOON_SCALE = 3.474 / 2;
@@ -412,7 +413,9 @@
         </T.Group>
       </T.Group>
 
-      <PostProcessing />
+      {#if gpu.postProcessingEnabled}
+        <PostProcessing />
+      {/if}
     </Canvas>
   </div>
 {/if}

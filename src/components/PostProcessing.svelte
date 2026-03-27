@@ -5,26 +5,24 @@
     EffectComposer,
     EffectPass,
     RenderPass,
-    SMAAEffect,
-    SMAAPreset,
   } from "postprocessing";
-
   import { HalfFloatType } from "three";
+  import { gpu } from "~/src/stores/gpu.svelte";
 
   const { scene, renderer, camera, size, autoRender, renderStage } =
     useThrelte();
 
-  // const composer = new EffectComposer(renderer);
   const composer = new EffectComposer(renderer, {
-    multisampling: Math.min(4, renderer.capabilities.maxSamples),
+    multisampling: Math.min(gpu.multisampling, renderer.capabilities.maxSamples),
     frameBufferType: HalfFloatType,
   });
+
   const renderPass = new RenderPass(scene);
   composer.addPass(renderPass);
 
   const bloomEffect = new BloomEffect({
     intensity: 0.4,
-    luminanceThreshold: 0.1,
+    luminanceThreshold: 0.15,    // Raised slightly — fewer pixels trigger bloom
     luminanceSmoothing: 0.5,
     mipmapBlur: true,
   });
@@ -65,7 +63,7 @@
   useTask(
     (delta) => {
       const { width, height } = $size;
-      if (width === 0 || height === 0) return; // skip if no dimensions yet
+      if (width === 0 || height === 0) return;
       composer.render(delta);
     },
     { stage: renderStage, autoInvalidate: false },
