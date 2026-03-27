@@ -4,9 +4,11 @@ import { stage } from "~/src/stores/stage.svelte";
 import {
   waypointStore,
   type TransitionWaypoint,
+  type CameraWaypoint,
 } from "~/src/stores/waypoints.svelte";
 
 let lastPosition: [number, number, number] = [0, 0, 0];
+let activeWaypoint: CameraWaypoint | undefined = undefined;
 
 /*
 
@@ -51,7 +53,7 @@ export const getCameraPosition = (
     }
   }
 
-  const waypoint = waypointStore.waypoints.find((w) => {
+  const isValid = (w: CameraWaypoint) => {
     if (w.type === "fixed") {
       return w.sections.includes(currentSectionName);
     }
@@ -59,7 +61,17 @@ export const getCameraPosition = (
     const isAfterStart = stage.getDownpage(start) <= pageScrollBottom;
     const isBeforeEnd = stage.getDownpage(w.end) > pageScrollBottom;
     return isAfterStart && isBeforeEnd;
-  });
+  };
+
+  if (activeWaypoint && !isValid(activeWaypoint)) {
+    activeWaypoint = undefined;
+  }
+
+  if (!activeWaypoint) {
+    activeWaypoint = waypointStore.waypoints.find(isValid);
+  }
+
+  const waypoint = activeWaypoint;
 
   const result = Match.value(waypoint).pipe(
     Match.withReturnType<CameraPositionResult>(),

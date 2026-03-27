@@ -15,7 +15,7 @@ export type TransitionWaypoint = {
   toPosition: [number, number, number];
 };
 
-type CameraWaypoint = FixedWaypoint | TransitionWaypoint;
+export type CameraWaypoint = FixedWaypoint | TransitionWaypoint;
 
 const STARTING_POSITION: [number, number, number] = [0, 36, -70];
 const TAKEOFF_POSITION: [number, number, number] = [0, 0, 0];

@@ -70,10 +70,10 @@
     text-align: center;
     backdrop-filter: blur(4px);
 
-    img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 16px;
-    }
+    // img {
+    //   max-width: 100%;
+    //   height: auto;
+    //   margin-bottom: 16px;
+    // }
   }
 </style>
