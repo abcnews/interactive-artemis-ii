@@ -18,7 +18,7 @@
       }
 
       @include breakpoints.for-desktop-up {
-        max-width: 700;
+        max-width: 700px;
         font-size: 1.375rem;
       }
 

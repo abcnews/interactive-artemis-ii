@@ -104,7 +104,7 @@
 {#if currentScene === "orion"}
   <div
     class="stage-root orion"
-    transition:fade={{ duration: SCENE_FADE_DURATION }}
+    in:fade={{ duration: SCENE_FADE_DURATION }}
     style:opacity={orionOpacity}
   >
     <Canvas>
@@ -126,7 +126,7 @@
 {:else if currentScene === "artemis"}
   <div
     class="stage-root orion"
-    transition:fade={{ duration: SCENE_FADE_DURATION, delay: 50 }}
+    in:fade={{ duration: SCENE_FADE_DURATION, delay: 0 }}
   >
     <Canvas>
       <T.PerspectiveCamera
@@ -159,7 +159,7 @@
 {:else}
   <div
     class="stage-root launch"
-    transition:fade={{ duration: SCENE_FADE_DURATION, delay: 200 }}
+    in:fade={{ duration: SCENE_FADE_DURATION, delay: 0 }}
   >
     <Canvas
       createRenderer={(canvas) => {

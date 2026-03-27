@@ -141,7 +141,7 @@
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
   <div
     class="stage-root setup"
-    transition:fade={{ duration: STAGE_FADE_DURATION }}
+    in:fade={{ duration: STAGE_FADE_DURATION }}
   >
     <Canvas>
       <T.PerspectiveCamera
@@ -182,7 +182,7 @@
 {:else}
   <div
     class="stage-root launch"
-    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 200 }}
+    in:fade={{ duration: STAGE_FADE_DURATION, delay: 0 }}
   >
     <Canvas
       createRenderer={(canvas) => {
