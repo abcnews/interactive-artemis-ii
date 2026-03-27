@@ -10,18 +10,20 @@
     border?: string;
     /** Icon name, prefixed with 4-digit year (e.g. 2026finger) */
     icon?: string;
+    /** Underline colour (css hex or name) */
+    underline?: string;
   }
 
-  let { name, colour, text, border, icon }: Props = $props();
+  let { name, colour, text, border, icon, underline }: Props = $props();
 
   const iconUrl = $derived.by(() => {
     if (!icon) return null;
     const year = icon.substring(0, 4);
     let name = icon.substring(4);
-    let extension = 'webp';
+    let extension = "webp";
 
-    if (name.endsWith('svg')) {
-      extension = 'svg';
+    if (name.endsWith("svg")) {
+      extension = "svg";
       name = name.slice(0, -3);
     }
 
@@ -31,20 +33,28 @@
   const isMinimal = $derived(!border && !colour);
 </script>
 
-<span class="inline-pill-wrapper" class:inline-pill-wrapper--active={!isMinimal}>
+<span
+  class="inline-pill-wrapper"
+  class:inline-pill-wrapper--active={!isMinimal}
+>
   <span
-    class="inline-pill"
-    class:inline-pill--with-icon={iconUrl}
-    class:inline-pill--with-border={border}
-    class:inline-pill--minimal={isMinimal}
+    class="inline-style"
+    class:inline-style--with-icon={iconUrl}
+    class:inline-style--with-border={border}
+    class:inline-style--minimal={isMinimal}
+    class:inline-style--with-underline={underline}
     style:--bgColour={colour}
     style:--fgColour={text}
     style:--borderColour={border}
+    style:--underlineColour={underline}
   >
     {#if iconUrl}
       <img src={iconUrl} alt="" class="inline-pill__icon" />
     {/if}
-    <span class="inline-pill__text" class:inline-pill__text--active={!isMinimal}>
+    <span
+      class="inline-pill__text"
+      class:inline-pill__text--active={!isMinimal}
+    >
       {name}
     </span>
   </span>
@@ -64,11 +74,11 @@
     }
   }
 
-  .inline-pill {
+  .inline-style {
     position: relative;
-    color: var(--fgColour, black);
+    color: var(--fgColour, white);
     background: var(--bgColour, transparent);
-    border-radius: 4px;
+    // border-radius: 4px;
     font-family: ABCSans;
     font-size: 0.9em;
     font-style: normal;
@@ -87,6 +97,9 @@
     }
     &--with-icon {
       padding-right: calc(4px + 16px + 2px);
+    }
+    &--with-underline {
+      border-bottom: 5px dashed var(--underlineColour, transparent);
     }
 
     .inline-pill__text {

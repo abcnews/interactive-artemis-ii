@@ -14,6 +14,7 @@ import type { ComponentProps } from "svelte";
 import { mount } from "svelte";
 import { whenOdysseyLoaded, prefersColorScheme } from "@abcnews/env-utils";
 import Timeout from "await-timeout";
+import "./lib/inlineStyleText/";
 
 // Component imports
 import App from "./App.svelte";
@@ -34,6 +35,7 @@ async function waitForOdysseyWithTimeout() {
 async function tryMount(target: HTMLElement) {
   try {
     await waitForOdysseyWithTimeout();
+
     return [
       null,
       mount(App, {
