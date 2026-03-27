@@ -30,6 +30,7 @@
     blendFunction: BlendFunction.ADD,
   });
 
+  // May or may not do anything. Could remove.
   const toneMappingEffect = new ToneMappingEffect({
     mode: ToneMappingMode.ACES_FILMIC,
   });
