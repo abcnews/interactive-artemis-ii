@@ -14,6 +14,7 @@
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
   import Orion from "./Orion/Orion_Draco_Optimized.svelte";
   import Starfield from "./Starfield.svelte";
+  import StarfieldStatic from "./StarfieldStatic.svelte";
   import HUDScene from "./HUDScene.svelte";
   import Moon from "./Moon/Moon.svelte";
   import Atmosphere from "./Atmosphere.svelte";
@@ -140,10 +141,7 @@
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div
-    class="stage-root setup"
-    in:fade={{ duration: STAGE_FADE_DURATION }}
-  >
+  <div class="stage-root setup" in:fade={{ duration: STAGE_FADE_DURATION }}>
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
@@ -185,6 +183,9 @@
     class="stage-root launch"
     in:fade={{ duration: STAGE_FADE_DURATION, delay: 0 }}
   >
+    {#if gpu.qualityTier === "low"}
+      <StarfieldStatic />
+    {/if}
     <Canvas
       createRenderer={(canvas) => {
         return new THREE.WebGLRenderer({
@@ -210,7 +211,9 @@
       <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
       <T.AmbientLight intensity={0.1} />
 
-      <Starfield />
+      {#if gpu.qualityTier === "high"}
+        <Starfield />
+      {/if}
 
       <DistanceMarkers {cameraPosition} />
 

@@ -78,10 +78,11 @@ class GPU {
     // Default: disable post-processing on low-end
     this.postProcessingEnabled = this.qualityTier !== "low";
 
-    // Query param takes priority
+    // Query param takes priority — also forces quality tier
     const override = getQueryOverride();
     if (override !== null) {
       this.postProcessingEnabled = override;
+      this.qualityTier = override ? "high" : "low";
     }
   }
 }
