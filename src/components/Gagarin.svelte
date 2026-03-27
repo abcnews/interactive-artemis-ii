@@ -22,21 +22,21 @@
 
     const found: THREE.MeshBasicMaterial[] = [];
 
-    svgRef.traverse((child) => {
-      if (!(child instanceof THREE.Mesh)) return;
-      const mats = Array.isArray(child.material)
-        ? child.material
-        : [child.material];
+    // svgRef.traverse((child) => {
+    //   if (!(child instanceof THREE.Mesh)) return;
+    //   const mats = Array.isArray(child.material)
+    //     ? child.material
+    //     : [child.material];
 
-      mats.forEach((mat) => {
-        const m = mat as THREE.MeshBasicMaterial;
-        m.color.set(0.3, 0.3, 0.3);
-        m.opacity = opacity;
-        m.depthWrite = true; // prevent bloom bleed-through
-        m.needsUpdate = true;
-        found.push(m);
-      });
-    });
+    //   mats.forEach((mat) => {
+    //     const m = mat as THREE.MeshBasicMaterial;
+    //     m.color.set(0.3, 0.3, 0.3);
+    //     m.opacity = opacity;
+    //     m.depthWrite = true; // prevent bloom bleed-through
+    //     m.needsUpdate = true;
+    //     found.push(m);
+    //   });
+    // });
 
     if (found.length > 0) {
       svgMaterials = found;

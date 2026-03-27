@@ -164,11 +164,14 @@
   const pageHeight = document.body.scrollHeight;
 
   let shouldShowOnScreenDisplay = $derived.by(() => {
-    if (!hasPassedPanel("zoomintro")) {
-      return false;
-    } else {
-      return true;
-    }
+    // Hide before the first zooming panel
+    if (!hasPassedPanel("zoomintro")) return false;
+    
+    // Hide when you reach the end!
+    // Change "footer" to whatever the ID of your final text block/credits is
+    if (hasPassedPanel("outerrange")) return false; 
+    
+    return true;
   });
 </script>
 

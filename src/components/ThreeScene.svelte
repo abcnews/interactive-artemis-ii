@@ -230,7 +230,7 @@
             radius={kmScale(12)}
             colour="#3216ff"
             {opacity}
-            thickness={0.05}
+            thickness={ATMOSPHERE_THICKNESS}
             yOffset={-0.5}
           />
         {/snippet}
@@ -387,7 +387,7 @@
             radius={kmScale(10000)}
             colour="#3216ff"
             {opacity}
-            thickness={0.2}
+            thickness={ATMOSPHERE_THICKNESS}
           />
         {/snippet}
       </Waypoint>

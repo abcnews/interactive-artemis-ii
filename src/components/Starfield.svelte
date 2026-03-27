@@ -25,7 +25,7 @@
     points.position.copy(camera.current.position).multiplyScalar(0.99);
   });
 
-  const COUNT = 10000;
+  const COUNT = 5000;
 
   const generateStars = () => {
     const positions = new Float32Array(COUNT * 3);
@@ -49,5 +49,5 @@
       );
     }}
   />
-  <T.PointsMaterial size={0.1} color="#ffffff" />
+  <T.PointsMaterial size={0.1} color="#ddd" />
 </T.Points>
