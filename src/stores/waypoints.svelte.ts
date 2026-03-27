@@ -17,7 +17,7 @@ export type TransitionWaypoint = {
 
 type CameraWaypoint = FixedWaypoint | TransitionWaypoint;
 
-const STARTING_POSITION: [number, number, number] = [0, 36, -65];
+const STARTING_POSITION: [number, number, number] = [0, 36, -70];
 const TAKEOFF_POSITION: [number, number, number] = [0, 0, 0];
 
 const INITIAL_WAYPOINTS: CameraWaypoint[] = [
