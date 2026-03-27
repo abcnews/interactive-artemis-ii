@@ -8,6 +8,7 @@
   import { prefersReducedMotion } from "svelte/motion";
   import { type CameraPositionResult } from "../lib/getCameraPosition";
   import { Throttled } from "runed";
+  import { scaleLinear } from "d3-scale";
 
   // Components
   import Sphere from "./Sphere.svelte";
@@ -35,7 +36,6 @@
   // Stores
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
-  import { accessibility } from "~/src/stores/accessibility.svelte";
 
   // Constants
   const MOON_SCALE = 3.474 / 2;
@@ -80,16 +80,11 @@
     const introPanel = scroll.panelsCurrent.find(
       (panel) => panel.name === "intro",
     );
+    if (!introPanel) return 0;
 
-    if (!introPanel) {
-      return 0;
-    }
-
-    if (introPanel.screenProgress < 0.8) {
-      return 0;
-    } else {
-      return 1;
-    }
+    return scaleLinear().domain([0.7, 1.0]).range([0, 1]).clamp(true)(
+      introPanel.screenProgress,
+    );
   });
 
   const isBefore = (section: string) =>
@@ -101,7 +96,7 @@
 
   const currentScene = $derived.by(() => {
     if (isBefore("artemis")) return "orion";
-    if (isBetween("artemis", "excitement")) return "artemis";
+    if (isBetween("artemis", "zoomintro")) return "artemis";
     return "launch";
   });
 </script>
@@ -110,13 +105,14 @@
   <div
     class="stage-root orion"
     transition:fade={{ duration: SCENE_FADE_DURATION }}
+    style:opacity={orionOpacity}
   >
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
         position={[0, 0, 0]}
         oncreate={(ref) => {}}
-        fov={78}
+        fov={70}
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
@@ -124,11 +120,7 @@
       <T.DirectionalLight position={[10, 10, 10]} />
       <T.AmbientLight intensity={0.1} />
 
-      <Orion
-        position={[0, 0, -10]}
-        orionRotation={undefined}
-        opacity={orionOpacity}
-      />
+      <Orion position={[0, 0, -10]} orionRotation={undefined} opacity={1.0} />
     </Canvas>
   </div>
 {:else if currentScene === "artemis"}
@@ -141,7 +133,7 @@
         makeDefault
         position={[0, 0, 0]}
         oncreate={(ref) => {}}
-        fov={78}
+        fov={70}
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
@@ -150,14 +142,14 @@
       <T.AmbientLight intensity={0.1} />
 
       <Orion
-        position={[0, 36, -70]}
+        position={[0, 36, -80]}
         orionRotation={undefined}
         opacity={orionOpacity}
       />
 
       {#if artemisState.isVisible}
         <Artemis
-          position={[0, -10, -70]}
+          position={[0, -10, -80]}
           scale={0.5}
           opacity={artemisOpacity}
         />

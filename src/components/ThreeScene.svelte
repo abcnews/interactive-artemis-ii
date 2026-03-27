@@ -8,6 +8,7 @@
   import { prefersReducedMotion } from "svelte/motion";
   import { type CameraPositionResult } from "../lib/getCameraPosition";
   import { Throttled } from "runed";
+  import { scaleLinear } from "d3-scale";
 
   // Components
   import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
@@ -71,6 +72,11 @@
     precision: 0.00001,
   });
 
+  let orionPosSpring = new Spring(0, {
+    stiffness: 0.2,
+    damping: 2,
+  });
+
   const throttledPosition = new Throttled(
     () => cameraPosition.position, // reactive source
     1000,
@@ -86,24 +92,40 @@
     })(scroll.pageScrollBottom);
   });
 
-  let orionOpacity = $derived.by(() => {
+  let targetOrionY = $derived.by(() => {
     const introPanel = scroll.panelsCurrent.find(
       (panel) => panel.name === "intro",
     );
 
-    if (!introPanel) {
-      return 0;
-    }
+    // If not visible, keep it safely below the camera's view
+    if (!introPanel) return 10;
 
-    if (introPanel.screenProgress < 0.8) {
-      return 0;
-    } else {
-      return 1;
-    }
+    // screenProgress 0.0 -> Orion starts below the frame (e.g. Y = 16)
+    // screenProgress 0.8 -> Orion reaches its final position (Y = 36) and "docks"
+    return scaleLinear()
+      .domain([0.0, 1.2]) // Matches your old 0.8 pop-in point
+      .range([10, 36]) // Tune '10' so it enters the bottom of the screen exactly as you scroll
+      .clamp(true)(introPanel.screenProgress);
+  });
+
+  // Smooth fade in as it rises, rather than a hard pop
+  let orionOpacity = $derived.by(() => {
+    const introPanel = scroll.panelsCurrent.find(
+      (panel) => panel.name === "intro",
+    );
+    if (!introPanel) return 0;
+
+    return scaleLinear().domain([0.0, 0.2]).range([0, 1]).clamp(true)(
+      introPanel.screenProgress,
+    );
   });
 
   $effect(() => {
     cameraPositionSpring.set(cameraPosition.position);
+  });
+
+  $effect(() => {
+    orionPosSpring.target = targetOrionY;
   });
 
   const whichScene = Match.type<{ downpage: number }>().pipe(
@@ -126,7 +148,7 @@
         makeDefault
         position={cameraPositionSpring.current}
         oncreate={(ref) => {}}
-        fov={78}
+        fov={70}
         near={0.01}
         far={1000}
       ></T.PerspectiveCamera>
@@ -141,7 +163,7 @@
           rotationSpeed={[1, 0.5, 0.2]}
         >
           <Orion
-            position={[0, 36, -70]}
+            position={[0, orionPosSpring.current, -80]}
             orionRotation={undefined}
             opacity={orionOpacity}
           />
@@ -150,7 +172,7 @@
 
       {#if artemisState.isVisible}
         <Artemis
-          position={[0, -10, -70]}
+          position={[0, -10, -80]}
           scale={0.5}
           opacity={artemisOpacity}
         />

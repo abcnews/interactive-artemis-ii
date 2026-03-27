@@ -38,7 +38,7 @@
     flex-direction: column;
     gap: 8px;
     font-family: "Courier New", monospace;
-    filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.4));
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
   }
 
   .labels {
@@ -50,7 +50,7 @@
   .label {
     font-size: 10px;
     letter-spacing: 0.2em;
-    color: #00e5ff;
+    color: #fff;
     opacity: 0.7;
     text-transform: uppercase;
   }
@@ -59,7 +59,7 @@
     position: relative;
     width: 100%;
     height: 4px;
-    background: rgba(0, 229, 255, 0.15);
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 2px;
     overflow: visible; // Allows the blip and target marker to stick out
   }
@@ -67,12 +67,12 @@
   .fill {
     position: relative;
     height: 100%;
-    background: #00e5ff;
+    background: #fff;
     border-radius: 2px;
     // Svelte's spring/tween handles the continuous values,
     // but a tiny CSS transition smooths out any micro-stutters
     transition: width 50ms linear;
-    box-shadow: 0 0 8px #00e5ff;
+    box-shadow: 0 0 8px #fff;
   }
 
   // The leading edge of the progress bar (looks like a ship/tracker)
@@ -96,7 +96,7 @@
     transform: translateY(-50%);
     width: 8px;
     height: 8px;
-    border: 1px solid #00e5ff;
+    border: 1px solid #fff;
     border-radius: 50%;
     background: transparent;
   }
