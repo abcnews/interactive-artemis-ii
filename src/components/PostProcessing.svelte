@@ -22,7 +22,8 @@
     intensity: 0.4,
     luminanceThreshold: 0.15,
     luminanceSmoothing: 0.5,
-    mipmapBlur: true,
+    mipmapBlur: false,
+    resolutionScale: 0.5,
   });
 
   const effectPass = new EffectPass(undefined, bloomEffect);
