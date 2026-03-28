@@ -99,7 +99,7 @@
       padding-right: calc(4px + 16px + 2px);
     }
     &--with-underline {
-      border-bottom: 5px dashed var(--underlineColour, transparent);
+      border-bottom: 3px dashed var(--underlineColour, transparent);
     }
 
     .inline-pill__text {

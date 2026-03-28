@@ -260,7 +260,7 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(50)}
-            colour="#3216ff"
+            colour="#F5276C"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
           />
