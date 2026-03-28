@@ -65,7 +65,11 @@
       makeDefault
       position={cameraPosition}
       oncreate={(ref) => {
-        ref.lookAt(0, -80, -406);
+        ref.lookAt(
+          cameraPosition[0],
+          cameraPosition[1] - 80,
+          cameraPosition[2] - 406,
+        );
       }}
       fov={75}
       near={kmScale(0.01)}
@@ -79,7 +83,7 @@
       <Starfield />
     {/if}
 
-    <DistanceMarkers {cameraPosition} />
+    <DistanceMarkers {cameraPosition} alwaysVisible={false} />
 
     <!-- Stratosphere -->
     <Waypoint
