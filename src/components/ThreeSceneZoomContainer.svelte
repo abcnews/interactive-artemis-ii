@@ -38,11 +38,18 @@
   const ISS_SCALE = REAL_SCALE * VISIBILITY_MULTIPLIER;
 
   const { cameraPosition } = $props();
+
+  const cameraPositionSpring = $derived.by(() => {
+    return {
+      current: cameraPosition,
+    };
+  });
 </script>
 
 <div
   class="stage-root launch"
-  in:fade={{ duration: STAGE_FADE_DURATION, delay: 0 }}
+  in:fade={{ duration: STAGE_FADE_DURATION }}
+  out:fade={{ duration: STAGE_FADE_DURATION, delay: 200 }}
 >
   {#if gpu.qualityTier === "low"}
     <StarfieldStatic />
@@ -62,13 +69,9 @@
     {/if}
     <T.PerspectiveCamera
       makeDefault
-      position={cameraPosition}
+      position={cameraPositionSpring.current}
       oncreate={(ref) => {
-        ref.lookAt(
-          cameraPosition[0],
-          cameraPosition[1] - 80,
-          cameraPosition[2] - 406,
-        );
+        ref.lookAt(0, -80, -406);
       }}
       fov={75}
       near={kmScale(0.01)}
@@ -82,12 +85,12 @@
       <Starfield />
     {/if}
 
-    <DistanceMarkers {cameraPosition} alwaysVisible={false} />
+    <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
 
     <!-- Stratosphere -->
     <Waypoint
       position={[0, 0, kmScale(-12)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(10)}
     >
       {#snippet children({ opacity })}
@@ -104,7 +107,7 @@
     <!-- Cornish pasty -->
     <Waypoint
       position={[0, 0, kmScale(-35.5)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(22)}
     >
       {#snippet children({ opacity })}
@@ -116,32 +119,32 @@
       {/snippet}
     </Waypoint>
 
-    <!-- Mesosphere -->
+    <!-- Stratosphere end - Mesosphere start -->
     <Waypoint
       position={[0, 0, kmScale(-50)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(40)}
     >
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(50)}
-          colour="#3216ff"
+          colour="#F5276C"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
         />
       {/snippet}
     </Waypoint>
 
-    <!-- Thermosphere -->
+    <!-- Mesosphere end - Thermosphere start -->
     <Waypoint
       position={[0, 0, kmScale(-87)]}
-      {cameraPosition}
-      visibleRange={kmScale(30)}
+      cameraPosition={cameraPositionSpring.current}
+      visibleRange={kmScale(40)}
     >
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(87)}
-          colour="#3216ff"
+          colour="#F5B027"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
         />
@@ -151,13 +154,13 @@
     <!-- Karman line (SPACE) -->
     <Waypoint
       position={[0, 0, kmScale(-100)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(30)}
     >
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(100)}
-          colour="#3216ff"
+          colour="#00A36C"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
         />
@@ -167,7 +170,7 @@
     <!-- Yuri Gagaran -->
     <Waypoint
       position={[0, 0, kmScale(-240)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(50)}
     >
       {#snippet children({ opacity })}
@@ -181,7 +184,7 @@
     <!-- ISS -->
     <Waypoint
       position={[0, 0, kmScale(-400)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(80)}
     >
       {#snippet children({ opacity })}
@@ -196,7 +199,7 @@
     <!-- Exosphere -->
     <Waypoint
       position={[0, 0, kmScale(-700)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(500)}
     >
       {#snippet children({ opacity })}
@@ -212,7 +215,7 @@
     <!-- Gemini 11 -->
     <Waypoint
       position={[0, 0, kmScale(-1369)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(200)}
     >
       {#snippet children({ opacity })}
@@ -228,7 +231,7 @@
     <!-- Laika the dog -->
     <Waypoint
       position={[0, 0, kmScale(-1659)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(200)}
     >
       {#snippet children({ opacity })}
@@ -244,7 +247,7 @@
     <!-- Outer Space -->
     <Waypoint
       position={[0, 0, kmScale(-10000)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(500)}
     >
       {#snippet children({ opacity })}
@@ -260,7 +263,7 @@
     <!-- GPS -->
     <Waypoint
       position={[0, 0, kmScale(-20180)]}
-      {cameraPosition}
+      cameraPosition={cameraPositionSpring.current}
       visibleRange={kmScale(5000)}
     >
       {#snippet children({ opacity })}
@@ -276,7 +279,10 @@
     <!-- The Moon -->
     <T.Group position={[0, 0, -406]} rotation={[0, 0, -Math.PI * 1]}>
       <T.Group rotation={[0, Math.PI * 0.5, 0]}>
-        <Moon scale={MOON_SCALE} {cameraPosition} />
+        <Moon
+          scale={MOON_SCALE}
+          cameraPosition={cameraPositionSpring.current}
+        />
       </T.Group>
     </T.Group>
 

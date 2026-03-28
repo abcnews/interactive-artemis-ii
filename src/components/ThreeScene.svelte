@@ -41,7 +41,7 @@
 
   // Constants
   const MOON_SCALE = 3.474 / 2;
-  const ATMOSPHERE_THICKNESS = 0.05;
+  const ATMOSPHERE_THICKNESS = 0.1;
   const STAGE_FADE_DURATION = 500;
 
   export type ModelState = {
@@ -251,7 +251,7 @@
         {/snippet}
       </Waypoint>
 
-      <!-- Mesosphere -->
+      <!-- Stratosphere end - Mesosphere start -->
       <Waypoint
         position={[0, 0, kmScale(-50)]}
         cameraPosition={cameraPositionSpring.current}
@@ -267,16 +267,16 @@
         {/snippet}
       </Waypoint>
 
-      <!-- Thermosphere -->
+      <!-- Mesosphere end - Thermosphere start -->
       <Waypoint
         position={[0, 0, kmScale(-87)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(30)}
+        visibleRange={kmScale(40)}
       >
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(87)}
-            colour="#3216ff"
+            colour="#F5B027"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
           />
@@ -292,7 +292,7 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(100)}
-            colour="#3216ff"
+            colour="#00A36C"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
           />

@@ -100,6 +100,8 @@
   const currentScene = $derived.by(() => {
     if (isBefore("artemis")) return "orion";
     if (isBetween("artemis", "zoomintro")) return "artemis";
+    if (isBetween("zoomintro", "stratosphere")) return "launch";
+    if (isBetween("stratosphere", "cornish")) return "thermosphere";
     return "launch";
   });
 </script>
@@ -161,6 +163,8 @@
   </div>
 {:else if currentScene === "launch"}
   <ThreeSceneZoomContainer cameraPosition={[0, 0, 0]} />
+{:else if currentScene === "thermosphere"}
+  <ThreeSceneZoomContainer cameraPosition={[0, 0, kmScale(-10)]} />
 {/if}
 
 <style lang="scss">
