@@ -64,9 +64,6 @@
       });
     }}
   >
-    {#if gpu.qualityTier === "high"}
-      <T.Color attach="background" args={["#0f0f0f"]} />
-    {/if}
     <T.PerspectiveCamera
       makeDefault
       position={cameraPositionSpring.current}
@@ -299,5 +296,8 @@
     position: fixed;
     top: 0;
     left: 0;
+  }
+  .stage-root.launch {
+    background-color: #0f0f0f;
   }
 </style>

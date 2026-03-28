@@ -22,6 +22,7 @@
     to: v.number(),
   });
 
+  // A test for fly-by, remove later
   function getXPos({ from }: { from: number }) {
     if (from < 380700) return 0;
     else return -5;
@@ -43,8 +44,8 @@
       type: "transition",
       start,
       end,
-      fromPosition: [getXPos({ from }), Y_POS, kmScale(-from)],
-      toPosition: [getXPos({ from }), 0, kmScale(-to)],
+      fromPosition: [0, 0, kmScale(-from)],
+      toPosition: [0, 0, kmScale(-to)],
     };
   }
 

@@ -123,7 +123,12 @@
   });
 
   $effect(() => {
-    cameraPositionSpring.set(cameraPosition.position);
+    // Max camera
+    cameraPositionSpring.set(
+      cameraPosition.position[2] < -400
+        ? [0, 0, -400]
+        : cameraPosition.position,
+    );
   });
 
   $effect(() => {
@@ -196,9 +201,6 @@
         });
       }}
     >
-      {#if gpu.qualityTier === "high"}
-        <T.Color attach="background" args={["#0f0f0f"]} />
-      {/if}
       <T.PerspectiveCamera
         makeDefault
         position={cameraPositionSpring.current}
@@ -216,7 +218,6 @@
       {#if gpu.qualityTier === "high"}
         <Starfield />
       {/if}
-
       <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
 
       <!-- Stratosphere -->
@@ -432,5 +433,8 @@
     position: fixed;
     top: 0;
     left: 0;
+  }
+  .stage-root.launch {
+    background-color: #0f0f0f;
   }
 </style>
