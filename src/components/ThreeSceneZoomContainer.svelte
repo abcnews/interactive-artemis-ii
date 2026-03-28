@@ -20,7 +20,6 @@
   import Cornish from "./Cornish/CornishBasic.svelte";
   import Text from "./Text.svelte";
   import PostProcessing from "./PostProcessing.svelte";
-  import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
   import Gemini from "./Gemini.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
   import Gagarin from "./Gagarin.svelte";

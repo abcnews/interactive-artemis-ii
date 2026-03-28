@@ -102,35 +102,6 @@
     if (isBetween("artemis", "zoomintro")) return "artemis";
     return "launch";
   });
-
-  import { quadInOut } from "svelte/easing";
-
-  // Opacity tweens for the 3D models in the launch scene
-  const cornishOpacity = new Tween(0, { duration: 800, easing: quadInOut });
-  const yuriOpacity = new Tween(0, { duration: 800, easing: quadInOut });
-  const issOpacity = new Tween(0, { duration: 800, easing: quadInOut });
-  const geminiOpacity = new Tween(0, { duration: 800, easing: quadInOut });
-  const laikaOpacity = new Tween(0, { duration: 800, easing: quadInOut });
-  const gpsOpacity = new Tween(0, { duration: 800, easing: quadInOut });
-  const moonOpacity = new Tween(0, { duration: 800, easing: quadInOut });
-
-  $effect(() => {
-    const s = scroll.currentSection.name;
-    cornishOpacity.target = s.includes("cornish") ? 1 : 0;
-    yuriOpacity.target = s.includes("yuri") ? 1 : 0;
-    issOpacity.target = s.includes("spacestation") ? 1 : 0;
-    geminiOpacity.target = s.includes("gemini") ? 1 : 0;
-    laikaOpacity.target = s.includes("laika") ? 1 : 0;
-    gpsOpacity.target = s.includes("gps") ? 1 : 0;
-    moonOpacity.target = [
-      "apollo8",
-      "averagemoon",
-      "flyby1",
-      "moonrange",
-    ].includes(s)
-      ? 1
-      : 0;
-  });
 </script>
 
 {#if currentScene === "orion"}
@@ -188,7 +159,7 @@
       {/if}
     </Canvas>
   </div>
-{:else}
+{:else if currentScene === "launch"}
   <ThreeSceneZoomContainer cameraPosition={[0, 0, 0]} />
 {/if}
 
