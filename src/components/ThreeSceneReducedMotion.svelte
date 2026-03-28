@@ -30,6 +30,7 @@
   import Gagarin from "./Gagarin.svelte";
   import GPS from "./GPS.svelte";
   import Sputnik2 from "./Sputnik2.svelte";
+  import ThreeSceneZoomContainer from "./ThreeSceneZoomContainer.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -121,7 +122,14 @@
     geminiOpacity.target = s.includes("gemini") ? 1 : 0;
     laikaOpacity.target = s.includes("laika") ? 1 : 0;
     gpsOpacity.target = s.includes("gps") ? 1 : 0;
-    moonOpacity.target = ["apollo8", "averagemoon", "flyby1", "moonrange"].includes(s) ? 1 : 0;
+    moonOpacity.target = [
+      "apollo8",
+      "averagemoon",
+      "flyby1",
+      "moonrange",
+    ].includes(s)
+      ? 1
+      : 0;
   });
 </script>
 
@@ -181,92 +189,7 @@
     </Canvas>
   </div>
 {:else}
-  <div
-    class="stage-root launch"
-    in:fade={{ duration: SCENE_FADE_DURATION, delay: 0 }}
-  >
-    {#if gpu.qualityTier === "low"}
-      <StarfieldStatic />
-    {/if}
-    <Canvas
-      createRenderer={(canvas) => {
-        return new THREE.WebGLRenderer({
-          canvas,
-          // logarithmicDepthBuffer: true,
-          antialias: true,
-          alpha: true,
-        });
-      }}
-    >
-      {#if gpu.qualityTier === "high"}
-        <T.Color attach="background" args={["#0f0f0f"]} />
-      {/if}
-
-      <T.PerspectiveCamera
-        makeDefault
-        position={[0, 0, 0]}
-        oncreate={(ref) => {}}
-        fov={75}
-        near={kmScale(0.01)}
-        far={500}
-      ></T.PerspectiveCamera>
-
-      <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
-      <T.AmbientLight intensity={0.1} />
-
-      {#if gpu.qualityTier === "high"}
-        <Starfield />
-      {/if}
-
-      {#if cornishOpacity.current > 0.01}
-        <T.Group position={[0, -0.5, -4]}>
-          <Cornish scale={0.015} opacity={cornishOpacity.current} />
-        </T.Group>
-      {/if}
-
-      {#if yuriOpacity.current > 0.01}
-        <T.Group position={[0, -2, -20]}>
-          <Gagarin position={[0,0,0]} opacity={yuriOpacity.current} />
-        </T.Group>
-      {/if}
-
-      {#if issOpacity.current > 0.01}
-        <T.Group position={[0, 0, -10]}>
-          <ISS scale={0.005} opacity={issOpacity.current} />
-        </T.Group>
-      {/if}
-
-      {#if geminiOpacity.current > 0.01}
-        <T.Group position={[0, -0.5, -15]} rotation={[0.4, -0.2, -0.2]}>
-          <Gemini scale={0.2} opacity={geminiOpacity.current} />
-        </T.Group>
-      {/if}
-
-      {#if laikaOpacity.current > 0.01}
-        <T.Group position={[0, -2, -25]} rotation={[0.2, 0.4, 0]}>
-          <Sputnik2 scale={0.8} opacity={laikaOpacity.current} />
-        </T.Group>
-      {/if}
-
-      {#if gpsOpacity.current > 0.01}
-        <T.Group position={[0, -1, -20]} rotation={[-0.4, 0.2, 0.8]}>
-          <GPS scale={0.04} opacity={gpsOpacity.current} />
-        </T.Group>
-      {/if}
-
-      {#if moonOpacity.current > 0.01}
-        <T.Group position={[0, -2, -40]} rotation={[0, 0, -Math.PI]}>
-          <T.Group rotation={[0, Math.PI * 0.5, 0]}>
-            <Moon scale={MOON_SCALE * 0.5} cameraPosition={{ position: [0,0,0], progress: 0 }} />
-          </T.Group>
-        </T.Group>
-      {/if}
-
-      {#if gpu.postProcessingEnabled}
-        <PostProcessing />
-      {/if}
-    </Canvas>
-  </div>
+  <ThreeSceneZoomContainer cameraPosition={[0, 0, 0]} />
 {/if}
 
 <style lang="scss">

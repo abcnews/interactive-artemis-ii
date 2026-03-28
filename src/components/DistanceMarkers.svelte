@@ -23,10 +23,10 @@
 
   const COUNT = markerKms.length;
 
-  import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
+  // import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
 
   type Props = {
-    cameraPosition?: CameraPositionResult;
+    cameraPosition?: [number, number, number];
     alwaysVisible?: boolean;
   };
 
@@ -101,7 +101,7 @@
   useTask(() => {
     if (!meshRef) return;
 
-    const camZ = cameraPosition?.position[2] || 0;
+    const camZ = (cameraPosition && cameraPosition[2]) || 0;
     let anyChanged = false;
 
     for (let i = 0; i < COUNT; i++) {

@@ -217,7 +217,7 @@
         <Starfield />
       {/if}
 
-      <DistanceMarkers {cameraPosition} />
+      <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
 
       <!-- Stratosphere -->
       <Waypoint
