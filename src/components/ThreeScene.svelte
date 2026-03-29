@@ -141,12 +141,28 @@
       { downpage: (downpage) => downpage < stage.getDownpage("zoomintro") },
       () => "setup",
     ),
-    Match.orElse(() => "launch"),
+    Match.when(
+      {
+        downpage: (downpage) =>
+          downpage >= stage.getDownpage("zoomintro") &&
+          downpage < stage.getDownpage("outerrange"),
+      },
+      () => "zoomsection",
+    ),
+    Match.when(
+      { downpage: (downpage) => downpage >= stage.getDownpage("outerrange") },
+      () => "outro",
+    ),
+    Match.orElse(() => "unknown"),
   );
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div class="stage-root setup" in:fade={{ duration: STAGE_FADE_DURATION }}>
+  <div
+    class="stage-root setup"
+    in:fade={{ duration: STAGE_FADE_DURATION, delay: STAGE_FADE_DURATION + 10 }}
+    out:fade={{ duration: STAGE_FADE_DURATION }}
+  >
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
@@ -183,10 +199,11 @@
       {/if}
     </Canvas>
   </div>
-{:else}
+{:else if whichScene({ downpage: scroll.pageScrollBottom }) === "zoomsection"}
   <div
     class="stage-root launch"
-    in:fade={{ duration: STAGE_FADE_DURATION, delay: 0 }}
+    in:fade={{ duration: STAGE_FADE_DURATION, delay: STAGE_FADE_DURATION + 10 }}
+    out:fade={{ duration: STAGE_FADE_DURATION }}
   >
     {#if gpu.qualityTier === "low"}
       <StarfieldStatic />
@@ -245,8 +262,8 @@
       >
         {#snippet children({ opacity })}
           <Cornish
-            scale={kmScale(0.1)}
-            position={[kmScale(0.1), kmScale(-0.3), kmScale(-35.5)]}
+            scale={kmScale(0.07)}
+            position={[kmScale(0.04), kmScale(-0.2), kmScale(-35.5)]}
             {opacity}
           ></Cornish>
         {/snippet}
@@ -401,7 +418,7 @@
       >
         {#snippet children({ opacity })}
           <GPS
-            position={[kmScale(0.4), kmScale(-0.8), kmScale(-20180)]}
+            position={[kmScale(1.2), kmScale(-1.1), kmScale(-20180)]}
             rotation={[-(Math.PI * 0.1), Math.PI * 0.1, Math.PI * 0.4]}
             scale={kmScale(0.02)}
             {opacity}
@@ -424,6 +441,12 @@
       {/if}
     </Canvas>
   </div>
+{:else if whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
+  <div
+    class="stage-root outro"
+    in:fade={{ duration: STAGE_FADE_DURATION, delay: STAGE_FADE_DURATION + 10 }}
+    out:fade={{ duration: STAGE_FADE_DURATION }}
+  ></div>
 {/if}
 
 <style lang="scss">
