@@ -160,8 +160,7 @@
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
   <div
     class="stage-root setup"
-    in:fade={{ duration: STAGE_FADE_DURATION, delay: STAGE_FADE_DURATION + 10 }}
-    out:fade={{ duration: STAGE_FADE_DURATION }}
+    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 1 }}
   >
     <Canvas>
       <T.PerspectiveCamera
@@ -202,8 +201,10 @@
 {:else if whichScene({ downpage: scroll.pageScrollBottom }) === "zoomsection"}
   <div
     class="stage-root launch"
-    in:fade={{ duration: STAGE_FADE_DURATION, delay: STAGE_FADE_DURATION + 10 }}
-    out:fade={{ duration: STAGE_FADE_DURATION }}
+    transition:fade={{
+      duration: STAGE_FADE_DURATION,
+      delay: STAGE_FADE_DURATION,
+    }}
   >
     {#if gpu.qualityTier === "low"}
       <StarfieldStatic />
@@ -222,7 +223,11 @@
         makeDefault
         position={cameraPositionSpring.current}
         oncreate={(ref) => {
-          ref.lookAt(0, -80, -406);
+          // Keep the viewing angle perfectly parallel regardless of where we scroll-spawn.
+          // By looking exactly 406 units ahead and 80 units down relative to its current Z location,
+          // the pitch angle remains an identical -11 degrees even if we spawn close to the moon!
+          const spawnZ = cameraPositionSpring.current[2];
+          ref.lookAt(0, -80, spawnZ - 406);
         }}
         fov={75}
         near={kmScale(0.01)}
@@ -444,8 +449,7 @@
 {:else if whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
   <div
     class="stage-root outro"
-    in:fade={{ duration: STAGE_FADE_DURATION, delay: STAGE_FADE_DURATION + 10 }}
-    out:fade={{ duration: STAGE_FADE_DURATION }}
+    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 1 }}
   ></div>
 {/if}
 

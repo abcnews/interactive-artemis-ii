@@ -13,7 +13,7 @@
   const INTERVAL = 10000;
   const MIN_KM = 40000;
   const MAX_KM = 350000;
-  const VISIBLE_RANGE = kmScale(15000);
+  const VISIBLE_RANGE = kmScale(30000);
   const FADE_RANGE = VISIBLE_RANGE * 0.3;
 
   const markerKms = Array.from(
@@ -23,8 +23,6 @@
 
   const COUNT = markerKms.length;
 
-  // import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
-
   type Props = {
     cameraPosition?: [number, number, number];
     alwaysVisible?: boolean;
@@ -33,7 +31,8 @@
   let { cameraPosition, alwaysVisible = false }: Props = $props();
 
   // Shared geometry — created once
-  const geometry = new PlaneGeometry(1, 0.03);
+  // The first number is the width (length of the bar), the second is thickness.
+  const geometry = new PlaneGeometry(2.0, 0.03);
 
   // Custom shader that reads per-instance opacity from instance attribute
   const material = new ShaderMaterial({
@@ -84,7 +83,8 @@
   function setupInstances(mesh: InstancedMesh) {
     // Set static transforms — these never change
     for (let i = 0; i < COUNT; i++) {
-      dummy.position.set(0, 1, markerPositionsZ[i]);
+      // Position the markers in space
+      dummy.position.set(0, -1, markerPositionsZ[i]);
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
     }
