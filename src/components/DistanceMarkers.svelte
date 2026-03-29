@@ -13,7 +13,7 @@
   const INTERVAL = 10000;
   const MIN_KM = 40000;
   const MAX_KM = 350000;
-  const VISIBLE_RANGE = kmScale(30000);
+  const VISIBLE_RANGE = kmScale(20000);
   const FADE_RANGE = VISIBLE_RANGE * 0.3;
 
   const markerKms = Array.from(

@@ -72,3 +72,7 @@ body {
 [data-mount="true"] {
   margin-block: 0 !important;
 }
+
+[data-component="Figure"] {
+  z-index: 1;
+}

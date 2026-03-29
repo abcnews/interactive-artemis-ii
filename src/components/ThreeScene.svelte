@@ -5,7 +5,6 @@
   import { Spring } from "svelte/motion";
   import { Match } from "effect";
   import { fade } from "svelte/transition";
-  import { prefersReducedMotion } from "svelte/motion";
   import { type CameraPositionResult } from "../lib/getCameraPosition";
   import { Throttled } from "runed";
   import { scaleLinear } from "d3-scale";
@@ -15,15 +14,12 @@
   import Orion from "./Orion/Orion_Draco_Optimized.svelte";
   import Starfield from "./Starfield.svelte";
   import StarfieldStatic from "./StarfieldStatic.svelte";
-  import HUDScene from "./HUDScene.svelte";
   import Moon from "./Moon/Moon.svelte";
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./ISS/ISS_stationary.svelte";
   import Cornish from "./Cornish/CornishBasic.svelte";
-  import Text from "./Text.svelte";
   import PostProcessing from "./PostProcessing.svelte";
-  import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
   import Gemini from "./Gemini.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
   import Gagarin from "./Gagarin.svelte";
@@ -158,10 +154,7 @@
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div
-    class="stage-root setup"
-    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 1 }}
-  >
+  <div class="stage-root setup" in:fade={{ duration: STAGE_FADE_DURATION }}>
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
@@ -201,9 +194,11 @@
 {:else if whichScene({ downpage: scroll.pageScrollBottom }) === "zoomsection"}
   <div
     class="stage-root launch"
-    transition:fade={{
+    in:fade={{
       duration: STAGE_FADE_DURATION,
-      delay: STAGE_FADE_DURATION,
+    }}
+    out:fade={{
+      duration: STAGE_FADE_DURATION,
     }}
   >
     {#if gpu.qualityTier === "low"}
@@ -408,7 +403,7 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(10000)}
-            colour="#3216ff"
+            colour="#9648D5"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
           />
@@ -447,10 +442,7 @@
     </Canvas>
   </div>
 {:else if whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
-  <div
-    class="stage-root outro"
-    transition:fade={{ duration: STAGE_FADE_DURATION, delay: 1 }}
-  ></div>
+  <div class="stage-root outro"></div>
 {/if}
 
 <style lang="scss">

@@ -30,15 +30,25 @@
         1 - (ahead - fadeInRange) / (visibleRange - fadeInRange),
       );
 
-    // Fully visible when passed, fade out behind
-    const behind = Math.abs(ahead);
-    return Math.max(0, 1 - behind / (visibleRange * 3));
+    // We no longer fade out when physically passed — it stays 100% opaque,
+    // because it will instantly leave the camera FOV anyway and get unmounted. 
+    return 1;
   });
 
-  // Mount slightly before visible so material is ready when fade starts
+  // Mount slightly before visible so material is ready when fade starts,
+  // and actively UNMOUNT when completely passed to free up RAM and CPU!
   const shouldMount = $derived.by(() => {
     const ahead = cameraPosition[2] - position[2];
-    return ahead < visibleRange * 1.1;
+    
+    // Have we not reached it yet?
+    if (ahead > visibleRange * 1.1) return false;
+
+    // Have we flown completely past it?
+    // Since we no longer fade out, we can unmount it shortly after passing it.
+    // Keeping a small 50% buffer ensures scrolling backwards doesn't cause visual pop-in.
+    if (ahead < 0 && Math.abs(ahead) > visibleRange * 0.5) return false;
+    
+    return true;
   });
 </script>
 
