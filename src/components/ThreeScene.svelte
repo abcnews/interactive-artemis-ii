@@ -155,7 +155,7 @@
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div class="stage-root setup" in:fade={{ duration: STAGE_FADE_DURATION }}>
+  <div class="stage-root setup" transition:fade={{ duration: STAGE_FADE_DURATION }}>
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
@@ -341,6 +341,7 @@
         {#snippet children({ opacity })}
           <ISS
             position={[kmScale(0.01), kmScale(0.2), kmScale(-400)]}
+            rotation={[0, 0, 0]}
             scale={ISS_SCALE}
             {opacity}
           />

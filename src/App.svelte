@@ -189,7 +189,7 @@
   <Portal target="[data-key='body']">
     {#if shouldShowOnScreenDisplay}
       <div transition:fade={{ duration: 500 }}>
-        <OnScreenDisplay {cameraPosition} />
+        <!-- <OnScreenDisplay {cameraPosition} /> -->
       </div>
     {/if}
     <BackgroundStage>
