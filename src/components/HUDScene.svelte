@@ -1,6 +1,6 @@
 <script>
   import { T } from "@threlte/core";
-  import Orion from "./Orion/Orion_Draco_Optimized.svelte";
+  import Orion from "./models/Orion/Orion_Draco_Optimized.svelte";
 </script>
 
 <T.PerspectiveCamera

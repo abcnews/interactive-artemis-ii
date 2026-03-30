@@ -11,25 +11,25 @@
   import { scaleLinear } from "d3-scale";
 
   // Components
-  import Sphere from "./Sphere.svelte";
-  import Artemis from "./NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
-  import Orion from "./Orion/Orion_Draco_Optimized.svelte";
+  import Sphere from "./models/Sphere.svelte";
+  import Artemis from "./models/NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
+  import Orion from "./models/Orion/Orion_Draco_Optimized.svelte";
   import Starfield from "./Starfield.svelte";
   import StarfieldStatic from "./StarfieldStatic.svelte";
   import HUDScene from "./HUDScene.svelte";
-  import Moon from "./Moon/Moon.svelte";
+  import Moon from "./models/Moon/Moon.svelte";
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
-  import ISS from "./ISS/ISS_stationary.svelte";
-  import Cornish from "./Cornish/CornishBasic.svelte";
+  import ISS from "./models/ISS/ISS_stationary.svelte";
+  import Cornish from "./models/Cornish/CornishBasic.svelte";
   import Text from "./Text.svelte";
   import PostProcessing from "./PostProcessing.svelte";
   import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
-  import Gemini from "./Gemini.svelte";
+  import Gemini from "./models/Gemini.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
-  import Gagarin from "./Gagarin.svelte";
-  import GPS from "./GPS.svelte";
-  import Sputnik2 from "./Sputnik2.svelte";
+  import Gagarin from "./models/Gagarin.svelte";
+  import GPS from "./models/GPS.svelte";
+  import Sputnik2 from "./models/Sputnik2.svelte";
   import ThreeSceneZoomContainer from "./ThreeSceneZoomContainer.svelte";
 
   // Utils

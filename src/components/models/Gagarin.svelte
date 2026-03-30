@@ -3,7 +3,7 @@
   import { T, useTask } from "@threlte/core";
   import * as THREE from "three";
   import svgSource from "~/src/assets/Vostok-1-v1.svg?url";
-  import { kmScale } from "../lib/utils";
+  import { kmScale } from "../../lib/utils";
 
   const SVG_WIDTH = 229.12;
   const SVG_HEIGHT = 755.22;
