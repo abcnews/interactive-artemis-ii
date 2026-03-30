@@ -16,10 +16,11 @@
     opacity: 0.15,
   });
 
-  let lineMaterials: THREE.LineBasicMaterial[] = [];
+  let lineMaterials = $state<THREE.LineBasicMaterial[]>([]);
 
   $effect(() => {
     darkMaterial.opacity = opacity * 0.15;
+    // Iterating the $state array ensures the effect re-tracks when new materials are added
     lineMaterials.forEach((mat) => (mat.opacity = opacity));
   });
 </script>

@@ -336,9 +336,9 @@
             {opacity}
           /> -->
           <Vostok1
-            position={[kmScale(-0.1), kmScale(-0.1), kmScale(-240)]}
+            position={[kmScale(-0.2), kmScale(-0.2), kmScale(-240)]}
             {opacity}
-            scale={kmScale(0.01)}
+            scale={kmScale(0.02)}
             rotation={[Math.PI * -0.4, Math.PI * 0.0, Math.PI * -0.1]}
           />
         {/snippet}
@@ -368,9 +368,9 @@
       >
         {#snippet children({ opacity })}
           <Hubble
-            position={[kmScale(1.5), kmScale(-1.7), kmScale(-540)]}
-            rotation={[Math.PI * 0.08, Math.PI * 0.03, Math.PI * 0.03]}
-            scale={kmScale(0.01)}
+            position={[kmScale(1.1), kmScale(-0.9), kmScale(-540)]}
+            rotation={[Math.PI * 0.1, Math.PI * 0.03, Math.PI * 0.03]}
+            scale={kmScale(0.005)}
             {opacity}
           ></Hubble>
         {/snippet}
