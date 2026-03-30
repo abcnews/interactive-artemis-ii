@@ -236,6 +236,7 @@
       {#if gpu.qualityTier === "high"}
         <Starfield />
       {/if}
+
       <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
 
       <!-- Stratosphere -->
@@ -274,7 +275,7 @@
       <Waypoint
         position={[0, 0, kmScale(-50)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(40)}
+        visibleRange={kmScale(30)}
       >
         {#snippet children({ opacity })}
           <Atmosphere
@@ -368,7 +369,7 @@
       <Waypoint
         position={[0, 0, kmScale(-700)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(500)}
+        visibleRange={kmScale(100)}
       >
         {#snippet children({ opacity })}
           <Atmosphere

@@ -32,7 +32,7 @@
 
   // Shared geometry — created once
   // The first number is the width (length of the bar), the second is thickness.
-  const geometry = new PlaneGeometry(2.0, 0.03);
+  const geometry = new PlaneGeometry(1.2, 0.03);
 
   // Custom shader that reads per-instance opacity from instance attribute
   const material = new ShaderMaterial({
