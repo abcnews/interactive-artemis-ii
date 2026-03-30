@@ -23,6 +23,7 @@
   import Gemini from "./models/Gemini.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
   import Gagarin from "./models/Gagarin.svelte";
+  import Vostok1 from "./models/Vostok_1.svelte";
   import GPS from "./models/GPS.svelte";
   import Sputnik2 from "./models/Sputnik2.svelte";
   import Hubble from "./models/Hubble.svelte";
@@ -155,7 +156,10 @@
 </script>
 
 {#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
-  <div class="stage-root setup" transition:fade={{ duration: STAGE_FADE_DURATION }}>
+  <div
+    class="stage-root setup"
+    transition:fade={{ duration: STAGE_FADE_DURATION }}
+  >
     <Canvas>
       <T.PerspectiveCamera
         makeDefault
@@ -326,9 +330,15 @@
         visibleRange={kmScale(50)}
       >
         {#snippet children({ opacity })}
-          <Gagarin
+          <!-- <Gagarin
             position={[kmScale(-0.1), kmScale(-0.2), kmScale(-240)]}
             {opacity}
+          /> -->
+          <Vostok1
+            position={[kmScale(-0.1), kmScale(-0.1), kmScale(-240)]}
+            {opacity}
+            scale={kmScale(0.01)}
+            rotation={[Math.PI * -0.4, Math.PI * 0.0, Math.PI * -0.1]}
           />
         {/snippet}
       </Waypoint>

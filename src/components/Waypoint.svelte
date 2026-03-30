@@ -41,7 +41,7 @@
   const shouldMount = $derived.by(() => {
     const ahead = cameraPosition[2] - position[2];
     
-    if (ahead > visibleRange * 2.0) return false;
+    if (ahead > visibleRange * 3.0) return false;
     if (ahead < 0 && Math.abs(ahead) > visibleRange * 4.0) return false;
     
     return true;

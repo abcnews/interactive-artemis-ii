@@ -79,7 +79,7 @@
     color: var(--fgColour, white);
     background: var(--bgColour, transparent);
     // border-radius: 4px;
-    font-family: ABCSans;
+    font-family: ABCSans, "ABC Sans Nova", sans-serif;
     font-size: 0.9em;
     font-style: normal;
     font-weight: 700;

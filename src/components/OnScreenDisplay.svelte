@@ -1,55 +1,63 @@
 <script lang="ts">
   import { pipe } from "effect";
-  import type { CameraPositionResult } from "~/src/lib/getCameraPosition";
-  import { altitudeToTimeSec, formatTime } from "~/src/lib/timeDistance";
   import { fade } from "svelte/transition";
-  import HudProgressMeter from "./Progress.svelte";
 
   type Props = {
-    cameraPosition: CameraPositionResult;
+    altitude: number;
   };
 
-  const { cameraPosition }: Props = $props();
+  const { altitude }: Props = $props();
 
-  const altKm = $derived(Math.abs(cameraPosition.position[2] * 1000));
-  // const tSec = $derived(altitudeToTimeSec(altKm));
-  // const missionTime = $derived(formatTime(tSec));
+  const km = $derived(pipe(altitude, Math.round).toLocaleString());
 
-  const km = $derived(pipe(altKm, Math.round).toLocaleString());
-
-  // Time stops displaying after 25 hours (90,000 seconds)
-  // const showTime = $derived(tSec < 90000);
-
-  const showDistance = $derived(true);
+  // Each character ~11px wide + padding on both sides
+  const MIN_WIDTH = 100;
+  const MAX_WIDTH = 260;
+  const containerWidth = $derived(
+    Math.min(MAX_WIDTH, Math.max(MIN_WIDTH, km.length * 11 + 75)),
+  );
 </script>
 
-<div class="hud-root">
-  {#if showDistance}
-    <span class="number" transition:fade={{ duration: 400 }}>
+<div class="hud-container" style:width="{containerWidth}px">
+  <div class="hud-root">
+    <span class="kms" transition:fade={{ duration: 400 }}>
       {km}km
     </span>
-  {/if}
-  <HudProgressMeter currentKm={altKm} />
+  </div>
 </div>
 
 <style lang="scss">
-  .hud-root {
+  .hud-container {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    padding: 5px 10px;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 4px;
-    color: white;
-    font-family: "abcsans", "fallback sans", sans-serif;
-    text-align: center;
-    filter: drop-shadow(0 0 3px grey);
+    gap: 5px;
+    flex-shrink: 0;
+    border-radius: 32px;
+    background: #212121;
+
+    /* This is what makes it animate */
+    transition: width 1000ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .number {
-    font-variant-numeric: tabular-nums;
-    font-size: 1.5rem;
+  .hud-root {
+    display: flex;
+    width: 100%; /* fills the animated container */
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    color: #b3b3b3;
+    text-align: center;
+    font-family: "abcsans condensed", ABCSans, "ABC Sans Nova", sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 15px;
+    letter-spacing: 0.54px;
   }
 </style>

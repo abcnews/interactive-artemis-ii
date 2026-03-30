@@ -154,7 +154,7 @@
   });
 
   let kmsFromEarth = $derived.by(() => {
-    return cameraPosition.position[2] * 1000;
+    return Math.abs(cameraPosition.position[2] * 1000);
   });
 
   const body = document.body;
@@ -166,11 +166,11 @@
   let shouldShowOnScreenDisplay = $derived.by(() => {
     // Hide before the first zooming panel
     if (!hasPassedPanel("zoomintro")) return false;
-    
+
     // Hide when you reach the end!
     // Change "footer" to whatever the ID of your final text block/credits is
-    if (hasPassedPanel("outerrange")) return false; 
-    
+    if (hasPassedPanel("outerrange")) return false;
+
     return true;
   });
 </script>
@@ -189,7 +189,7 @@
   <Portal target="[data-key='body']">
     {#if shouldShowOnScreenDisplay}
       <div transition:fade={{ duration: 500 }}>
-        <OnScreenDisplay {cameraPosition} />
+        <OnScreenDisplay altitude={kmsFromEarth} />
       </div>
     {/if}
     <BackgroundStage>
