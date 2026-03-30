@@ -25,6 +25,7 @@
   import Gagarin from "./Gagarin.svelte";
   import GPS from "./GPS.svelte";
   import Sputnik2 from "./Sputnik2.svelte";
+  import Hubble from "./models/Hubble.svelte";
 
   // Utils
   import { kmScale } from "~/src/lib/utils";
@@ -343,6 +344,22 @@
             scale={ISS_SCALE}
             {opacity}
           />
+        {/snippet}
+      </Waypoint>
+
+      <!-- Hubble / space jumk etc -->
+      <Waypoint
+        position={[0, 0, kmScale(-540)]}
+        cameraPosition={cameraPositionSpring.current}
+        visibleRange={kmScale(120)}
+      >
+        {#snippet children({ opacity })}
+          <Hubble
+            position={[kmScale(1.5), kmScale(-1.7), kmScale(-540)]}
+            rotation={[Math.PI * 0.1, 0, Math.PI * 0.02]}
+            scale={kmScale(0.01)}
+            {opacity}
+          ></Hubble>
         {/snippet}
       </Waypoint>
 
