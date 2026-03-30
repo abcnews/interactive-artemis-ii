@@ -15,7 +15,7 @@
     position,
     cameraPosition,
     visibleRange = 20,
-    fadeInRange = visibleRange * 0.3,  // fade over ??% of visible range
+    fadeInRange = visibleRange * 0.3, // fade over ??% of visible range
     children,
   }: Props = $props();
 
@@ -25,13 +25,14 @@
     if (ahead > visibleRange) return 0;
 
     if (ahead > 0) {
-      const calculatedOpacity = 1 - (ahead - fadeInRange) / (visibleRange - fadeInRange);
+      const calculatedOpacity =
+        1 - (ahead - fadeInRange) / (visibleRange - fadeInRange);
 
       // Clamp 0-1
       return Math.max(0, Math.min(1, calculatedOpacity));
     }
 
-    // Fully visible when passed 
+    // Fully visible when passed
     return 1;
   });
 
@@ -40,10 +41,13 @@
   // Watch for big models unmounting and freezing up the scene
   const shouldMount = $derived.by(() => {
     const ahead = cameraPosition[2] - position[2];
-    
+
+    // Mount/unmount in front of camera
     if (ahead > visibleRange * 3.0) return false;
-    if (ahead < 0 && Math.abs(ahead) > visibleRange * 4.0) return false;
-    
+
+    // Mount/unmount when behind camera (optional)
+    // if (ahead < 0 && Math.abs(ahead) > visibleRange * 4.0) return false;
+
     return true;
   });
 </script>

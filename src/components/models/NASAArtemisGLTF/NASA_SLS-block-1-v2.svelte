@@ -62,7 +62,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -72,7 +72,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -82,7 +82,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -92,7 +92,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -102,7 +102,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -112,7 +112,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -122,7 +122,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -132,7 +132,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -142,7 +142,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
 
@@ -152,7 +152,7 @@ Command: npx @threlte/gltf@3.0.1 --types --transform NASA_SLS-block-1-v2.glb
         metalness={METALNESS}
         {opacity}
         transparent
-        depthWrite={false}
+        depthWrite={true}
       />
     </T.Mesh>
   {:catch err}

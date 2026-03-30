@@ -191,6 +191,7 @@
         <Artemis
           position={[0, -10, -80]}
           scale={0.5}
+          rotation={[0, 0, 0]}
           opacity={artemisOpacity}
         />
       {/if}
