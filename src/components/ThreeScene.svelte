@@ -356,7 +356,7 @@
         {#snippet children({ opacity })}
           <Hubble
             position={[kmScale(1.5), kmScale(-1.7), kmScale(-540)]}
-            rotation={[Math.PI * 0.1, 0, Math.PI * 0.02]}
+            rotation={[Math.PI * 0.08, Math.PI * 0.03, Math.PI * 0.03]}
             scale={kmScale(0.01)}
             {opacity}
           ></Hubble>
