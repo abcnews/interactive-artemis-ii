@@ -25,6 +25,19 @@
       "--header-height",
       `${screenHeight - tabsHeight - navHeight}px`,
     );
+
+    if (headline) {
+      // Only apply the split if a <br> hasn't already been injected (handles HMR)
+      if (!headline.querySelector("br")) {
+        const text = headline.textContent?.trim() ?? "";
+        const words = text.split(" ");
+        if (words.length > 1) {
+          const mid = Math.ceil(words.length / 2);
+          headline.innerHTML =
+            words.slice(0, mid).join(" ") + "<br>" + words.slice(mid).join(" ");
+        }
+      }
+    }
   });
 </script>
 
@@ -52,6 +65,7 @@
           font-weight: 700;
           text-transform: uppercase;
           font-stretch: condensed;
+          text-wrap: balance;
         }
       }
 
@@ -85,6 +99,9 @@
       .Header-byline {
         text-align: center;
         color: white;
+        text-wrap: balance;
+        max-width: 400px;
+        margin: auto;
 
         ul * {
           color: hsla(215, 64%, 89%, 1) !important;
@@ -98,6 +115,7 @@
       .Header-byline > ul {
         justify-content: center;
         margin-top: 3em !important;
+        
       }
 
       .Header-meta * {

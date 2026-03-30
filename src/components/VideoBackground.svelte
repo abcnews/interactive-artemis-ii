@@ -35,7 +35,7 @@
       top: 0;
       left: 50%;
       height: 100%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateY(-4%);
     }
   }
 </style>

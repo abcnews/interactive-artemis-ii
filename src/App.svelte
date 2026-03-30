@@ -10,6 +10,7 @@
   import UtilTransformSpacers from "./components/UtilTransformSpacers.svelte";
   import UtilGetPanelData from "./components/UtilGetPanelData.svelte";
   import UtilGetWaypoints from "./components/UtilGetWaypoints.svelte";
+  import UtilReplaceMissionTimeMarkers from "./components/UtilReplaceMissionTimeMarkers.svelte";
   import Debug from "./components/Debug.svelte";
   import ThreeScene, { type ModelState } from "./components/ThreeScene.svelte";
   import ThreeSceneReducedMotion from "./components/ThreeSceneReducedMotion.svelte";
@@ -208,6 +209,7 @@
   <UtilTransformSpacers />
   <UtilGetPanelData />
   <UtilGetWaypoints />
+  <UtilReplaceMissionTimeMarkers />
 
   {#if isDebug}
     <Debug {cameraPosition} />

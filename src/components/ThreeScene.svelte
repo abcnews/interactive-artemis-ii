@@ -336,9 +336,9 @@
             {opacity}
           /> -->
           <Vostok1
-            position={[kmScale(-0.2), kmScale(-0.2), kmScale(-240)]}
+            position={[kmScale(-0.3), kmScale(-0.3), kmScale(-240)]}
             {opacity}
-            scale={kmScale(0.02)}
+            scale={kmScale(0.03)}
             rotation={[Math.PI * -0.4, Math.PI * 0.0, Math.PI * -0.1]}
           />
         {/snippet}
