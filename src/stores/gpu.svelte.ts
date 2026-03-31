@@ -11,7 +11,7 @@ type QualityTier = "low" | "high";
  * MANUAL OVERRIDE: Set to "low" or "high" to force a specific mode for testing.
  * Set to null to re-enable auto-detection based on device hardware.
  */
-const FORCE_QUALITY: QualityTier | null = null; 
+const FORCE_QUALITY: QualityTier | null = null;
 
 function detectQuality(): QualityTier {
   // Check for manual override first
@@ -30,9 +30,7 @@ function detectQuality(): QualityTier {
 
   // Low-end mobile GPUs (Mali, Adreno 2xx-3xx, etc.)
   const isLowEndGPU =
-    /mali-[gt][0-9]{2,3}|adreno\s?[23]\d{2}|powervr|sgx/i.test(
-      gpuRenderer,
-    );
+    /mali-[gt][0-9]{2,3}|adreno\s?[23]\d{2}|powervr|sgx/i.test(gpuRenderer);
 
   // Low core count (likely a weak device)
   const hasLowCores =
@@ -55,7 +53,9 @@ function detectQuality(): QualityTier {
   // or if it's a known ancient GPU architecture.
   if (isMobile) {
     // Requires at least 2 weak signals to be "low tier" on mobile
-    const weakSignals = [isLowEndGPU, hasLowCores, hasLowMemory].filter(Boolean).length;
+    const weakSignals = [isLowEndGPU, hasLowCores, hasLowMemory].filter(
+      Boolean,
+    ).length;
     if (weakSignals >= 2) return "low";
   } else if (isLowEndGPU) {
     // On desktop, only extremely weak legacy integrated chips get "low"

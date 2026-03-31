@@ -244,7 +244,7 @@
 
       <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
 
-      <!-- Stratosphere -->
+      <!-- Troposphere - to Stratosphere -->
       <Waypoint
         position={[0, 0, kmScale(-12)]}
         cameraPosition={cameraPositionSpring.current}
@@ -253,7 +253,7 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(12)}
-            colour="#3216ff"
+            colour="#4f02ff"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
             yOffset={-0.5}
@@ -370,7 +370,7 @@
           <Hubble
             position={[kmScale(1.1), kmScale(-0.9), kmScale(-540)]}
             rotation={[Math.PI * 0.1, Math.PI * 0.03, Math.PI * 0.03]}
-            scale={kmScale(0.005)}
+            scale={kmScale(0.008)}
             {opacity}
           ></Hubble>
         {/snippet}

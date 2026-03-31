@@ -54,6 +54,7 @@
       {opacity}
       blending={THREE.AdditiveBlending}
       depthWrite={false}
+      toneMapped={false}
     />
   </T.Mesh>
 
@@ -66,6 +67,7 @@
       opacity={opacity * 0.5}
       blending={THREE.AdditiveBlending}
       depthWrite={false}
+      toneMapped={false}
     />
   </T.Mesh>
 </T.Group>

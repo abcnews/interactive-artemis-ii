@@ -24,7 +24,7 @@
   const bloomEffect = new BloomEffect({
     intensity: 0.4,
     luminanceThreshold: 0.15,
-    luminanceSmoothing: 0.5,
+    luminanceSmoothing: 0.1,
     mipmapBlur: false,
     resolutionScale: 0.5,
     blendFunction: BlendFunction.ADD,
