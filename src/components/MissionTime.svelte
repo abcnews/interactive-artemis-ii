@@ -24,7 +24,7 @@
   @use "../styles/breakpoints.scss";
 
   .container {
-    width: calc(100% - 48px);
+    width: calc(100% - 52px);
     margin-inline: auto;
 
     @include breakpoints.for-tablet-up {
@@ -33,6 +33,7 @@
 
     @include breakpoints.for-desktop-up {
       max-width: 700px;
+      margin-inline: -18px;
     }
   }
 

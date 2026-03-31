@@ -18,7 +18,7 @@
   --interactive-color-background: hsla(0, 0%, 6%, 1);
 
   /* Panels */
-  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 0.9);
+  --interactive-panel-border: 1px solid hsla(0, 0%, 94%, 0.2);
   --interactive-panel-background: hsla(0, 0%, 6%, 0.8);
   --interactive-panel-background-opaque: hsla(0, 0%, 6%, 1);
 }
@@ -32,6 +32,9 @@
 
 body {
   overflow-x: clip !important;
+  P {
+    color: #f9f9f9 !important;
+  }
 }
 
 #reduced-motion-plugin-mount {

@@ -3,14 +3,21 @@
 
   :global {
     .u-layout > [data-key="panel"] {
-      border: var(--interactive-panel-border);
+      // border: var(--interactive-panel-border);
       border-radius: 12px;
-      background-color: var(--interactive-panel-background);
-      backdrop-filter: blur(7px);
-      box-shadow: 0 0px 30px hsla(0, 0%, 100%, 0.2);
+      // background-color: var(--interactive-panel-background);
+      background: rgba(15, 15, 15, 0.5);
+      backdrop-filter: blur(2px);
+      // box-shadow: 0 0px 30px hsla(0, 0%, 100%, 0.2);
       width: calc(100% - 48px);
       position: relative;
       z-index: 1;
+
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        /* top lit edge */ inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+        /* bottom shadow edge */ 0 4px 24px rgba(0, 0, 0, 0.4); /* outer depth shadow */
 
       @include breakpoints.for-tablet-up {
         max-width: 621.33px;
