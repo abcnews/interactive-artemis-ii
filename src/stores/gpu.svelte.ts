@@ -7,7 +7,16 @@
 
 type QualityTier = "low" | "high";
 
+/**
+ * MANUAL OVERRIDE: Set to "low" or "high" to force a specific mode for testing.
+ * Set to null to re-enable auto-detection based on device hardware.
+ */
+const FORCE_QUALITY: QualityTier | null = null; 
+
 function detectQuality(): QualityTier {
+  // Check for manual override first
+  if (FORCE_QUALITY) return FORCE_QUALITY;
+
   // Check for low-end signals
   const canvas = document.createElement("canvas");
   const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
@@ -57,8 +66,10 @@ function detectQuality(): QualityTier {
 function getQueryOverride(): boolean | null {
   const params = new URLSearchParams(window.location.search);
   const val = params.get("effects");
-  if (val === "off" || val === "false") return false;
-  if (val === "on" || val === "true") return true;
+  const quality = params.get("quality");
+
+  if (val === "off" || val === "false" || quality === "low") return false;
+  if (val === "on" || val === "true" || quality === "high") return true;
   return null; // no override
 }
 
