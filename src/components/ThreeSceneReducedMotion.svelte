@@ -166,6 +166,7 @@
     if (isBefore("artemis")) return "orion";
     if (isBetween("artemis", "zoomintro")) return "artemis";
     if (isBetween("zoomintro", "excitement")) return "launch";
+    if (isBetween("excitement", "points")) return "excitement";
     if (isBetween("points", "stratosphere")) return "points";
     if (isBetween("stratosphere", "maxq")) return "troposphere";
     if (isBetween("maxq", "cornish")) return "maxq";
@@ -204,6 +205,7 @@
     if (currentScene === "orion") return [0, 0, 0];
     if (currentScene === "artemis") return [0, 36, -80];
     if (currentScene === "launch") return [0, 0, 0];
+    if (currentScene === "excitement") return [0, 0, kmScale(-0)];
     if (currentScene === "points") return [0, 0, kmScale(-6)];
     if (currentScene === "troposphere") return [0, 0, kmScale(-10.5)];
     if (currentScene === "maxq") return [0, 0, kmScale(-11.5)];
