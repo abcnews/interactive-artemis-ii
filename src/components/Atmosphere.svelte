@@ -10,6 +10,7 @@
     thickness?: number;
     yOffset?: number;
     dashed?: boolean;
+    bloomScale?: number;
   };
 
   let {
@@ -19,7 +20,12 @@
     thickness = 0.01,
     yOffset = -1,
     dashed = false,
+    bloomScale = 1,
   }: Props = $props();
+
+  const hdrColour = $derived(
+    new THREE.Color(colour).multiplyScalar(bloomScale)
+  );
 
   const dashTex = $derived.by(() => {
     if (!dashed) return null;
@@ -48,7 +54,7 @@
   <T.Mesh scale={[1, 1, 0.001]}>
     <T.TorusGeometry args={[radius, kmScale(thickness), 8, 128]} />
     <T.MeshBasicMaterial
-      color={colour}
+      color={hdrColour}
       transparent
       alphaMap={dashTex ?? undefined}
       {opacity}
@@ -61,7 +67,7 @@
   <T.Mesh scale={[1, 1, 0.001]}>
     <T.TorusGeometry args={[radius, kmScale(thickness + 0.01), 8, 128]} />
     <T.MeshBasicMaterial
-      color={colour}
+      color={hdrColour}
       transparent
       alphaMap={dashTex ?? undefined}
       opacity={opacity * 0.5}

@@ -257,6 +257,7 @@
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
             yOffset={-0.5}
+            bloomScale={0.5}
           />
         {/snippet}
       </Waypoint>
@@ -285,9 +286,10 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(50)}
-            colour="#F5276C"
+            colour="#8a52ff"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
+            bloomScale={0.5}
           />
         {/snippet}
       </Waypoint>
@@ -301,9 +303,10 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(87)}
-            colour="#F5B027"
+            colour="#d5b4ff"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
+            bloomScale={1}
           />
         {/snippet}
       </Waypoint>
@@ -317,9 +320,11 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(100)}
-            colour="#00A36C"
+            colour="#9c9c9c"
             {opacity}
-            thickness={ATMOSPHERE_THICKNESS}
+            thickness={ATMOSPHERE_THICKNESS + 0.1}
+            bloomScale={0.633}
+            dashed={true}
           />
         {/snippet}
       </Waypoint>
@@ -385,9 +390,10 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(700)}
-            colour="#3216ff"
+            colour="#4fffff"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
+            bloomScale={0.8}
           />
         {/snippet}
       </Waypoint>
@@ -433,9 +439,10 @@
         {#snippet children({ opacity })}
           <Atmosphere
             radius={kmScale(10000)}
-            colour="#9648D5"
+            colour="#12f99d"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
+            bloomScale={0.5}
           />
         {/snippet}
       </Waypoint>
