@@ -39,7 +39,7 @@
 
   // Constants
   const MOON_SCALE = 3.474 / 2;
-  const ATMOSPHERE_THICKNESS = 0.1;
+  const ATMOSPHERE_THICKNESS = 0.2;
   const STAGE_FADE_DURATION = 500;
 
   export type ModelState = {
@@ -197,7 +197,7 @@
       {/if}
     </Canvas>
   </div>
-{:else if whichScene({ downpage: scroll.pageScrollBottom }) === "zoomsection"}
+{:else if whichScene( { downpage: scroll.pageScrollBottom }, ) === "zoomsection" || whichScene( { downpage: scroll.pageScrollBottom }, ) === "outro"}
   <div
     class="stage-root launch"
     in:fade={{
@@ -206,6 +206,7 @@
     out:fade={{
       duration: STAGE_FADE_DURATION,
     }}
+    class:faded={whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
   >
     {#if gpu.qualityTier === "low"}
       <StarfieldStatic />
@@ -306,7 +307,7 @@
             colour="#d5b4ff"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
-            bloomScale={1}
+            bloomScale={0.4}
           />
         {/snippet}
       </Waypoint>
@@ -322,8 +323,8 @@
             radius={kmScale(100)}
             colour="#9c9c9c"
             {opacity}
-            thickness={ATMOSPHERE_THICKNESS + 0.1}
-            bloomScale={0.633}
+            thickness={ATMOSPHERE_THICKNESS}
+            bloomScale={0.5}
             dashed={true}
           />
         {/snippet}
@@ -393,7 +394,7 @@
             colour="#4fffff"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
-            bloomScale={0.8}
+            bloomScale={0.3}
           />
         {/snippet}
       </Waypoint>
@@ -442,7 +443,7 @@
             colour="#12f99d"
             {opacity}
             thickness={ATMOSPHERE_THICKNESS}
-            bloomScale={0.5}
+            bloomScale={0.4}
           />
         {/snippet}
       </Waypoint>
@@ -478,8 +479,8 @@
       {/if}
     </Canvas>
   </div>
-{:else if whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
-  <div class="stage-root outro"></div>
+  <!-- {:else if whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
+  <div class="stage-root outro"></div> -->
 {/if}
 
 <style lang="scss">
@@ -492,5 +493,10 @@
   }
   .stage-root.launch {
     background-color: #0f0f0f;
+    transition: opacity 500ms ease;
+
+    &.faded {
+      opacity: 0;
+    }
   }
 </style>
