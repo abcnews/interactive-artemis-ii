@@ -38,7 +38,6 @@
   // Stores
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
-  import { gpu } from "~/src/stores/gpu.svelte";
 
   // Constants
   const MOON_SCALE = 3.474 / 2;
@@ -51,11 +50,13 @@
   };
 
   type ComponentProps = {
+    cameraPosition: CameraPositionResult;
     orionState: ModelState;
     artemisState: ModelState;
   };
 
   let {
+    cameraPosition,
     orionState = { isVisible: false },
     artemisState = { isVisible: false },
   }: ComponentProps = $props();
@@ -97,12 +98,162 @@
     scroll.pageScrollBottom >= stage.getDownpage(start) &&
     scroll.pageScrollBottom < stage.getDownpage(end);
 
+  //     #transitionSTARTzoomintroENDexcitementFROM0TO0
+
+  // #transitionSTARTexcitementENDpointsFROM0TO0
+
+  // #transitionSTARTpointsENDstratosphereFROM0TO9
+
+  // #transitionSTARTstratosphereENDmaxqFROM9TO10
+
+  // #transitionSTARTmaxqENDcornishFROM10TO13
+
+  // #transitionSTARTcornishENDcornish2FROM13TO34
+
+  // #transitionSTARTcornish2END2minsFROM34TO36
+
+  // #transitionSTART2minsENDthermosphereFROM36TO55
+
+  // #transitionSTARTthermosphereENDspaceFROM55TO92
+
+  // #transitionSTARTspaceENDcoreFROM92TO101
+
+  // #transitionSTARTcoreENDyuriFROM101TO235
+
+  // #transitionSTARTyuriENDspacestationFROM235TO241
+
+  // #transitionSTARTspacestationENDspacestation2FROM241TO393
+
+  // #transitionSTARTspacestation2ENDexosphereFROM393TO401
+
+  // #transitionSTARTexosphereENDexosphere2FROM401TO691
+
+  // #transitionSTARTexosphere2ENDgeminiFROM691TO701
+
+  // #transitionSTARTgeminiENDgemini2FROM701TO1363
+
+  // #transitionSTARTgemini2ENDlaikaFROM1363TO1370
+
+  // #transitionSTARTlaikaENDlaika2FROM1370TO1652
+
+  // #transitionSTARTlaika2ENDraiseFROM1652TO1660
+
+  // #transitionSTARTraiseENDpreouterspaceFROM1660TO9987
+
+  // #transitionSTARTpreouterspaceENDouterspaceFROM9987TO10001
+
+  // #transitionSTARTouterspaceENDpregpsFROM10001TO20150
+
+  // #transitionSTARTpregpsENDgpsFROM20160TO20181
+
+  // #transitionSTARTgpsENDpretranslunarFROM20181TO22280
+
+  // #transitionSTARTpretranslunarENDtranslunarFROM22280TO38117
+
+  // #transitionSTARTtranslunarENDmoonrangeFROM38117TO356000
+
+  // #transitionSTARTmoonrangeENDapollo8FROM356000TO377349
+
+  // #transitionSTARTapollo8ENDaveragemoonFROM377349TO384400
+
+  // #transitionSTARTaveragemoonENDflyby1FROM384400TO384402
+
+  // #transitionSTARTflyby1ENDrecordFROM384402TO400171
+
+  // #transitionSTARTrecordENDendmoonFROM400171TO400171
+
   const currentScene = $derived.by(() => {
     if (isBefore("artemis")) return "orion";
     if (isBetween("artemis", "zoomintro")) return "artemis";
-    if (isBetween("zoomintro", "stratosphere")) return "launch";
-    if (isBetween("stratosphere", "cornish")) return "thermosphere";
-    return "launch";
+    if (isBetween("zoomintro", "excitement")) return "launch";
+    if (isBetween("points", "stratosphere")) return "points";
+    if (isBetween("stratosphere", "maxq")) return "troposphere";
+    if (isBetween("maxq", "cornish")) return "maxq";
+    if (isBetween("cornish", "cornish2")) return "cornish";
+    if (isBetween("cornish2", "2mins")) return "cornish2";
+    if (isBetween("2mins", "thermosphere")) return "2mins";
+    if (isBetween("thermosphere", "space")) return "thermosphere";
+    if (isBetween("space", "core")) return "space";
+    if (isBetween("core", "yuri")) return "core";
+    if (isBetween("yuri", "spacestation")) return "yuri";
+    if (isBetween("spacestation", "spacestation2")) return "spacestation";
+    if (isBetween("spacestation2", "exosphere")) return "spacestation2";
+    if (isBetween("exosphere", "exosphere2")) return "exosphere";
+    if (isBetween("exosphere2", "gemini")) return "exosphere2";
+    if (isBetween("gemini", "gemini2")) return "gemini";
+    if (isBetween("gemini2", "laika")) return "gemini2";
+    if (isBetween("laika", "laika2")) return "laika";
+    if (isBetween("laika2", "raise")) return "laika2";
+    if (isBetween("raise", "preouterspace")) return "raise";
+    if (isBetween("preouterspace", "outerspace")) return "preouterspace";
+    if (isBetween("outerspace", "pregps")) return "outerspace";
+    if (isBetween("pregps", "gps")) return "pregps";
+    if (isBetween("gps", "pretranslunar")) return "gps";
+    if (isBetween("pretranslunar", "translunar")) return "pretranslunar";
+    if (isBetween("translunar", "moonrange")) return "translunar";
+    if (isBetween("moonrange", "apollo8")) return "moonrange";
+    if (isBetween("apollo8", "averagemoon")) return "apollo8";
+    if (isBetween("averagemoon", "flyby1")) return "averagemoon";
+    if (isBetween("flyby1", "record")) return "flyby1";
+    if (isBetween("record", "endmoon")) return "record";
+    if (isBetween("endmoon", "outerrange")) return "endmoon";
+    return "outerrange";
+  });
+
+  let cameraPositionAbsolute = $derived.by(() => {
+    if (currentScene === "orion") return [0, 0, 0];
+    if (currentScene === "artemis") return [0, 36, -80];
+    if (currentScene === "launch") return [0, 0, 0];
+    if (currentScene === "points") return [0, 0, kmScale(-6)];
+    if (currentScene === "troposphere") return [0, 0, kmScale(-10.5)];
+    if (currentScene === "maxq") return [0, 0, kmScale(-11.5)];
+    if (currentScene === "cornish") return [0, 0, kmScale(-30)];
+    if (currentScene === "cornish2") return [0, 0, kmScale(-34.9)];
+    if (currentScene === "2mins") return [0, 0, kmScale(-48)];
+    if (currentScene === "thermosphere") return [0, 0, kmScale(-84)];
+    if (currentScene === "space") return [0, 0, kmScale(-96)];
+    if (currentScene === "core") return [0, 0, kmScale(-235)];
+    if (currentScene === "yuri") return [0, 0, kmScale(-239.6)];
+    if (currentScene === "spacestation") return [0, 0, kmScale(-393)];
+    if (currentScene === "spacestation2") return [0, 0, kmScale(-398)];
+    if (currentScene === "exosphere") return [0, 0, kmScale(-531)];
+    if (currentScene === "exosphere2") return [0, 0, kmScale(-697)];
+    if (currentScene === "gemini") return [0, 0, kmScale(-1352)];
+    if (currentScene === "gemini2") return [0, 0, kmScale(-1366.5)];
+    if (currentScene === "laika") return [0, 0, kmScale(-1649)];
+    if (currentScene === "laika2") return [0, 0, kmScale(-1656)];
+    if (currentScene === "raise") return [0, 0, kmScale(-9988)];
+    if (currentScene === "preouterspace") return [0, 0, kmScale(-9998)];
+    if (currentScene === "outerspace") return [0, 0, kmScale(-20122)];
+    if (currentScene === "pregps") return [0, 0, kmScale(-20167)];
+    if (currentScene === "gps") return [0, 0, kmScale(-20829)];
+    if (currentScene === "pretranslunar") return [0, 0, kmScale(-32000)];
+    if (currentScene === "translunar") {
+      const zKm = cameraPosition.position[2] * 1000;
+      const stepSize = 20000;
+
+      // Handle bounds
+      if (zKm > -40000) return [0, 0, kmScale(-40000)];
+      if (zKm <= -350000) return [0, 0, kmScale(-350000)];
+
+      // Calculate step index (quantizing to 10k units)
+      const stepIndex = Math.floor(Math.abs(zKm) / stepSize);
+      const snappedKm = stepIndex * stepSize;
+
+      // This breaks the aliasing where every jump looks identical
+      const jitterZ = (stepIndex % 5) * 2000; // Adds 0, 2000, 4000, 6000, 8000 km
+
+      const finalKm = snappedKm + jitterZ;
+      return [0, 0, kmScale(-finalKm)];
+    }
+    if (currentScene === "moonrange") return [0, 0, kmScale(-356000)];
+    if (currentScene === "apollo8") return [0, 0, kmScale(-377349)];
+    if (currentScene === "averagemoon") return [0, 0, kmScale(-384400)];
+    if (currentScene === "flyby1") return [0, 0, kmScale(-385500)];
+    if (currentScene === "record") return [0, 0, kmScale(-400171)];
+    if (currentScene === "endmoon") return [0, 0, kmScale(-400171)];
+    if (currentScene === "outerrange") return [0, 0, kmScale(-400171)];
+    return [0, 0, 0];
   });
 </script>
 
@@ -161,10 +312,8 @@
       {/if}
     </Canvas>
   </div>
-{:else if currentScene === "launch"}
-  <ThreeSceneZoomContainer cameraPosition={[0, 0, 0]} />
-{:else if currentScene === "thermosphere"}
-  <ThreeSceneZoomContainer cameraPosition={[0, 0, kmScale(-10)]} />
+{:else}
+  <ThreeSceneZoomContainer cameraPosition={cameraPositionAbsolute} />
 {/if}
 
 <style lang="scss">

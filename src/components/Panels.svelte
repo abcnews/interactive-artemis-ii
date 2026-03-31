@@ -19,15 +19,15 @@
         padding: 1px;
 
         background: linear-gradient(
-            to bottom right,
-            rgba(255, 255, 255, 0.35) 0%,
+            160deg,
+            rgba(255, 255, 255, 0.25) 0%,
             /* bright top border */ rgba(255, 255, 255, 0.08) 30%,
             /* fading down the sides */ rgba(255, 255, 255, 0.02) 70%,
             /* dim lower sides */ rgba(255, 255, 255, 0.01) 100%
           ),
           linear-gradient(
-            to top left,
-            rgba(255, 255, 255, 0.2) 0%,
+            340deg,
+            rgba(255, 255, 255, 0.15) 0%,
             rgba(255, 255, 255, 0.08) 30%,
             rgba(255, 255, 255, 0.02) 70%,
             rgba(255, 255, 255, 0.01) 100%

@@ -25,6 +25,8 @@
   import Gagarin from "./models/Gagarin.svelte";
   import GPS from "./models/GPS.svelte";
   import Sputnik2 from "./models/Sputnik2.svelte";
+  import Vostok1 from "./models/Vostok_1.svelte";
+  import Hubble from "./models/Hubble.svelte";
 
   const MOON_SCALE = 3.474 / 2;
   const ATMOSPHERE_THICKNESS = 0.05;
@@ -48,8 +50,9 @@
 
 <div
   class="stage-root launch"
-  in:fade={{ duration: STAGE_FADE_DURATION }}
-  out:fade={{ duration: STAGE_FADE_DURATION, delay: 200 }}
+  in:fade={{
+    duration: STAGE_FADE_DURATION,
+  }}
 >
   {#if gpu.qualityTier === "low"}
     <StarfieldStatic />
@@ -68,7 +71,11 @@
       makeDefault
       position={cameraPositionSpring.current}
       oncreate={(ref) => {
-        ref.lookAt(0, -80, -406);
+        // Keep the viewing angle perfectly parallel regardless of where we scroll-spawn.
+        // By looking exactly 406 units ahead and 80 units down relative to its current Z location,
+        // the pitch angle remains an identical -11 degrees even if we spawn close to the moon!
+        const spawnZ = cameraPositionSpring.current[2];
+        ref.lookAt(0, -80, spawnZ - 406);
       }}
       fov={75}
       near={kmScale(0.01)}
@@ -84,7 +91,7 @@
 
     <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
 
-    <!-- Stratosphere -->
+    <!-- Troposphere - to Stratosphere -->
     <Waypoint
       position={[0, 0, kmScale(-12)]}
       cameraPosition={cameraPositionSpring.current}
@@ -93,10 +100,11 @@
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(12)}
-          colour="#3216ff"
+          colour="#4f02ff"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
           yOffset={-0.5}
+          bloomScale={0.5}
         />
       {/snippet}
     </Waypoint>
@@ -109,8 +117,8 @@
     >
       {#snippet children({ opacity })}
         <Cornish
-          scale={kmScale(0.1)}
-          position={[kmScale(0.1), kmScale(-0.3), kmScale(-35.5)]}
+          scale={kmScale(0.07)}
+          position={[kmScale(0.04), kmScale(-0.2), kmScale(-35.5)]}
           {opacity}
         ></Cornish>
       {/snippet}
@@ -120,14 +128,15 @@
     <Waypoint
       position={[0, 0, kmScale(-50)]}
       cameraPosition={cameraPositionSpring.current}
-      visibleRange={kmScale(40)}
+      visibleRange={kmScale(30)}
     >
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(50)}
-          colour="#F5276C"
+          colour="#8a52ff"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
+          bloomScale={0.5}
         />
       {/snippet}
     </Waypoint>
@@ -136,14 +145,15 @@
     <Waypoint
       position={[0, 0, kmScale(-87)]}
       cameraPosition={cameraPositionSpring.current}
-      visibleRange={kmScale(40)}
+      visibleRange={kmScale(50)}
     >
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(87)}
-          colour="#F5B027"
+          colour="#d5b4ff"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
+          bloomScale={0.4}
         />
       {/snippet}
     </Waypoint>
@@ -157,9 +167,11 @@
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(100)}
-          colour="#00A36C"
+          colour="#9c9c9c"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
+          bloomScale={0.5}
+          dashed={true}
         />
       {/snippet}
     </Waypoint>
@@ -171,9 +183,15 @@
       visibleRange={kmScale(50)}
     >
       {#snippet children({ opacity })}
-        <Gagarin
-          position={[kmScale(-0.1), kmScale(-0.2), kmScale(-240)]}
+        <!-- <Gagarin
+            position={[kmScale(-0.1), kmScale(-0.2), kmScale(-240)]}
+            {opacity}
+          /> -->
+        <Vostok1
+          position={[kmScale(-0.3), kmScale(-0.3), kmScale(-240)]}
           {opacity}
+          scale={kmScale(0.03)}
+          rotation={[Math.PI * -0.4, Math.PI * 0.0, Math.PI * -0.1]}
         />
       {/snippet}
     </Waypoint>
@@ -187,9 +205,26 @@
       {#snippet children({ opacity })}
         <ISS
           position={[kmScale(0.01), kmScale(0.2), kmScale(-400)]}
+          rotation={[0, 0, 0]}
           scale={ISS_SCALE}
           {opacity}
         />
+      {/snippet}
+    </Waypoint>
+
+    <!-- Hubble / space jumk etc -->
+    <Waypoint
+      position={[0, 0, kmScale(-540)]}
+      cameraPosition={cameraPositionSpring.current}
+      visibleRange={kmScale(120)}
+    >
+      {#snippet children({ opacity })}
+        <Hubble
+          position={[kmScale(1.1), kmScale(-0.9), kmScale(-540)]}
+          rotation={[Math.PI * 0.1, Math.PI * 0.03, Math.PI * 0.03]}
+          scale={kmScale(0.008)}
+          {opacity}
+        ></Hubble>
       {/snippet}
     </Waypoint>
 
@@ -197,14 +232,15 @@
     <Waypoint
       position={[0, 0, kmScale(-700)]}
       cameraPosition={cameraPositionSpring.current}
-      visibleRange={kmScale(500)}
+      visibleRange={kmScale(100)}
     >
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(700)}
-          colour="#3216ff"
+          colour="#4fffff"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
+          bloomScale={0.3}
         />
       {/snippet}
     </Waypoint>
@@ -250,9 +286,10 @@
       {#snippet children({ opacity })}
         <Atmosphere
           radius={kmScale(10000)}
-          colour="#3216ff"
+          colour="#12f99d"
           {opacity}
           thickness={ATMOSPHERE_THICKNESS}
+          bloomScale={0.4}
         />
       {/snippet}
     </Waypoint>
@@ -265,7 +302,7 @@
     >
       {#snippet children({ opacity })}
         <GPS
-          position={[kmScale(0.4), kmScale(-0.8), kmScale(-20180)]}
+          position={[kmScale(1.2), kmScale(-1.1), kmScale(-20180)]}
           rotation={[-(Math.PI * 0.1), Math.PI * 0.1, Math.PI * 0.4]}
           scale={kmScale(0.02)}
           {opacity}
