@@ -28,22 +28,22 @@ function detectQuality(): QualityTier {
     ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL).toLowerCase()
     : "";
 
-  // Low-end mobile GPUs
+  // Low-end mobile GPUs (Mali, Adreno 2xx-3xx, etc.)
   const isLowEndGPU =
-    /mali-[gt][0-9]{2,3}|adreno\s?[23]\d{2}|powervr|sgx|apple gpu/i.test(
+    /mali-[gt][0-9]{2,3}|adreno\s?[23]\d{2}|powervr|sgx/i.test(
       gpuRenderer,
     );
 
   // Low core count (likely a weak device)
   const hasLowCores =
     typeof navigator.hardwareConcurrency === "number" &&
-    navigator.hardwareConcurrency <= 4;
+    navigator.hardwareConcurrency <= 2;
 
   // Low device memory (Chrome-only API)
   const hasLowMemory =
     "deviceMemory" in navigator &&
     (navigator as any).deviceMemory !== undefined &&
-    (navigator as any).deviceMemory <= 4;
+    (navigator as any).deviceMemory < 2; // Only flag if < 2GB RAM
 
   // Mobile device
   const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -51,13 +51,16 @@ function detectQuality(): QualityTier {
   // Clean up the detection canvas
   canvas.remove();
 
-  // Conservative: flag as low if mobile + any weak signal
-  if (isMobile && (isLowEndGPU || hasLowCores || hasLowMemory)) {
+  // Flag as low only if multiple weak signals are detected on mobile,
+  // or if it's a known ancient GPU architecture.
+  if (isMobile) {
+    // Requires at least 2 weak signals to be "low tier" on mobile
+    const weakSignals = [isLowEndGPU, hasLowCores, hasLowMemory].filter(Boolean).length;
+    if (weakSignals >= 2) return "low";
+  } else if (isLowEndGPU) {
+    // On desktop, only extremely weak legacy integrated chips get "low"
     return "low";
   }
-
-  // Also flag as low on any very weak GPU regardless of mobile
-  if (isLowEndGPU) return "low";
 
   return "high";
 }
