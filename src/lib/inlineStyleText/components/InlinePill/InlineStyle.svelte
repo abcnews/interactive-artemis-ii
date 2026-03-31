@@ -12,9 +12,11 @@
     icon?: string;
     /** Underline colour (css hex or name) */
     underline?: string;
+    /** Dashed underline instead of solid */
+    dashed?: string;
   }
 
-  let { name, colour, text, border, icon, underline }: Props = $props();
+  let { name, colour, text, border, icon, underline, dashed }: Props = $props();
 
   const iconUrl = $derived.by(() => {
     if (!icon) return null;
@@ -43,6 +45,7 @@
     class:inline-style--with-border={border}
     class:inline-style--minimal={isMinimal}
     class:inline-style--with-underline={underline}
+    class:inline-style--with-dashed-underline={dashed}
     style:--bgColour={colour}
     style:--fgColour={text}
     style:--borderColour={border}
@@ -100,6 +103,9 @@
     }
     &--with-underline {
       border-bottom: 4px solid var(--underlineColour, transparent);
+    }
+    &--with-dashed-underline {
+      border-bottom: 4px dashed var(--underlineColour, transparent);
     }
 
     .inline-pill__text {

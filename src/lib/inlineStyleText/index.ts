@@ -37,6 +37,7 @@ function autoStyleStrongTags() {
           border: config.border ? `#${config.border}` : undefined,
           icon: config.icon,
           underline: config.underline ? `#${config.underline}` : undefined,
+          dashed: config.dashed ? `#${config.dashed}` : undefined,
         },
       });
 

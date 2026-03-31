@@ -3,21 +3,48 @@
 
   :global {
     .u-layout > [data-key="panel"] {
-      // border: var(--interactive-panel-border);
       border-radius: 12px;
-      // background-color: var(--interactive-panel-background);
       background: rgba(15, 15, 15, 0.5);
       backdrop-filter: blur(2px);
-      // box-shadow: 0 0px 30px hsla(0, 0%, 100%, 0.2);
+
       width: calc(100% - 48px);
       position: relative;
       z-index: 1;
 
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        /* top lit edge */ inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-        /* bottom shadow edge */ 0 4px 24px rgba(0, 0, 0, 0.4); /* outer depth shadow */
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+
+        background: linear-gradient(
+            to bottom right,
+            rgba(255, 255, 255, 0.35) 0%,
+            /* bright top border */ rgba(255, 255, 255, 0.08) 30%,
+            /* fading down the sides */ rgba(255, 255, 255, 0.02) 70%,
+            /* dim lower sides */ rgba(255, 255, 255, 0.01) 100%
+          ),
+          linear-gradient(
+            to top left,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0.08) 30%,
+            rgba(255, 255, 255, 0.02) 70%,
+            rgba(255, 255, 255, 0.01) 100%
+          );
+
+        /* A "hollow" that reveals only the border strip */
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        -webkit-mask-composite: xor;
+
+        pointer-events: none;
+      }
 
       @include breakpoints.for-tablet-up {
         max-width: 621.33px;

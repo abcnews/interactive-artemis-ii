@@ -5,4 +5,5 @@ export interface StyleConfig {
   border?: string;
   icon?: string;
   underline?: string;
+  dashed?: string;
 }
