@@ -30,10 +30,8 @@
     artemisState: ModelState;
   };
 
-  let {
-    cameraPosition,
-    artemisState = { isVisible: false },
-  }: ComponentProps = $props();
+  let { cameraPosition, artemisState = { isVisible: false } }: ComponentProps =
+    $props();
 
   // Scaling of the International Space Station
   // 1 unit = 1,000km = 1,000,000m
@@ -142,7 +140,7 @@
     if (currentScene === "pretranslunar") return [0, 0, kmScale(-32000)];
     if (currentScene === "translunar") {
       const zKm = cameraPosition.position[2] * 1000;
-      const stepSize = 20000;
+      const stepSize = 10000;
 
       // Handle bounds
       if (zKm > -40000) return [0, 0, kmScale(-40000)];
