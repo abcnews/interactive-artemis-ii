@@ -39,7 +39,7 @@
   const VISIBILITY_MULTIPLIER = 10;
   const ISS_SCALE = REAL_SCALE * VISIBILITY_MULTIPLIER;
 
-  const { cameraPosition } = $props();
+  const { cameraPosition, isOutro = false } = $props();
 
   const cameraPositionSpring = $derived.by(() => {
     return {
@@ -50,6 +50,7 @@
 
 <div
   class="stage-root launch"
+  class:faded={isOutro}
   in:fade={{
     duration: STAGE_FADE_DURATION,
   }}
@@ -336,5 +337,10 @@
   }
   .stage-root.launch {
     background-color: #0f0f0f;
+    transition: opacity 500ms ease;
+
+    &.faded {
+      opacity: 0;
+    }
   }
 </style>

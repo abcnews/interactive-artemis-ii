@@ -98,70 +98,6 @@
     scroll.pageScrollBottom >= stage.getDownpage(start) &&
     scroll.pageScrollBottom < stage.getDownpage(end);
 
-  //     #transitionSTARTzoomintroENDexcitementFROM0TO0
-
-  // #transitionSTARTexcitementENDpointsFROM0TO0
-
-  // #transitionSTARTpointsENDstratosphereFROM0TO9
-
-  // #transitionSTARTstratosphereENDmaxqFROM9TO10
-
-  // #transitionSTARTmaxqENDcornishFROM10TO13
-
-  // #transitionSTARTcornishENDcornish2FROM13TO34
-
-  // #transitionSTARTcornish2END2minsFROM34TO36
-
-  // #transitionSTART2minsENDthermosphereFROM36TO55
-
-  // #transitionSTARTthermosphereENDspaceFROM55TO92
-
-  // #transitionSTARTspaceENDcoreFROM92TO101
-
-  // #transitionSTARTcoreENDyuriFROM101TO235
-
-  // #transitionSTARTyuriENDspacestationFROM235TO241
-
-  // #transitionSTARTspacestationENDspacestation2FROM241TO393
-
-  // #transitionSTARTspacestation2ENDexosphereFROM393TO401
-
-  // #transitionSTARTexosphereENDexosphere2FROM401TO691
-
-  // #transitionSTARTexosphere2ENDgeminiFROM691TO701
-
-  // #transitionSTARTgeminiENDgemini2FROM701TO1363
-
-  // #transitionSTARTgemini2ENDlaikaFROM1363TO1370
-
-  // #transitionSTARTlaikaENDlaika2FROM1370TO1652
-
-  // #transitionSTARTlaika2ENDraiseFROM1652TO1660
-
-  // #transitionSTARTraiseENDpreouterspaceFROM1660TO9987
-
-  // #transitionSTARTpreouterspaceENDouterspaceFROM9987TO10001
-
-  // #transitionSTARTouterspaceENDpregpsFROM10001TO20150
-
-  // #transitionSTARTpregpsENDgpsFROM20160TO20181
-
-  // #transitionSTARTgpsENDpretranslunarFROM20181TO22280
-
-  // #transitionSTARTpretranslunarENDtranslunarFROM22280TO38117
-
-  // #transitionSTARTtranslunarENDmoonrangeFROM38117TO356000
-
-  // #transitionSTARTmoonrangeENDapollo8FROM356000TO377349
-
-  // #transitionSTARTapollo8ENDaveragemoonFROM377349TO384400
-
-  // #transitionSTARTaveragemoonENDflyby1FROM384400TO384402
-
-  // #transitionSTARTflyby1ENDrecordFROM384402TO400171
-
-  // #transitionSTARTrecordENDendmoonFROM400171TO400171
-
   const currentScene = $derived.by(() => {
     if (isBefore("artemis")) return "orion";
     if (isBetween("artemis", "zoomintro")) return "artemis";
@@ -315,7 +251,10 @@
     </Canvas>
   </div>
 {:else}
-  <ThreeSceneZoomContainer cameraPosition={cameraPositionAbsolute} />
+  <ThreeSceneZoomContainer
+    cameraPosition={cameraPositionAbsolute}
+    isOutro={currentScene === "outerrange"}
+  />
 {/if}
 
 <style lang="scss">

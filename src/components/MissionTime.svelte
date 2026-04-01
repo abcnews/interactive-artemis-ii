@@ -24,11 +24,12 @@
   @use "../styles/breakpoints.scss";
 
   .container {
-    width: calc(100% - 52px);
+    width: calc(100% - 37px);
     margin-inline: auto;
 
     @include breakpoints.for-tablet-up {
       max-width: 621.33px;
+      width: calc(100% - 50px);
     }
 
     @include breakpoints.for-desktop-up {
@@ -45,9 +46,6 @@
     border-radius: 100px;
     background: #212121;
   }
-
-  // .content {
-  // }
 
   .mission-time {
     color: #f9f9f9;
