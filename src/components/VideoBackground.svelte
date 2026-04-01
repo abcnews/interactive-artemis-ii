@@ -1,8 +1,11 @@
 <script lang="ts">
-  import backgroundVideo from "~/src/assets/Overview 01-1_ProRes4444_16x9-1-vp9-chrome.webm?url";
-  import backgroundVideoPortrait from "~/src/assets/Overview 01-1_ProRes4444_390x844-1-vp9-chrome.webm?url";
-  import backgroundVideoSafari from "~/src/assets/Overview 01-1_ProRes4444_16x9-1-hevc-safari.mp4?url";
-  import backgroundVideoPortraitSafari from "~/src/assets/Overview 01-1_ProRes4444_390x844-1-hevc-safari.mp4?url";
+  // Video format for Chrome and Firefox
+  import backgroundVideo from "~/src/assets/Artemis-II_animated-header-DESKTOP_16x9-1-vp9-chrome.webm?url";
+  import backgroundVideoPortrait from "~/src/assets/Artemis-II_animated-header-MOBILE_9x16_PProRes4444-1-vp9-chrome.webm?url";
+
+  // Video format for Safari
+  import backgroundVideoSafari from "~/src/assets/Artemis-II_animated-header-DESKTOP_16x9-1-hevc-safari.mp4?url";
+  import backgroundVideoPortraitSafari from "~/src/assets/Artemis-II_animated-header-MOBILE_9x16_PProRes4444-1-hevc-safari.mp4?url";
 
   import { screen } from "~/src/stores/screen.svelte";
 
