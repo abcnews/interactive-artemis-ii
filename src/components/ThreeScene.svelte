@@ -363,13 +363,13 @@
 
       <!-- Hubble / space jumk etc -->
       <Waypoint
-        position={[0, 0, kmScale(-540)]}
+        position={[0, 0, kmScale(-550)]}
         cameraPosition={cameraPositionSpring.current}
-        visibleRange={kmScale(120)}
+        visibleRange={kmScale(150)}
       >
         {#snippet children({ opacity })}
           <Hubble
-            position={[kmScale(1.1), kmScale(-0.9), kmScale(-540)]}
+            position={[kmScale(1.1), kmScale(-0.9), kmScale(-550)]}
             rotation={[Math.PI * 0.1, Math.PI * 0.03, Math.PI * 0.03]}
             scale={kmScale(0.008)}
             {opacity}

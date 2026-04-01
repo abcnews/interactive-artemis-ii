@@ -28,26 +28,33 @@
   const COUNT = 5000;
 
   const generateStars = () => {
-    const positions = new Float32Array(COUNT * 3);
-    for (let i = 0; i < COUNT; i++) {
-      positions[i * 3] = (rand.next() - 0.5) * 1000;
-      positions[i * 3 + 1] = (rand.next() - 0.5) * 1000;
-      positions[i * 3 + 2] = -rand.next() * 500;
-    }
-    return positions;
-  };
+  const positions = new Float32Array(COUNT * 3);
+  const colors    = new Float32Array(COUNT * 3);
 
-  const starPositions = generateStars();
+  for (let i = 0; i < COUNT; i++) {
+    positions[i * 3]     = (rand.next() - 0.5) * 1000;
+    positions[i * 3 + 1] = (rand.next() - 0.5) * 1000;
+    positions[i * 3 + 2] = -rand.next() * 500;
+
+    // Most stars dim, a few brighter — power curve biased low
+    const brightness = Math.pow(rand.next(), 2) * 0.35 + 0.1;
+    colors[i * 3]     = brightness;
+    colors[i * 3 + 1] = brightness;
+    colors[i * 3 + 2] = brightness;
+  }
+
+  return { positions, colors };
+};
+
+const { positions, colors } = generateStars();
 </script>
 
 <T.Points bind:ref={points}>
   <T.BufferGeometry
     oncreate={(geometry) => {
-      geometry.setAttribute(
-        "position",
-        new BufferAttribute(starPositions, 3),
-      );
+      geometry.setAttribute("position", new BufferAttribute(positions, 3));
+      geometry.setAttribute("color",    new BufferAttribute(colors, 3));
     }}
   />
-  <T.PointsMaterial size={0.1} color="#ddd" />
+  <T.PointsMaterial size={0.1} vertexColors={true} />
 </T.Points>
