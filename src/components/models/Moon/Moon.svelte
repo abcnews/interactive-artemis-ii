@@ -47,14 +47,28 @@ Command: npx @threlte/gltf@3.0.1 --types --transform 3D-Moon-NASA-textures-v1.1.
       geometry={gltf.nodes.Moon.geometry}
       material={gltf.materials["Material.001"]}
       oncreate={(ref) => {
-        const mat = ref.material as THREE.MeshStandardMaterial;
+        // const mat = ref.material as THREE.MeshStandardMaterial;
 
-        const heightMap = mat.normalMap; // grab it before nulling
-        mat.normalMap = null;
-        mat.bumpMap = heightMap;
-        mat.bumpScale = 0.4;
+        // const heightMap = mat.normalMap; // grab it before nulling
+        // mat.normalMap = null;
+        // mat.bumpMap = heightMap;
+        // mat.bumpScale = 0.4;
+        // mat.needsUpdate = true;
+
+        const original = ref.material as THREE.MeshStandardMaterial;
+        const mat = original.clone();
+
+        mat.metalness = 0.0;
+        mat.roughness = 1.0;
+        mat.normalMap = null; // or keep it — test both
         mat.needsUpdate = true;
-        // mat.roughness = 1.0;
+
+        ref.material = mat; // replace with the cloned copy
+
+        mat.onBeforeCompile = (shader) => {
+          shader.fragmentShader =
+            "precision highp float;\n" + shader.fragmentShader;
+        };
       }}
     />
   {:catch err}
