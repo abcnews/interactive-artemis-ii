@@ -57,8 +57,8 @@
     @media (orientation: portrait) {
       top: 0;
       left: 50%;
-      height: 115%;
-      transform: translateX(-48%) translateY(-9%);
+      height: 105%;
+      transform: translateX(-48.5%) translateY(-5%);
     }
   }
 </style>

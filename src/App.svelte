@@ -176,7 +176,7 @@
       fadeOutProgress={scroll.currentSection.name === "initial"
         ? 0
         : scroll.currentSection.name === "intro"
-          ? scroll.progressUntilNextSection
+          ? scroll.progressUntilNextSection * 3
           : 1}
     />
   </Portal>
