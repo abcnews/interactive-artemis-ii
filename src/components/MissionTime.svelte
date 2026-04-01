@@ -31,7 +31,7 @@
 
   .container {
     width: calc(100% - 37px);
-    margin-inline: auto;
+    margin-inline: auto !important;
 
     @include breakpoints.for-tablet-up {
       max-width: 621.33px;

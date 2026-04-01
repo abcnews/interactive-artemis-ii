@@ -158,12 +158,6 @@
     return Math.abs(cameraPosition.position[2] * 1000);
   });
 
-  const body = document.body;
-  const html = document.documentElement;
-
-  // This doesn't update FIXME
-  const pageHeight = document.body.scrollHeight;
-
   let shouldShowOnScreenDisplay = $derived.by(() => {
     // Hide before the first zooming panel
     if (!hasPassedPanel("zoomintro")) return false;

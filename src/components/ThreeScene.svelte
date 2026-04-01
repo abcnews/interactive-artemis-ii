@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Canvas, T, useThrelte, useTask } from "@threlte/core";
-  import { HUD, Grid, Stars, Float, SVG } from "@threlte/extras";
+  import { Float } from "@threlte/extras";
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
   import { Match } from "effect";
@@ -153,9 +153,11 @@
     ),
     Match.orElse(() => "unknown"),
   );
+
+  let currentSceneName = $derived(whichScene({ downpage: scroll.pageScrollBottom }));
 </script>
 
-{#if whichScene({ downpage: scroll.pageScrollBottom }) === "setup"}
+{#if currentSceneName === "setup"}
   <div
     class="stage-root setup"
     transition:fade={{ duration: STAGE_FADE_DURATION }}
@@ -164,7 +166,6 @@
       <T.PerspectiveCamera
         makeDefault
         position={cameraPositionSpring.current}
-        oncreate={(ref) => {}}
         fov={70}
         near={0.01}
         far={1000}
@@ -197,7 +198,7 @@
       {/if}
     </Canvas>
   </div>
-{:else if whichScene( { downpage: scroll.pageScrollBottom }, ) === "zoomsection" || whichScene( { downpage: scroll.pageScrollBottom }, ) === "outro"}
+{:else if currentSceneName === "zoomsection" || currentSceneName === "outro"}
   <div
     class="stage-root launch"
     in:fade={{
@@ -206,12 +207,10 @@
     out:fade={{
       duration: STAGE_FADE_DURATION,
     }}
-    // class:faded={whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
   >
     <div
       class="fade-overlay"
-      class:visible={whichScene({ downpage: scroll.pageScrollBottom }) ===
-        "outro"}
+      class:visible={currentSceneName === "outro"}
     ></div>
     {#if gpu.qualityTier === "low"}
       <StarfieldStatic />

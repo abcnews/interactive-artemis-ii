@@ -7,13 +7,14 @@ type Transition = {
   end: number;
 };
 
-// I DON'T THINK THIS WILL WORK ACTUALLY
 
 class Stage {
   transitions = new SvelteMap<string, Transition>();
 
   starsProgress = $derived.by(() => {
-    const { start, end } = this.transitions.get("stars-enter")!;
+    const range = this.transitions.get("stars-enter");
+    if (!range) return 0;
+    const { start, end } = range;
     const current = scroll.pageScrollBottom;
 
     if (current < start) return 0;
