@@ -234,10 +234,8 @@
         far={500}
       ></T.PerspectiveCamera>
 
-      <T.DirectionalLight position={[500, 100, -100]} intensity={0.8} />
-      <!-- Faint fill so dark side is never void black -->
-      <T.DirectionalLight position={[-200, 0, -400]} intensity={0.15} />
-      <T.AmbientLight intensity={0.5} />
+      <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
+      <T.AmbientLight intensity={0.1} />
 
       {#if gpu.qualityTier === "high"}
         <Starfield />
