@@ -23,6 +23,12 @@
 <style lang="scss">
   @use "../styles/breakpoints.scss";
 
+  :global {
+    [id^="missiontime"] {
+      width: 100% !important;
+    }
+  }
+
   .container {
     width: calc(100% - 37px);
     margin-inline: auto;

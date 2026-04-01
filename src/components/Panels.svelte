@@ -9,7 +9,7 @@
       width: calc(100% - 32px);
       position: relative;
       z-index: 1;
-      max-width: 400px;
+      // max-width: 600px;
       padding: 1px 24px;
 
       @include breakpoints.for-tablet-up {
