@@ -36,17 +36,6 @@
   });
 </script>
 
-<!-- <video bind:this={videoEl} autoplay muted loop playsinline preload="auto">
-  <source
-    src={landscape ? backgroundVideoSafari : backgroundVideoPortraitSafari}
-    type="video/mp4"
-  />
-  <source
-    src={landscape ? backgroundVideo : backgroundVideoPortrait}
-    type="video/webm"
-  />
-</video> -->
-
 <video bind:this={videoEl} autoplay muted loop playsinline preload="auto">
   <source {src} type={supportsHEVC ? "video/mp4" : "video/webm"} />
 </video>
@@ -65,8 +54,8 @@
     @media (orientation: portrait) {
       top: 0;
       left: 50%;
-      height: 100%;
-      transform: translateX(-50%) translateY(-4%);
+      height: 115%;
+      transform: translateX(-48%) translateY(-9%);
     }
   }
 </style>

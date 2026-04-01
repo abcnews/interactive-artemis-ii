@@ -6,7 +6,6 @@
     ShaderMaterial,
     Object3D,
     DoubleSide,
-    Matrix4,
   } from "three";
   import { kmScale } from "~/src/lib/utils";
 
@@ -15,6 +14,7 @@
   const MAX_KM = 350000;
   const VISIBLE_RANGE = kmScale(20000);
   const FADE_RANGE = VISIBLE_RANGE * 0.3;
+  const Y_POS = -0.6;
 
   const markerKms = Array.from(
     { length: Math.floor((MAX_KM - MIN_KM) / INTERVAL) + 1 },
@@ -37,7 +37,7 @@
 
   // Shared geometry — created once
   // The first number is the width (length of the bar), the second is thickness.
-  const geometry = new PlaneGeometry(0.6, 0.03);
+  const geometry = new PlaneGeometry(0.5, 0.03);
 
   const material = new ShaderMaterial({
     transparent: true,
@@ -93,7 +93,7 @@
     // Set static transforms — these never change
     for (let i = 0; i < COUNT; i++) {
       // Position the markers in space
-      dummy.position.set(0, -1, markerPositionsZ[i]);
+      dummy.position.set(0, Y_POS, markerPositionsZ[i]);
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
     }

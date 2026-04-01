@@ -74,6 +74,9 @@
         color: var(--interactive-color-header);
         text-align: center;
         text-shadow: 0 0 4px hsla(0, 0%, 100%, 1);
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        line-height: 1;
 
         @include breakpoints.for-small-mobile-only {
           font-size: 2.5rem !important;
@@ -102,6 +105,11 @@
         text-wrap: balance;
         max-width: 400px;
         margin: auto;
+        margin-bottom: 1rem !important;
+
+        ul[class^="CardTagList"] {
+          margin-top: 1.5rem !important;
+        }
 
         ul * {
           color: hsla(215, 64%, 89%, 1) !important;
@@ -115,7 +123,6 @@
       .Header-byline > ul {
         justify-content: center;
         margin-top: 3em !important;
-        
       }
 
       .Header-meta * {

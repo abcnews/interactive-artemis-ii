@@ -4,7 +4,7 @@
   :global {
     .u-layout > [data-key="panel"] {
       border-radius: 12px;
-      background: rgba(15, 15, 15, 0.5);
+      background: rgba(15, 15, 15, 0.6);
       backdrop-filter: blur(2px);
       width: calc(100% - 32px);
       position: relative;
