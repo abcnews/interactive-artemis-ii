@@ -1,35 +1,12 @@
 <script lang="ts">
-  import { Canvas, T, useThrelte, useTask } from "@threlte/core";
-  import { HUD, Grid, Stars, Float, SVG } from "@threlte/extras";
-  import * as THREE from "three";
-  import { Spring, Tween } from "svelte/motion";
-  import { Match } from "effect";
+  import { Canvas, T } from "@threlte/core";
   import { fade } from "svelte/transition";
-  import { prefersReducedMotion } from "svelte/motion";
   import { type CameraPositionResult } from "../lib/getCameraPosition";
-  import { Throttled } from "runed";
   import { scaleLinear } from "d3-scale";
 
   // Components
-  import Sphere from "./models/Sphere.svelte";
   import Artemis from "./models/NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
   import Orion from "./models/Orion/Orion_Draco_Optimized.svelte";
-  import Starfield from "./Starfield.svelte";
-  import StarfieldStatic from "./StarfieldStatic.svelte";
-  import HUDScene from "./HUDScene.svelte";
-  import Moon from "./models/Moon/Moon.svelte";
-  import Atmosphere from "./Atmosphere.svelte";
-  import Waypoint from "./Waypoint.svelte";
-  import ISS from "./models/ISS/ISS_stationary.svelte";
-  import Cornish from "./models/Cornish/CornishBasic.svelte";
-  import Text from "./Text.svelte";
-  import PostProcessing from "./PostProcessing.svelte";
-  import ThreltePostProcessing from "./ThreltePostProcessing.svelte";
-  import Gemini from "./models/Gemini.svelte";
-  import DistanceMarkers from "./DistanceMarkers.svelte";
-  import Gagarin from "./models/Gagarin.svelte";
-  import GPS from "./models/GPS.svelte";
-  import Sputnik2 from "./models/Sputnik2.svelte";
   import ThreeSceneZoomContainer from "./ThreeSceneZoomContainer.svelte";
 
   // Utils
@@ -40,8 +17,6 @@
   import { stage } from "~/src/stores/stage.svelte";
 
   // Constants
-  const MOON_SCALE = 3.474 / 2;
-  const ATMOSPHERE_THICKNESS = 0.05;
   const SCENE_FADE_DURATION = 250;
 
   export type ModelState = {
@@ -57,7 +32,6 @@
 
   let {
     cameraPosition,
-    orionState = { isVisible: false },
     artemisState = { isVisible: false },
   }: ComponentProps = $props();
 

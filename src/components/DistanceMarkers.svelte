@@ -10,7 +10,7 @@
   } from "three";
   import { kmScale } from "~/src/lib/utils";
 
-  const INTERVAL = 10000;
+  const INTERVAL = 50000;
   const MIN_KM = 40000;
   const MAX_KM = 350000;
   const VISIBLE_RANGE = kmScale(20000);

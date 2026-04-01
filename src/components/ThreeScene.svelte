@@ -206,8 +206,13 @@
     out:fade={{
       duration: STAGE_FADE_DURATION,
     }}
-    class:faded={whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
+    // class:faded={whichScene({ downpage: scroll.pageScrollBottom }) === "outro"}
   >
+    <div
+      class="fade-overlay"
+      class:visible={whichScene({ downpage: scroll.pageScrollBottom }) ===
+        "outro"}
+    ></div>
     {#if gpu.qualityTier === "low"}
       <StarfieldStatic />
     {/if}
@@ -493,10 +498,19 @@
   }
   .stage-root.launch {
     background-color: #0f0f0f;
-    transition: opacity 500ms ease;
+  }
 
-    &.faded {
-      opacity: 0;
+  .fade-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: #0f0f0f;
+    opacity: 0;
+    transition: opacity 500ms ease;
+    pointer-events: none;
+    z-index: 10;
+
+    &.visible {
+      opacity: 1;
     }
   }
 </style>
