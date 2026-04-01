@@ -361,8 +361,8 @@
           />
 
           <!-- <ISSSmall
-            position={[kmScale(0.00), kmScale(0.09), kmScale(-400)]}
-            rotation={[Math.PI * 0.0, Math.PI * 0.5, Math.PI * 0.4]}
+            position={[kmScale(-0.0), kmScale(0.1), kmScale(-400)]}
+            rotation={[Math.PI * -0.5, Math.PI * 0.5, Math.PI * 0.2]}
             scale={kmScale(0.03)}
             {opacity}
           /> -->
