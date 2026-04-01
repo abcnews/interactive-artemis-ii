@@ -14,14 +14,15 @@
   let landscape = $derived(isLandscape(screen.innerWidth, screen.innerHeight));
 
   $effect(() => {
-    if (landscape) videoEl?.load();
+    landscape;
+    videoEl?.load();
   });
 </script>
 
 <video bind:this={videoEl} autoplay muted loop playsinline preload="auto">
   <source
     src={landscape ? backgroundVideoSafari : backgroundVideoPortraitSafari}
-    type="video/mp4; codecs='hvc1'"
+    type="video/mp4"
   />
   <source
     src={landscape ? backgroundVideo : backgroundVideoPortrait}

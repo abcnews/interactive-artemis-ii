@@ -248,8 +248,6 @@
         <Starfield />
       {/if}
 
-      <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
-
       <!-- Troposphere - to Stratosphere -->
       <Waypoint
         position={[0, 0, kmScale(-12)]}
@@ -468,6 +466,8 @@
           ></GPS>
         {/snippet}
       </Waypoint>
+
+      <DistanceMarkers cameraPosition={cameraPositionSpring.current} />
 
       <!-- The Moon -->
       <T.Group position={[0, 0, -406]} rotation={[0, 0, -Math.PI * 1]}>
