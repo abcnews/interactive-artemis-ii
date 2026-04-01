@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Canvas, T, useThrelte, useTask } from "@threlte/core";
-  import { Float } from "@threlte/extras";
+  import { Canvas, T } from "@threlte/core";
   import * as THREE from "three";
   import { Spring } from "svelte/motion";
   import { Match } from "effect";
@@ -22,7 +21,6 @@
   import PostProcessing from "./PostProcessing.svelte";
   import Gemini from "./models/Gemini.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
-  import Gagarin from "./models/Gagarin.svelte";
   import Vostok1 from "./models/Vostok_1.svelte";
   import GPS from "./models/GPS.svelte";
   import Sputnik2 from "./models/Sputnik2.svelte";
@@ -34,7 +32,6 @@
   // Stores
   import { scroll } from "~/src/stores/scroll.svelte";
   import { stage } from "~/src/stores/stage.svelte";
-  import { accessibility } from "~/src/stores/accessibility.svelte";
   import { gpu } from "~/src/stores/gpu.svelte";
 
   // Constants
@@ -154,7 +151,9 @@
     Match.orElse(() => "unknown"),
   );
 
-  let currentSceneName = $derived(whichScene({ downpage: scroll.pageScrollBottom }));
+  let currentSceneName = $derived(
+    whichScene({ downpage: scroll.pageScrollBottom }),
+  );
 </script>
 
 {#if currentSceneName === "setup"}
@@ -175,17 +174,11 @@
       <T.AmbientLight intensity={0.1} />
 
       {#if orionState.isVisible}
-        <Float
-          floatIntensity={orionState.shouldFloat ? kmScale(10) : 0}
-          rotationIntensity={orionState.shouldFloat ? kmScale(100) : 0}
-          rotationSpeed={[1, 0.5, 0.2]}
-        >
-          <Orion
-            position={[0, orionPosSpring.current, -80]}
-            orionRotation={undefined}
-            opacity={orionOpacity}
-          />
-        </Float>
+        <Orion
+          position={[0, orionPosSpring.current, -80]}
+          orionRotation={undefined}
+          opacity={orionOpacity}
+        />
       {/if}
 
       {#if artemisState.isVisible}

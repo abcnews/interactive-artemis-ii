@@ -1,11 +1,11 @@
 const makeOdysseyDark = () => {
   document.documentElement.classList.add("is-dark-mode");
-  const main = document.querySelector<HTMLElement>(".Main");
-  const header = document.querySelector<HTMLElement>(".Header");
+  const main = document.querySelector(".Main") as HTMLElement;
+  const header = document.querySelector(".Header") as HTMLElement;
 
   header?.classList.add("is-dark");
-  if (header) header.dataset.scheme = "dark";
-  if (main) main.dataset.scheme = "dark";
+  header.dataset.scheme = "dark";
+  main.dataset.scheme = "dark";
 
   const blocks = document.querySelectorAll(".Block") as NodeListOf<HTMLElement>;
 
@@ -18,12 +18,12 @@ const makeOdysseyDark = () => {
 const makeOdysseyLight = () => {
   document.documentElement.classList.remove("is-dark-mode");
 
-  const main = document.querySelector<HTMLElement>(".Main");
-  const header = document.querySelector<HTMLElement>(".Header");
+  const main = document.querySelector(".Main") as HTMLElement;
+  const header = document.querySelector(".Header") as HTMLElement;
 
   header?.classList.remove("is-dark");
-  if (header) header.dataset.scheme = "light";
-  if (main) main.dataset.scheme = "light";
+  header.dataset.scheme = "light";
+  main.dataset.scheme = "light";
 
   const blocks = document.querySelectorAll(".Block") as NodeListOf<HTMLElement>;
 
