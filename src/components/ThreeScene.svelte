@@ -14,6 +14,7 @@
   import Starfield from "./Starfield.svelte";
   import StarfieldStatic from "./StarfieldStatic.svelte";
   import Moon from "./models/Moon/Moon.svelte";
+  import Moon2 from "./models/Moon/moon_small.svelte";
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./models/ISS/ISS_stationary.svelte";
@@ -234,7 +235,7 @@
         far={500}
       ></T.PerspectiveCamera>
 
-      <T.DirectionalLight position={[500, 0, 200]} intensity={0.9} />
+      <T.DirectionalLight position={[300, 10, 200]} intensity={0.9} />
       <T.AmbientLight intensity={0.1} />
 
       {#if gpu.qualityTier === "high"}
@@ -476,6 +477,8 @@
             scale={MOON_SCALE}
             cameraPosition={cameraPositionSpring.current}
           />
+
+          <!-- <Moon2 scale={MOON_SCALE} /> -->
         </T.Group>
       </T.Group>
 

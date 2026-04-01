@@ -54,6 +54,8 @@ Command: npx @threlte/gltf@3.0.1 --types --transform 3D-Moon-NASA-textures-v1.1.
         mat.bumpMap = heightMap;
         mat.bumpScale = 0.4;
         mat.needsUpdate = true;
+
+        
       }}
     />
   {:catch err}
