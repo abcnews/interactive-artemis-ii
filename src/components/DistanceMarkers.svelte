@@ -26,35 +26,40 @@
   type Props = {
     cameraPosition?: [number, number, number];
     alwaysVisible?: boolean;
+    opacity?: number;
   };
 
-  let { cameraPosition, alwaysVisible = false }: Props = $props();
+  let { cameraPosition, alwaysVisible = false, opacity = 0.3 }: Props = $props();
 
   // Shared geometry — created once
   // The first number is the width (length of the bar), the second is thickness.
   const geometry = new PlaneGeometry(1.2, 0.03);
 
-  // Custom shader that reads per-instance opacity from instance attribute
   const material = new ShaderMaterial({
     transparent: true,
     depthWrite: false,
     side: DoubleSide,
     toneMapped: false,
+    uniforms: {
+      uOpacity: { value: 1.0 },
+    },
     vertexShader: `
-      attribute float instanceOpacity;
-      varying float vOpacity;
-      void main() {
-        vOpacity = instanceOpacity;
-        gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(position, 1.0);
-      }
-    `,
+    attribute float instanceOpacity;
+    varying float vOpacity;
+    void main() {
+      vOpacity = instanceOpacity;
+      gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(position, 1.0);
+    }
+  `,
     fragmentShader: `
-      varying float vOpacity;
-      void main() {
-        if (vOpacity < 0.01) discard;
-        gl_FragColor = vec4(1.0, 1.0, 1.0, vOpacity);
-      }
-    `,
+    uniform float uOpacity;
+    varying float vOpacity;
+    void main() {
+      float finalOpacity = vOpacity * uOpacity;
+      if (finalOpacity < 0.01) discard;
+      gl_FragColor = vec4(1.0, 1.0, 1.0, finalOpacity);
+    }
+  `,
   });
 
   // Pre-compute static Z positions
@@ -118,6 +123,10 @@
         (attr as THREE.BufferAttribute).needsUpdate = true;
       }
     }
+  });
+
+  $effect(() => {
+    material.uniforms.uOpacity.value = opacity;
   });
 </script>
 
