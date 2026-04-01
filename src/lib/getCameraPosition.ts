@@ -80,10 +80,20 @@ export const getCameraPosition = (
       progress: null,
     })),
     Match.when({ type: "transition" }, (w) => {
-      const progress = stage.getProgressBetweenSections({
+      const rawProgress = stage.getProgressBetweenSections({
         start: w.start,
         end: w.end,
       })(pageScrollBottom);
+
+      let progress = rawProgress;
+
+      if (w.slowZone) {
+        // Convert Z positions → progress values within this specific transition
+        const totalZ = w.toPosition[2] - w.fromPosition[2];
+        const p1 = (w.slowZone.fromZ - w.fromPosition[2]) / totalZ;
+        const p2 = (w.slowZone.toZ - w.fromPosition[2]) / totalZ;
+        progress = createSlowZoneEasing(p1, p2, w.slowZone.factor)(rawProgress);
+      }
 
       const position = w.fromPosition.map((from, i) =>
         scaleLinear([0, 1], [from, w.toPosition[i]]).clamp(true)(progress),
@@ -95,5 +105,20 @@ export const getCameraPosition = (
   );
 
   lastPosition = result.position;
+
   return result;
 };
+
+// Creates a piecewise easing that redistributes scroll so the
+// p1→p2 range of progress gets `factor`x more scroll than normal
+function createSlowZoneEasing(p1: number, p2: number, factor: number) {
+  const totalWeight = p1 + (p2 - p1) * factor + (1 - p2);
+  const s1 = p1 / totalWeight;
+  const s2 = s1 + ((p2 - p1) * factor) / totalWeight;
+
+  return (t: number): number => {
+    if (t <= s1) return scaleLinear([0, s1], [0, p1])(t);
+    if (t <= s2) return scaleLinear([s1, s2], [p1, p2])(t);
+    return scaleLinear([s2, 1], [p2, 1])(t);
+  };
+}

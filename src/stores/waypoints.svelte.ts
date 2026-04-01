@@ -13,6 +13,11 @@ export type TransitionWaypoint = {
   end: string;
   fromPosition: [number, number, number];
   toPosition: [number, number, number];
+  slowZone?: {
+    fromZ: number;
+    toZ: number;
+    factor: number; // 2 = twice as slow, 3 = three times, etc.
+  };
 };
 
 export type CameraWaypoint = FixedWaypoint | TransitionWaypoint;

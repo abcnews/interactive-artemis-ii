@@ -60,6 +60,13 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 135%; /* 21.6px */
+    line-height: 135%; 
+
+    @include breakpoints.for-tablet-up {
+      font-size: 18px;
+    }
+    @include breakpoints.for-desktop-up {
+      font-size: 20px;
+    }
   }
 </style>

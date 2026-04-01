@@ -13,8 +13,6 @@
     type TransitionWaypoint,
   } from "../stores/waypoints.svelte";
 
-  const Y_POS = 0;
-
   const ParsedSchema = v.object({
     start: v.string(),
     end: v.string(),
@@ -54,6 +52,22 @@
       .map(mountToWaypoint)
       .filter((w): w is TransitionWaypoint => w !== null);
 
-    waypointStore.setAdditionalWaypoints(waypoints);
+    // Add custom slowdown for Hubble Telescope otherwise it zooms
+    // past way too fast!
+    const waypointsWithSlowdown = waypoints.map((waypoint) => {
+      if (waypoint.start === "exosphere" && waypoint.end === "exosphere2") {
+        return {
+          ...waypoint,
+          slowZone: {
+            fromZ: -0.47,
+            toZ: -0.56,
+            factor: 50, // tune this — start with 3x and adjust
+          },
+        };
+      }
+      return waypoint;
+    });
+
+    waypointStore.setAdditionalWaypoints(waypointsWithSlowdown);
   });
 </script>

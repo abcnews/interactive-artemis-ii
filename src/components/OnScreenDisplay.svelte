@@ -27,6 +27,8 @@
 </div>
 
 <style lang="scss">
+  @use "../styles/breakpoints.scss";
+
   .hud-container {
     position: fixed;
     bottom: 20px;
@@ -42,13 +44,12 @@
     border-radius: 32px;
     background: #212121;
 
-    /* This is what makes it animate */
     transition: width 1000ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hud-root {
     display: flex;
-    width: 100%; /* fills the animated container */
+    width: 100%;
     height: 30px;
     flex-direction: column;
     justify-content: center;
@@ -59,5 +60,14 @@
     font-weight: 300;
     line-height: 15px;
     letter-spacing: 0.54px;
+
+    @include breakpoints.for-tablet-up {
+      height: 34px;
+      font-size: 20px;
+    }
+    @include breakpoints.for-desktop-up {
+      height: 36px;
+      font-size: 22px;
+    }
   }
 </style>
