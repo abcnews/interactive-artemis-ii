@@ -17,6 +17,7 @@
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./models/ISS/ISS_stationary.svelte";
+  import ISSSmall from "./models/ISSSmall.svelte";
   import Cornish from "./models/Cornish/CornishBasic.svelte";
   import PostProcessing from "./PostProcessing.svelte";
   import Gemini from "./models/Gemini.svelte";
@@ -358,6 +359,13 @@
             scale={ISS_SCALE}
             {opacity}
           />
+
+          <!-- <ISSSmall
+            position={[kmScale(0.00), kmScale(0.09), kmScale(-400)]}
+            rotation={[Math.PI * 0.0, Math.PI * 0.5, Math.PI * 0.4]}
+            scale={kmScale(0.03)}
+            {opacity}
+          /> -->
         {/snippet}
       </Waypoint>
 
