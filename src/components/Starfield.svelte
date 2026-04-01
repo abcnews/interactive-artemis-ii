@@ -37,7 +37,7 @@
       positions[i * 3 + 2] = -rand.next() * 500;
 
       // Most stars dim, a few brighter — power curve biased low
-      const brightness = Math.pow(rand.next(), 2) * 0.35 + 0.1;
+      const brightness = Math.pow(rand.next(), 2) * 0.8 + 0.1;
       colors[i * 3] = brightness;
       colors[i * 3 + 1] = brightness;
       colors[i * 3 + 2] = brightness;
