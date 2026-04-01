@@ -10,16 +10,33 @@
     return width > height ? true : false;
   }
 
+  const supportsHEVC = (() => {
+    if (typeof document === "undefined") return false;
+    const probe = document.createElement("video");
+    return probe.canPlayType('video/mp4; codecs="hvc1"') !== "";
+  })();
+
   let videoEl: HTMLVideoElement;
   let landscape = $derived(isLandscape(screen.innerWidth, screen.innerHeight));
 
+  let src = $derived(
+    supportsHEVC
+      ? landscape
+        ? backgroundVideoSafari
+        : backgroundVideoPortraitSafari
+      : landscape
+        ? backgroundVideo
+        : backgroundVideoPortrait,
+  );
+
   $effect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     landscape;
     videoEl?.load();
   });
 </script>
 
-<video bind:this={videoEl} autoplay muted loop playsinline preload="auto">
+<!-- <video bind:this={videoEl} autoplay muted loop playsinline preload="auto">
   <source
     src={landscape ? backgroundVideoSafari : backgroundVideoPortraitSafari}
     type="video/mp4"
@@ -28,6 +45,10 @@
     src={landscape ? backgroundVideo : backgroundVideoPortrait}
     type="video/webm"
   />
+</video> -->
+
+<video bind:this={videoEl} autoplay muted loop playsinline preload="auto">
+  <source {src} type={supportsHEVC ? "video/mp4" : "video/webm"} />
 </video>
 
 <style lang="scss">
