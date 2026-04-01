@@ -27,7 +27,7 @@ const props: ComponentProps<typeof App> = {
 async function waitForOdysseyWithTimeout() {
   return Timeout.wrap(
     whenOdysseyLoaded,
-    7000,
+    15000,
     "Timed out waiting for Odyssey to load. Please try again.",
   );
 }
