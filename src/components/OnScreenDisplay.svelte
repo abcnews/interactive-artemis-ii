@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { pipe } from "effect";
+  import { accessibility } from "~/src/stores/accessibility.svelte";
   import { fade } from "svelte/transition";
+  import { Throttled } from "runed";
 
   type Props = {
     altitude: number;
@@ -8,7 +9,12 @@
 
   const { altitude }: Props = $props();
 
-  const km = $derived(pipe(altitude, Math.round).toLocaleString());
+  const km = $derived.by(() => {
+    const rounded = Math.round(altitude);
+    return rounded.toLocaleString();
+  });
+
+  const throttledKm = new Throttled(() => km, 250);
 
   // Each character ~11px wide + padding on both sides
   const MIN_WIDTH = 100;
@@ -16,12 +22,17 @@
   const containerWidth = $derived(
     Math.min(MAX_WIDTH, Math.max(MIN_WIDTH, km.length * 11 + 75)),
   );
+
+  let finalKm = $derived.by(() => {
+    if (accessibility.prefersReducedMotion) return throttledKm.current;
+    return km;
+  });
 </script>
 
 <div class="hud-container" style:width="{containerWidth}px">
   <div class="hud-root">
     <span class="kms" transition:fade={{ duration: 400 }}>
-      {km}km
+      {finalKm}km
     </span>
   </div>
 </div>
