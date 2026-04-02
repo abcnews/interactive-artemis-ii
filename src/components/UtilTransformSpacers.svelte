@@ -49,9 +49,17 @@ Utility component to add spacing in the DOM
         const gap = parsedValues.gap;
 
         if (typeof gap === "string") {
+          const FALLBACK_HEIGHT = 700;
+          const MIN_VALID_HEIGHT = 100; // anything below this is likely a layout-not-ready state
+
+          const viewportHeight =
+            screen.innerHeight < MIN_VALID_HEIGHT
+              ? FALLBACK_HEIGHT
+              : screen.innerHeight;
+
           spacerHTMLElement.style.setProperty(
             "margin-top",
-            `${(screen.innerHeight * 0.98).toString()}px`,
+            `${(viewportHeight * 0.98).toString()}px`,
             "important",
           );
         } else if (typeof gap === "number") {
