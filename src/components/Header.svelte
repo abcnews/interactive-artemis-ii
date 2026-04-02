@@ -141,7 +141,7 @@
       width: 100%;
       height: var(--header-height, 900px);
       background-color: transparent;
-      z-index: -1;
+      z-index: 0;
       opacity: var(--fade-out-progress);
     }
   }
