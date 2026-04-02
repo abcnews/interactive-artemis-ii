@@ -59,6 +59,7 @@
 
       .Header-content {
         margin-inline: 16px;
+        z-index: 1;
 
         h1 {
           font-family: ABCSansNova-CondensedBold, "abcsans condensed" !important;

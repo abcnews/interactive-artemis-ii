@@ -17,6 +17,7 @@
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./models/ISS/ISS_stationary.svelte";
+  // import ISS2 from "./models/ISS2/ISS_stationary.svelte";
   import Cornish from "./models/Cornish/CornishBasic.svelte";
   import Text from "./Text.svelte";
   import PostProcessing from "./PostProcessing.svelte";

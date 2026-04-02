@@ -14,11 +14,12 @@
   import Starfield from "./Starfield.svelte";
   import StarfieldStatic from "./StarfieldStatic.svelte";
   import Moon from "./models/Moon/Moon.svelte";
-  import Moon2 from "./models/Moon/moon_small.svelte";
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./models/ISS/ISS_stationary.svelte";
-  import ISSSmall from "./models/ISSSmall.svelte";
+  // import ISSSmall from "./models/ISSSmall.svelte";
+  import ISS2 from "./models/ISS2/ISS_stationary.svelte";
+
   import Cornish from "./models/Cornish/CornishBasic.svelte";
   import PostProcessing from "./PostProcessing.svelte";
   import Gemini from "./models/Gemini.svelte";
@@ -365,6 +366,13 @@
             position={[kmScale(-0.0), kmScale(0.1), kmScale(-400)]}
             rotation={[Math.PI * -0.5, Math.PI * 0.5, Math.PI * 0.2]}
             scale={kmScale(0.03)}
+            {opacity}
+          /> -->
+
+          <!-- <ISS2
+            position={[kmScale(0.01), kmScale(0.2), kmScale(-400)]}
+            rotation={[0, 0, 0]}
+            scale={ISS_SCALE}
             {opacity}
           /> -->
         {/snippet}
