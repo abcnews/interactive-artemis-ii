@@ -51,9 +51,6 @@
     style:--borderColour={border}
     style:--underlineColour={underline}
   >
-    {#if iconUrl}
-      <img src={iconUrl} alt="" class="inline-pill__icon" />
-    {/if}
     <span
       class="inline-pill__text"
       class:inline-pill__text--active={!isMinimal}
