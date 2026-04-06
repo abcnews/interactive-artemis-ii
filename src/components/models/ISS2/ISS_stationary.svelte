@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as THREE from "three";
   import { GLTF, useDraco } from "@threlte/extras";
-  import gltfUrl from "./iss_simplified-v1.1-opt.glb?url";
+  import gltfUrl from "./iss_simplified-v1.1.glb?url";
   import { T } from "@threlte/core";
 
   let { opacity = 1, ...props } = $props();
@@ -31,17 +31,28 @@
     {dracoLoader}
     oncreate={(ref) => {
       ref.traverse((child) => {
+        if (child instanceof THREE.Line) {
+          child.material = new THREE.LineBasicMaterial({
+            color: LINE_COLOR,
+            transparent: true,
+            opacity: 1,
+            toneMapped: false,
+          });
+          lineMaterials.push(child.material as THREE.LineBasicMaterial);
+          return;
+        }
+
         if (!(child instanceof THREE.Mesh)) return;
 
+        // Your existing edge generation for meshes that don't already have lines...
         const edges = new THREE.EdgesGeometry(child.geometry, 30);
         const lineMat = new THREE.LineBasicMaterial({
           color: LINE_COLOR,
           transparent: true,
           opacity: 1,
+          toneMapped: false,
         });
-
         lineMaterials.push(lineMat);
-
         const lineSegs = new THREE.LineSegments(edges, lineMat);
         child.add(lineSegs);
         child.material = darkMaterial;

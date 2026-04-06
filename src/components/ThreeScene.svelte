@@ -17,8 +17,8 @@
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./models/ISS/ISS_stationary.svelte";
-  // import ISSSmall from "./models/ISSSmall.svelte";
-  import ISS2 from "./models/ISS2/ISS_stationary.svelte";
+  import ISS_Simplified from "./models/ISS2/ISS_stationary.svelte";
+  // import ISS2 from "./models/ISS2/ISS_stationary.svelte";
 
   import Cornish from "./models/Cornish/CornishBasic.svelte";
   import PostProcessing from "./PostProcessing.svelte";
@@ -355,12 +355,12 @@
         visibleRange={kmScale(80)}
       >
         {#snippet children({ opacity })}
-          <ISS
+          <!-- <ISS
             position={[kmScale(0.01), kmScale(0.2), kmScale(-400)]}
             rotation={[0, 0, 0]}
             scale={ISS_SCALE}
             {opacity}
-          />
+          /> -->
 
           <!-- <ISSSmall
             position={[kmScale(-0.0), kmScale(0.1), kmScale(-400)]}
@@ -375,6 +375,12 @@
             scale={ISS_SCALE}
             {opacity}
           /> -->
+          <ISS_Simplified
+            position={[kmScale(0.01), kmScale(0.2), kmScale(-400)]}
+            rotation={[0, 0, 0]}
+            scale={ISS_SCALE}
+            {opacity}
+          />
         {/snippet}
       </Waypoint>
 
