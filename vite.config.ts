@@ -3,6 +3,9 @@ import { defineConfig } from "vite";
 import { loadingScript } from "vite-plugin-script-loader";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+// IMPORTANT: Change this on every release
+const VERSION = "1.0.8";
+
 // https://vite.dev/config/
 export default defineConfig(({ command }) => {
   return {
@@ -14,7 +17,7 @@ export default defineConfig(({ command }) => {
     base:
       command === "serve"
         ? "/"
-        : "https://www.abc.net.au/res/sites/news-projects/interactive-artemis-ii/dist/",
+        : `https://www.abc.net.au/res/sites/news-projects/interactive-artemis-ii/${VERSION}/`,
     build: {
       rollupOptions: {
         output: {
