@@ -117,15 +117,5 @@
         }
       }
     }
-
-    .inline-pill__icon {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-      position: absolute;
-      right: 2px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
   }
 </style>
