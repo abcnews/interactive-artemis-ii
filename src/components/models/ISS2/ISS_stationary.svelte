@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as THREE from "three";
   import { GLTF, useDraco } from "@threlte/extras";
-  import gltfUrl from "./iss_simplified-v1.1.glb?url";
+  import gltfUrl from "./iss_simplified-v1.1_compressed.glb?url";
   import { T } from "@threlte/core";
 
   let { opacity = 1, ...props } = $props();
