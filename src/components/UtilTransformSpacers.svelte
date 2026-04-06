@@ -1,5 +1,5 @@
 <!--
-Utility component to add spacing in the DOM
+  Utility component to add spacing in the DOM
 -->
 
 <script lang="ts">

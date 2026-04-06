@@ -8,22 +8,16 @@
   import { gpu } from "~/src/stores/gpu.svelte";
 
   // Components
-  import Artemis from "./models/NASAArtemisGLTF/NASA_SLS-block-1-v2.svelte";
-  import Orion from "./models/Orion/Orion_Draco_Optimized.svelte";
   import Starfield from "./Starfield.svelte";
   import StarfieldStatic from "./StarfieldStatic.svelte";
-  import HUDScene from "./HUDScene.svelte";
   import Moon from "./models/Moon/Moon.svelte";
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
   import ISS from "./models/ISS/ISS_stationary.svelte";
-  // import ISS2 from "./models/ISS2/ISS_stationary.svelte";
   import Cornish from "./models/Cornish/CornishBasic.svelte";
-  import Text from "./Text.svelte";
   import PostProcessing from "./PostProcessing.svelte";
   import Gemini from "./models/Gemini.svelte";
   import DistanceMarkers from "./DistanceMarkers.svelte";
-  import Gagarin from "./models/Gagarin.svelte";
   import GPS from "./models/GPS.svelte";
   import Sputnik2 from "./models/Sputnik2.svelte";
   import Vostok1 from "./models/Vostok_1.svelte";

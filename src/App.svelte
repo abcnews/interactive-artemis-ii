@@ -16,7 +16,6 @@
   import ThreeSceneReducedMotion from "./components/ThreeSceneReducedMotion.svelte";
   import Panels from "./components/Panels.svelte";
   import OnScreenDisplay from "./components/OnScreenDisplay.svelte";
-  import HoveringOverlays from "./components/HoveringOverlays.svelte";
 
   // Standard imports
   import { ElementSize } from "runed";
@@ -24,7 +23,6 @@
   import { SvelteURLSearchParams } from "svelte/reactivity";
   import { Throttled } from "runed";
   import { Match } from "effect";
-  import { pipe } from "effect";
 
   // Type imports
   import { type Readable } from "svelte/store";
@@ -194,12 +192,12 @@
         <ThreeScene {cameraPosition} {orionState} {artemisState} />
       {/if}
     </BackgroundStage>
-
-    <!-- <HoveringOverlays /> -->
   </Portal>
 
   <Panels />
 
+  <!-- Utility components run and do important things,
+   but don't necessarily render markup. -->
   <UtilTransformSpacers />
   <UtilGetPanelData />
   <UtilGetWaypoints />
@@ -209,7 +207,8 @@
     <Debug {cameraPosition} />
   {/if}
 {:else}
-  <p>This web app needs to be attached to an ABC News CoreMedia article.</p>
+  <p>This web app needs to be attached
+    to an ABC News CoreMedia article.</p>
 {/if}
 
 <svelte:body bind:this={bodyEl} />
