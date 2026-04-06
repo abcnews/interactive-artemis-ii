@@ -44,7 +44,6 @@
 
         if (!(child instanceof THREE.Mesh)) return;
 
-        // Your existing edge generation for meshes that don't already have lines...
         const edges = new THREE.EdgesGeometry(child.geometry, 30);
         const lineMat = new THREE.LineBasicMaterial({
           color: LINE_COLOR,

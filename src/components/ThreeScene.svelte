@@ -16,8 +16,8 @@
   import Moon from "./models/Moon/Moon.svelte";
   import Atmosphere from "./Atmosphere.svelte";
   import Waypoint from "./Waypoint.svelte";
-  import ISS from "./models/ISS/ISS_stationary.svelte";
-  import ISS_Simplified from "./models/ISS2/ISS_stationary.svelte";
+  // import ISS from "./models/ISS/ISS_stationary.svelte";
+  import ISS_Simplified from "./models/ISS_Simplified/ISS_Simplified.svelte";
   // import ISS2 from "./models/ISS2/ISS_stationary.svelte";
 
   import Cornish from "./models/Cornish/CornishBasic.svelte";
@@ -376,7 +376,7 @@
             {opacity}
           /> -->
           <ISS_Simplified
-            position={[kmScale(0.01), kmScale(0.2), kmScale(-400)]}
+            position={[kmScale(0.01), kmScale(-0.15), kmScale(-400)]}
             rotation={[0, 0, 0]}
             scale={ISS_SCALE}
             {opacity}
