@@ -98,7 +98,6 @@ class Scroll {
     }
 
     // Return a shallow copy so Svelte sees a new array reference
-    // (the objects inside are still reused — that's the actual saving)
     return [...cache];
   });
 
